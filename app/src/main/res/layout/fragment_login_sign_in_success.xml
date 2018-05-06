@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="恭喜您注册成功"
+        android:textSize="@dimen/textSize_18"
+        android:textColor="@color/text_gray"
+        android:gravity="center"
+        android:drawableLeft="@mipmap/success"
+        android:drawablePadding="14dp"
+        android:layout_marginTop="45dp"/>
+    
+    <Button
+        android:id="@+id/login_btn_login"
+        android:layout_width="90dp"
+        android:layout_height="30dp"
+        android:background="@color/background_button_orange"
+        android:text="立即登录"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/textSize_14"
+        android:layout_marginTop="15dp"/>
+
+</LinearLayout>

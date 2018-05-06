@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ViewPagerTitle">
+        <attr format="color" name="background_content_color"/>
+        <attr format="color" name="defaultTextViewColor"/>
+        <attr format="color" name="selectedTextViewColor"/>
+        <attr format="dimension" name="defaultTextViewSize"/>
+        <attr format="dimension" name="selectedTextViewSize"/>
+        <attr format="dimension" name="item_margins"/>
+        <attr format="color" name="line_start_color"/>
+        <attr format="color" name="line_end_color"/>
+        <attr format="integer" name="line_height"/>
+    </declare-styleable>
+
+
+</resources>

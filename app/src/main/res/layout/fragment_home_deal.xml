@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_black">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/home_tly_dealtab"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/background_black_light"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="6dp"
+        tl:tl_iconGravity="LEFT"
+        tl:tl_iconHeight="wrap_content"
+        tl:tl_iconWidth="wrap_content"
+        tl:tl_iconMargin="5dp"
+        tl:tl_indicator_bounce_enable="false"
+        tl:tl_indicator_color="@color/background_black_light"
+        tl:tl_indicator_gravity="TOP"
+        tl:tl_textSelectColor="@color/background_blue"
+        tl:tl_textUnselectColor="@android:color/white"
+        tl:tl_textsize="15sp"
+        tl:tl_underline_color="@color/background_blue"
+        tl:tl_underline_gravity="BOTTOM"
+        tl:tl_underline_height="1dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/background_black_light"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="名称"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="建仓价"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="平仓价"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="盈亏"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="@android:color/white"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/home_tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="亲，你还没有持仓哦~ 赶快去挑选吧"
+        android:textSize="@dimen/textSize_13"
+        android:textColor="#A7B2C3"
+        android:drawableTop="@mipmap/transaction_no"
+        android:drawablePadding="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140dp"
+        android:visibility="gone"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/home_vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

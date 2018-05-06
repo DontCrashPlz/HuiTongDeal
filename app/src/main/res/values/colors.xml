@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#1D2228</color>
+    <color name="colorAccent">#FF3F00</color>
+
+    <color name="background_black">#101318</color>
+    <color name="background_black_light">#1D2228</color>
+    <color name="background_white">#F6F6F6</color>
+    <color name="background_blue">#1B82D2</color>
+    <color name="background_button_orange">#FF3F00</color>
+    <color name="background_button_gray">#999999</color>
+    <color name="background_button_green">#04BC04</color>
+    <color name="background_button_yellow">#FF9800</color>
+    <color name="hint_text_gray">#CCCCCC</color>
+    <color name="text_gray">#333333</color>
+    <color name="text_button_gray">#666666</color>
+    <color name="progressbar_background_gray">#AAAAAA</color>
+
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@color/background_black_light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="14dp">
+
+        <ImageView
+            android:id="@+id/toolbar_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"
+            android:paddingLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/toolbar_title"
+            android:layout_alignBottom="@+id/toolbar_title"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="汇通交易"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/toolbar_right_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提现记录"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:paddingRight="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/toolbar_title"
+            android:layout_alignBottom="@+id/toolbar_title"
+            android:gravity="center_vertical"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

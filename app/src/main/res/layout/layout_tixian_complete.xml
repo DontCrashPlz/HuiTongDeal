@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tixian_text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="银行处理中"
+        android:textSize="@dimen/textSize_18"
+        android:textColor="#04BC04"/>
+
+    <TextView
+        android:id="@+id/tixian_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预计2小时内到账"
+        android:textSize="@dimen/textSize_12"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/tixian_text1"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="到账成功"
+        android:textSize="@dimen/textSize_14"
+        android:textColor="#60FFFFFF"
+        android:layout_below="@+id/tixian_text2"/>
+
+</RelativeLayout>
