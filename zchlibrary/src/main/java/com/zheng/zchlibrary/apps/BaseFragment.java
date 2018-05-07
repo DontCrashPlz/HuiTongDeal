@@ -9,6 +9,9 @@ import android.widget.Toast;
 import com.zheng.zchlibrary.interfaces.*;
 import com.zheng.zchlibrary.utils.LogUtil;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by Zheng on 2018/4/14.
  */
@@ -17,16 +20,24 @@ public class BaseFragment extends Fragment implements IBaseView {
 
     private final String fragmentTag= this.getClass().getSimpleName();
 
+    public CompositeDisposable compositeDisposable;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtil.e(fragmentTag, fragmentTag + "is Created!");
         super.onCreate(savedInstanceState);
+        LogUtil.e(fragmentTag, fragmentTag + "is Created!");
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         LogUtil.e(fragmentTag, fragmentTag + "is Destroyed!");
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -44,5 +55,12 @@ public class BaseFragment extends Fragment implements IBaseView {
     @Override
     public Context getRealContext() {
         return getContext();
+    }
+
+    public void addNetWork(Disposable disposable){
+        if (compositeDisposable== null){
+            compositeDisposable= new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
     }
 }

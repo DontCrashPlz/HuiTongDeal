@@ -17,4 +17,6 @@
     <color name="text_button_gray">#666666</color>
     <color name="progressbar_background_gray">#AAAAAA</color>
 
+    <color name="progressbar_background_gr">#00F601</color>
+
 </resources>

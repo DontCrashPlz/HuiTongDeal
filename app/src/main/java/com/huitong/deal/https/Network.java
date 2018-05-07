@@ -4,6 +4,7 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.CommitOrderEntity;
+import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
@@ -14,17 +15,14 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 /**
  * Created by Zheng on 2018/4/23.
@@ -48,11 +46,14 @@ public class Network {
     private Network(){
         if (apiService == null) {
             if (mOkHttpClient== null){
+                HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY);
                 mOkHttpClient= new OkHttpClient.Builder()
 //                        .cookieJar(new NovateCookieManger(MyApplication.getInstance()))
                         .connectTimeout(15, TimeUnit.SECONDS)
                         .writeTimeout(15, TimeUnit.SECONDS)
                         .readTimeout(15,TimeUnit.SECONDS)
+                        .addInterceptor(logging)
                         .build();
             }
             if (mRetrofit== null){
@@ -391,6 +392,15 @@ public class Network {
      */
     public Observable<HttpResult<TiXianHistoryEntity>> getTiXianHistoryDetail(String appToken, String id){
         return apiService.getTiXianHistoryDetail(appToken, id);
+    }
+
+    /**
+     * 获取产品列表
+     * @param appToken
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<CommodityListEntity>>> getCommodityList(String appToken){
+        return apiService.getCommodityList(appToken);
     }
 
 }

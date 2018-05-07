@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_tv_empty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:text="亲，你还没有持仓哦~ 赶快去挑选吧"
+    android:textSize="@dimen/textSize_13"
+    android:textColor="#A7B2C3"
+    android:drawableTop="@mipmap/transaction_no"
+    android:drawablePadding="10dp"
+    android:layout_marginTop="140dp"/>

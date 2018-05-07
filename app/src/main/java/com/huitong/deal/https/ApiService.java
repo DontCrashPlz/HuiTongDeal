@@ -4,6 +4,7 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.CommitOrderEntity;
+import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
@@ -76,4 +77,7 @@ public interface ApiService {
 
     @GET("/api/stm/cach/getCachDetail")
     Observable<HttpResult<TiXianHistoryEntity>> getTiXianHistoryDetail(@Query("appToken") String appToken, @Query("id") String id);
+
+    @GET("/api/stm/stock/stockList")
+    Observable<HttpResult<ArrayList<CommodityListEntity>>> getCommodityList(@Query("appToken") String appToken);
 }

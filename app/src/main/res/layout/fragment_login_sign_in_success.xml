@@ -11,7 +11,7 @@
         android:textSize="@dimen/textSize_18"
         android:textColor="@color/text_gray"
         android:gravity="center"
-        android:drawableLeft="@mipmap/success"
+        android:drawableLeft="@mipmap/register_success"
         android:drawablePadding="14dp"
         android:layout_marginTop="45dp"/>
     
