@@ -25,7 +25,7 @@ public class BaseActivity extends AppCompatActivity implements IBaseView {
 
     private final String ACTIVITY_TAG= this.getClass().getSimpleName();
 
-    private CompositeDisposable compositeDisposable;
+    public CompositeDisposable compositeDisposable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,5 +66,12 @@ public class BaseActivity extends AppCompatActivity implements IBaseView {
     @Override
     public Context getRealContext() {
         return this;
+    }
+
+    public void addNetWork(Disposable disposable){
+        if (compositeDisposable== null){
+            compositeDisposable= new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
     }
 }

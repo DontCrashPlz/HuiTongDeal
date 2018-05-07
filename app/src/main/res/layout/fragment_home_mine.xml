@@ -33,7 +33,6 @@
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
     </FrameLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1px" 
@@ -68,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总资产"
+                    android:text="账户余额"
                     android:textSize="@dimen/textSize_13"
                     android:textColor="#60FFFFFF"
                     android:layout_below="@+id/home_mine_balance"
@@ -96,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="总资产"
+                    android:text="证券资产"
                     android:textSize="@dimen/textSize_13"
                     android:textColor="#60FFFFFF"
                     android:layout_below="@+id/home_mine_security"
@@ -112,6 +111,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp">
         <Button
+            android:id="@+id/home_mine_btn_tixian"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -120,6 +120,7 @@
             android:textSize="@dimen/textSize_15"
             android:background="@drawable/button_background_white_selector"/>
         <Button
+            android:id="@+id/home_mine_btn_chongzhi"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -130,6 +131,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/home_mine_rly_realname"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -154,6 +156,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/home_mine_rly_loginpass"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -177,6 +180,7 @@
             android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/home_mine_rly_paypass"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -200,6 +204,7 @@
             android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/home_mine_rly_aboutus"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -223,6 +228,7 @@
             android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/home_mine_rly_logout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -235,7 +241,7 @@
             android:text="退出登录"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/textSize_14"
-            android:drawableLeft="@mipmap/certification"
+            android:drawableLeft="@mipmap/sign_out"
             android:drawablePadding="6dp"
             android:layout_marginLeft="10dp"/>
     </RelativeLayout>

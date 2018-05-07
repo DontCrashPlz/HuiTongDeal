@@ -14,7 +14,6 @@
         android:layout_height="50dp"
         android:background="@color/background_black_light"
         android:layout_marginTop="1dp"
-        android:layout_marginBottom="6dp"
         app:tl_iconGravity="LEFT"
         app:tl_iconMargin="5dp"
         app:tl_indicator_color="@color/background_blue"
@@ -27,45 +26,6 @@
         app:tl_divider_color="#101318"
         app:tl_divider_padding="15dp"
         app:tl_divider_width="1dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/background_black_light"
-        android:gravity="center_vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="名称"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="建仓价"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="平仓价"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="盈亏"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
-    </LinearLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/home_vp_content"

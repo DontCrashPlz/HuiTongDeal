@@ -22,6 +22,7 @@
             android:textSize="@dimen/textSize_15"
             android:paddingLeft="10dp"/>
         <EditText
+            android:id="@+id/realname_et_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -50,6 +51,7 @@
             android:textSize="@dimen/textSize_15"
             android:paddingLeft="10dp"/>
         <EditText
+            android:id="@+id/realname_et_idcard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -82,6 +84,7 @@
             android:layout_weight="2"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/realname_rbtn_man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="男"
@@ -92,6 +95,7 @@
                 android:drawablePadding="6dp"
                 android:layout_marginRight="12dp"/>
             <RadioButton
+                android:id="@+id/realname_rbtn_woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="女"
@@ -119,6 +123,7 @@
             android:textSize="@dimen/textSize_15"
             android:paddingLeft="10dp"/>
         <EditText
+            android:id="@+id/realname_et_nation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -146,6 +151,7 @@
             android:textSize="@dimen/textSize_15"
             android:paddingLeft="10dp"/>
         <EditText
+            android:id="@+id/realname_et_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -157,5 +163,18 @@
             android:lines="1"
             android:ellipsize="end"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/realname_btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="提交"
+        android:textSize="@dimen/textSize_16"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/login_rly_remember"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/button_background_orange_selector"/>
 
 </LinearLayout>
