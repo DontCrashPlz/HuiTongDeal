@@ -26,7 +26,7 @@ public class DealFragment extends BaseFragment {
         return instance;
     }
 
-    private TextView textView2;
+//    private TextView textView2;
     private TextView textView3;
     private TextView textView4;
     private RecyclerView mRecycler;
@@ -36,7 +36,7 @@ public class DealFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mView= inflater.inflate(R.layout.fragment_deal, container, false);
 
-        textView2= mView.findViewById(R.id.deal_text2);
+//        textView2= mView.findViewById(R.id.deal_text2);
         textView3= mView.findViewById(R.id.deal_text3);
         textView4= mView.findViewById(R.id.deal_text4);
 
@@ -44,12 +44,12 @@ public class DealFragment extends BaseFragment {
 
         int mTag= getArguments().getInt("tag");
         if (mTag== 0){
-            textView2.setText("建仓价");
+//            textView2.setText("建仓价");
             textView3.setText("现价");
             textView4.setText("浮动");
             mRecycler.setBackgroundColor(Color.RED);
         }else {
-            textView2.setText("建仓价");
+//            textView2.setText("建仓价");
             textView3.setText("平仓价");
             textView4.setText("盈亏");
             mRecycler.setBackgroundColor(Color.BLUE);

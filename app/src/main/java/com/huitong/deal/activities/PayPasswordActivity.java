@@ -149,16 +149,11 @@ public class PayPasswordActivity extends BaseActivity {
     private void showNextDialog(Context context){
         View view = LayoutInflater.from(context).inflate(R.layout.layout_paypass_dialog, null);
         // 设置style 控制默认dialog带来的边距问题
-        final Dialog dialog = new Dialog(context);
+        final Dialog dialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
         dialog.setContentView(view);
         dialog.show();
 
         final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);
-        payPsdInputView.setFocusable(true);
-        payPsdInputView.setFocusableInTouchMode(true);
-        payPsdInputView.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(payPsdInputView,0);
 
         // 监听
         view.findViewById(R.id.paypass_dialog_btn_cancel).setOnClickListener(new View.OnClickListener() {

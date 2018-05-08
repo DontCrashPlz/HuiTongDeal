@@ -5,16 +5,16 @@ package com.huitong.deal.beans;
  */
 
 public class ChiCangHistoryQueryParam {
-    private String user_id;
+//    private String user_id;
     private int userid;
 
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
+//    public String getUser_id() {
+//        return user_id;
+//    }
+//
+//    public void setUser_id(String user_id) {
+//        this.user_id = user_id;
+//    }
 
     public int getUserid() {
         return userid;
@@ -27,7 +27,7 @@ public class ChiCangHistoryQueryParam {
     @Override
     public String toString() {
         return "ChiCangHistoryQueryParam{" +
-                "user_id='" + user_id + '\'' +
+//                "user_id='" + user_id + '\'' +
                 ", userid=" + userid +
                 '}';
     }
