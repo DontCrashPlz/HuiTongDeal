@@ -1,8 +1,16 @@
 package com.huitong.deal.activities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +24,7 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -108,6 +117,8 @@ public class PayPasswordActivity extends BaseActivity {
                     return;
                 }
 
+                showNextDialog(getRealContext());
+
                 String token= MyApplication.getInstance().getToken();
 //                if (token!= null && token.length()> 0){
 //                    addNetWork(Network.getInstance().certifyRealName(
@@ -135,8 +146,42 @@ public class PayPasswordActivity extends BaseActivity {
         });
     }
 
-    private void showNextDialog(){
+    private void showNextDialog(Context context){
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_paypass_dialog, null);
+        // 设置style 控制默认dialog带来的边距问题
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(view);
+        dialog.show();
 
+        final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);
+        payPsdInputView.setFocusable(true);
+        payPsdInputView.setFocusableInTouchMode(true);
+        payPsdInputView.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(payPsdInputView,0);
+
+        // 监听
+        view.findViewById(R.id.paypass_dialog_btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShortToast("取消");
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.paypass_dialog_btn_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShortToast(payPsdInputView.getPasswordString());
+                dialog.dismiss();
+            }
+        });
+
+        // 设置相关位置，一定要在 show()之后
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
     }
 
 }

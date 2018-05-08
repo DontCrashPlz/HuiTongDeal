@@ -1,11 +1,16 @@
 package com.huitong.deal.fragments;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,6 +24,7 @@ import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -48,6 +54,8 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
     private EditText mPasswordEt;
     private CheckBox mRememberCb;
 
+    private Button testButton;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +76,9 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
         mUserNameEt= mView.findViewById(R.id.login_et_username);
         mPasswordEt= mView.findViewById(R.id.login_et_password);
         mRememberCb= mView.findViewById(R.id.login_cb_remember2);
+
+        testButton= mView.findViewById(R.id.button_test);
+        testButton.setOnClickListener(this);
 
         return mView;
     }
@@ -116,8 +127,44 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
                             }
                         }));
                 break;
+            case R.id.button_test:
+                showNextDialog(getRealContext());
+                break;
             default:
                 break;
         }
+    }
+
+    private void showNextDialog(Context context){
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_paypass_dialog, null);
+        // 设置style 控制默认dialog带来的边距问题
+        final Dialog dialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
+        dialog.setContentView(view);
+        dialog.show();
+
+        final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);
+
+        // 监听
+        view.findViewById(R.id.paypass_dialog_btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShortToast("取消");
+                dialog.dismiss();
+            }
+        });
+        view.findViewById(R.id.paypass_dialog_btn_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showShortToast(payPsdInputView.getPasswordString());
+                dialog.dismiss();
+            }
+        });
+
+        // 设置相关位置，一定要在 show()之后
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
     }
 }
