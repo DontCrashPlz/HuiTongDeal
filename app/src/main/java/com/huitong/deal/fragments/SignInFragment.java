@@ -116,20 +116,16 @@ public class SignInFragment extends BaseFragment {
                     return;
                 }
 
-                addNetWork(Network.getInstance().checkMobile(mobile)
+                addNetWork(Network.getInstance().isExistMobile(mobile)
                         .subscribeOn(Schedulers.io())//io线程上执行检查号码的网络请求
-                        .observeOn(Schedulers.io())//io线程上处理注册网络请求
+                        .observeOn(AndroidSchedulers.mainThread())//io线程上处理注册网络请求
                         .flatMap(new Function<HttpResult<String>, ObservableSource<HttpResult<String>>>() {//根据检查号码的结果决定是否注册
                             @Override
                             public ObservableSource<HttpResult<String>> apply(HttpResult<String> stringHttpResult) throws Exception {
                                 if ("error".equals(stringHttpResult.getStatus())){
                                     showShortToast(stringHttpResult.getDescription());
                                 }else if ("success".equals(stringHttpResult.getStatus())){
-                                    if ("ok".equals(stringHttpResult.getData())){
-                                        return Network.getInstance().doRigister(mobile, verification, password, inviteCode, address);
-                                    }else if ("haveUsed".equals(stringHttpResult.getData())){
-                                        showShortToast("手机号码已被注册");
-                                    }
+                                    return Network.getInstance().doRigister(mobile, verification, password, inviteCode, address);
                                 }
                                 return null;
                             }

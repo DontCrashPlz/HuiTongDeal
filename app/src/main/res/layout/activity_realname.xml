@@ -91,7 +91,7 @@
                 android:textSize="@dimen/textSize_15"
                 android:textColor="@android:color/white"
                 android:button="@null"
-                android:drawableLeft="@drawable/checkbox_background_remember"
+                android:drawableLeft="@drawable/checkbox_background_green"
                 android:drawablePadding="6dp"
                 android:layout_marginRight="12dp"/>
             <RadioButton
@@ -102,7 +102,7 @@
                 android:textSize="@dimen/textSize_15"
                 android:textColor="@android:color/white"
                 android:button="@null"
-                android:drawableLeft="@drawable/checkbox_background_remember"
+                android:drawableLeft="@drawable/checkbox_background_green"
                 android:drawablePadding="6dp"
                 android:layout_marginRight="12dp"/>
         </RadioGroup>

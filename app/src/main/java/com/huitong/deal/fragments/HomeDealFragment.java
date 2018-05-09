@@ -51,7 +51,10 @@ public class HomeDealFragment extends BaseFragment {
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return DealFragment.newInstance(position);
+                if (position== 0){
+                    return DealChiCangFragment.newInstance(position);
+                }
+                return DealHistoryFragment.newInstance(position);
             }
 
             @Override

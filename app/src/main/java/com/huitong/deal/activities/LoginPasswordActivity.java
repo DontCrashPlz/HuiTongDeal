@@ -84,28 +84,26 @@ public class LoginPasswordActivity extends BaseActivity {
                 }
 
                 String token= MyApplication.getInstance().getToken();
-//                if (token!= null && token.length()> 0){
-//                    addNetWork(Network.getInstance().resetPassword(
-//                            token,
-//                            name,
-//                            idcard,
-//                            sex,
-//                            nation,
-//                            address)
-//                            .subscribeOn(Schedulers.io())
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe(new Consumer<HttpResult<String>>() {
-//                                @Override
-//                                public void accept(HttpResult<String> stringHttpResult) throws Exception {
-//                                    if ("error".equals(stringHttpResult.getStatus())){
-//                                        showShortToast(stringHttpResult.getDescription());
-//                                    }else if ("success".equals(stringHttpResult.getStatus())){
-//                                        showShortToast("认证完成");
-//                                        finish();
-//                                    }
-//                                }
-//                            }));
-//                }
+                if (token!= null && token.length()> 0){
+                    addNetWork(Network.getInstance().modifyPassword(
+                            token,
+                            password1,
+                            password2,
+                            password3)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Consumer<HttpResult<String>>() {
+                                @Override
+                                public void accept(HttpResult<String> stringHttpResult) throws Exception {
+                                    if ("error".equals(stringHttpResult.getStatus())){
+                                        showShortToast(stringHttpResult.getDescription());
+                                    }else if ("success".equals(stringHttpResult.getStatus())){
+                                        showShortToast("修改完成");
+                                        finish();
+                                    }
+                                }
+                            }));
+                }
             }
         });
     }

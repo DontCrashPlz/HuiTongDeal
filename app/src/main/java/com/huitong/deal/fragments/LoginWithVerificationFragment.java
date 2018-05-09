@@ -119,6 +119,7 @@ public class LoginWithVerificationFragment extends BaseFragment implements View.
                                     }else {
                                         MyApplication.getInstance().setToken(token);
                                         getRealContext().startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        getActivity().finish();
                                     }
                                 }
                             }

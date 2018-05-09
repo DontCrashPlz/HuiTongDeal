@@ -42,8 +42,11 @@ public interface ApiService {
     @GET("/api/trade/checkMobile")
     Observable<HttpResult<String>> checkMobile(@Query("mobile") String mobile);
 
-    @GET("/api/stm/user/resetPassword")
+    @GET("/api/stm/login/resetPassword")
     Observable<HttpResult<String>> resetPassword(@QueryMap Map<String, String> params);
+
+    @GET("/api/stm/user/modifyLoginPass")
+    Observable<HttpResult<String>> modifyPassword(@QueryMap Map<String, String> params);
 
     @GET("/api/stm/user/setPayPass")
     Observable<HttpResult<String>> setPayPassword(@QueryMap Map<String, String> params);
@@ -80,4 +83,10 @@ public interface ApiService {
 
     @GET("/api/stm/stock/stockList")
     Observable<HttpResult<ArrayList<CommodityListEntity>>> getCommodityList(@Query("appToken") String appToken);
+
+    @GET("/api/common/user/isExistMobile")
+    Observable<HttpResult<String>> isExistMobile(@Query("mobile") String mobile);
+
+    @GET("/api/common/user/isExistUserName")
+    Observable<HttpResult<String>> isExistUserName(@Query("userName") String userName);
 }

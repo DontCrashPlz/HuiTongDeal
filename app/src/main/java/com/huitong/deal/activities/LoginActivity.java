@@ -42,33 +42,35 @@ public class LoginActivity extends BaseActivity {
 
     public void changeFragment(int fragmentTag){
         switch (fragmentTag){
-            case 0:{
+            case 0:{//密码登录页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, LoginWithPasswordFragment.newInstance(""))
                         .commit();
                 break;
             }
-            case 1:{
+            case 1:{//验证码登录页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, LoginWithVerificationFragment.newInstance(""))
                         .commit();
                 break;
             }
-            case 2:{
+            case 2:{//注册页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, SignInFragment.newInstance(""))
+                        .addToBackStack(null)
                         .commit();
                 break;
             }
-            case 3:{
+            case 3:{//注册成功页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, SignInSuccessFragment.newInstance(""))
                         .commit();
                 break;
             }
-            case 4:{
+            case 4:{//忘记密码页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, ForgetPasswordFragment.newInstance(""))
+                        .addToBackStack(null)
                         .commit();
                 break;
             }

@@ -192,24 +192,41 @@ public class Network {
     }
 
     /**
-     * 重置登录密码
-     * @param appToken
+     * 忘记登录密码
      * @param mobile
      * @param smsCode
      * @param password
      * @return
      */
-    public Observable<HttpResult<String>> resetPassword(String appToken,
-                                                        String mobile,
+    public Observable<HttpResult<String>> resetPassword(String mobile,
                                                         String smsCode,
                                                         String password){
         HashMap<String, String> params= new HashMap<>();
-        params.put("appToken", appToken);
         params.put("mobile", mobile);
         params.put("smsCode", smsCode);
         params.put("useType", "userFindPass");
         params.put("password", password);
         return apiService.resetPassword(params);
+    }
+
+    /**
+     * 修改登录密码
+     * @param appToken
+     * @param oldpassword
+     * @param password
+     * @param repassword
+     * @return
+     */
+    public Observable<HttpResult<String>> modifyPassword(String appToken,
+                                                         String oldpassword,
+                                                         String password,
+                                                         String repassword){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("oldpassword", oldpassword);
+        params.put("password", password);
+        params.put("repassword", repassword);
+        return apiService.modifyPassword(params);
     }
 
     /**
@@ -401,6 +418,24 @@ public class Network {
      */
     public Observable<HttpResult<ArrayList<CommodityListEntity>>> getCommodityList(String appToken){
         return apiService.getCommodityList(appToken);
+    }
+
+    /**
+     * 手机号是否存在
+     * @param mobile
+     * @return
+     */
+    public Observable<HttpResult<String>> isExistMobile(String mobile){
+        return apiService.isExistMobile(mobile);
+    }
+
+    /**
+     * 用户名是否存在
+     * @param userName
+     * @return
+     */
+    public Observable<HttpResult<String>> isExistUserName(String userName){
+        return apiService.isExistUserName(userName);
     }
 
 }

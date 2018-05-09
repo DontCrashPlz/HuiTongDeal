@@ -3,6 +3,7 @@ package com.huitong.deal.activities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -117,36 +118,36 @@ public class PayPasswordActivity extends BaseActivity {
                     return;
                 }
 
-                showNextDialog(getRealContext());
-
-                String token= MyApplication.getInstance().getToken();
-//                if (token!= null && token.length()> 0){
-//                    addNetWork(Network.getInstance().certifyRealName(
-//                            token,
-//                            name,
-//                            idcard,
-//                            sex,
-//                            nation,
-//                            address)
-//                            .subscribeOn(Schedulers.io())
-//                            .observeOn(AndroidSchedulers.mainThread())
-//                            .subscribe(new Consumer<HttpResult<String>>() {
-//                                @Override
-//                                public void accept(HttpResult<String> stringHttpResult) throws Exception {
-//                                    if ("error".equals(stringHttpResult.getStatus())){
-//                                        showShortToast(stringHttpResult.getDescription());
-//                                    }else if ("success".equals(stringHttpResult.getStatus())){
-//                                        showShortToast("认证完成");
-//                                        finish();
-//                                    }
-//                                }
-//                            }));
-//                }
+                showNextDialog(getRealContext(), verification, mobile, loginPassword);
             }
         });
     }
 
-    private void showNextDialog(Context context){
+    private void doSetPayPass(String smsCode, String mobile, String password, String payPassword){
+        String token= MyApplication.getInstance().getToken();
+        if (token!= null && token.length()> 0){
+            addNetWork(Network.getInstance().setPayPassword(
+                    token,
+                    smsCode,
+                    mobile,
+                    password,
+                    payPassword)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<HttpResult<String>>() {
+                        @Override
+                        public void accept(HttpResult<String> stringHttpResult) throws Exception {
+                            if ("error".equals(stringHttpResult.getStatus())){
+                                showShortToast(stringHttpResult.getDescription());
+                            }else if ("success".equals(stringHttpResult.getStatus())){
+                                showSuccessDialog(getRealContext());
+                            }
+                        }
+                    }));
+        }
+    }
+
+    private void showNextDialog(Context context, final String smsCode, final String mobile, final String password){
         View view = LayoutInflater.from(context).inflate(R.layout.layout_paypass_dialog, null);
         // 设置style 控制默认dialog带来的边距问题
         final Dialog dialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
@@ -154,20 +155,47 @@ public class PayPasswordActivity extends BaseActivity {
         dialog.show();
 
         final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);
+        final TextView tipTv= view.findViewById(R.id.paypass_dialog_tv_tip);
 
         // 监听
         view.findViewById(R.id.paypass_dialog_btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showShortToast("取消");
                 dialog.dismiss();
             }
         });
         view.findViewById(R.id.paypass_dialog_btn_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showShortToast(payPsdInputView.getPasswordString());
+                String payPass= payPsdInputView.getPasswordString();
+                if (payPass== null || payPass.length()!= 6){
+                    tipTv.setVisibility(View.VISIBLE);
+                    return;
+                }
+                doSetPayPass(smsCode, mobile, password, payPass);
                 dialog.dismiss();
+            }
+        });
+
+        // 设置相关位置，一定要在 show()之后
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
+    }
+
+    private void showSuccessDialog(Context context){
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_paypass_success_dialog, null);
+        // 设置style 控制默认dialog带来的边距问题
+        final Dialog dialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
+        dialog.setContentView(view);
+        dialog.show();
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                finish();
             }
         });
 

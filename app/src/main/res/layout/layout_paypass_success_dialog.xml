@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:background="@drawable/edittext_background_white_corners_hollow">
+
+    <ImageView
+        android:id="@+id/paypass_success_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/success"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/paypass_success_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请输入交易密码"
+        android:textSize="@dimen/textSize_15"
+        android:textColor="#333333"
+        app:layout_constraintTop_toBottomOf="@+id/paypass_success_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="14dp"/>
+
+</android.support.constraint.ConstraintLayout>
