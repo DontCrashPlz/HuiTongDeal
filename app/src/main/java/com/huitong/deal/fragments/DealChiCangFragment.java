@@ -60,6 +60,7 @@ public class DealChiCangFragment extends BaseFragment {
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
         mAdapter= new ChiCangListAdapter(R.layout.item_deal_recycler);
         mRecycler.setAdapter(mAdapter);
+        mAdapter.bindToRecyclerView(mRecycler);
         final String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){
             addNetWork(

@@ -10,4 +10,4 @@
     android:textColor="#A7B2C3"
     android:drawableTop="@mipmap/transaction_no"
     android:drawablePadding="10dp"
-    android:layout_marginTop="140dp"/>
+    android:paddingTop="140dp"/>

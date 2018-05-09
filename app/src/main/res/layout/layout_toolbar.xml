@@ -43,7 +43,8 @@
             android:layout_alignTop="@+id/toolbar_title"
             android:layout_alignBottom="@+id/toolbar_title"
             android:gravity="center_vertical"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:clickable="true"/>
 
     </RelativeLayout>
 
