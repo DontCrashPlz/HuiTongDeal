@@ -64,4 +64,10 @@ public class BaseFragment extends Fragment implements IBaseView {
         }
         compositeDisposable.add(disposable);
     }
+
+    public void clearNetWork(){
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
+    }
 }

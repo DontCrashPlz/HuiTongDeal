@@ -15,6 +15,7 @@ import com.huitong.deal.activities.LoginActivity;
 import com.huitong.deal.activities.LoginPasswordActivity;
 import com.huitong.deal.activities.PayPasswordActivity;
 import com.huitong.deal.activities.RealNameActivity;
+import com.huitong.deal.activities.TiXianActivity;
 import com.zheng.zchlibrary.apps.BaseFragment;
 
 /**
@@ -77,6 +78,7 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         int vId= v.getId();
         switch (vId){
             case R.id.home_mine_btn_tixian:
+                startActivity(new Intent(getRealContext(), TiXianActivity.class));
                 break;
             case R.id.home_mine_btn_chongzhi:
                 break;

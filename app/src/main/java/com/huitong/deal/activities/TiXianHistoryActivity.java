@@ -2,6 +2,8 @@ package com.huitong.deal.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +23,7 @@ public class TiXianHistoryActivity extends BaseActivity {
     private TextView mTitleTv;
     private TextView mFunctionTv;
 
-    private EditText mNameEt;
-    private EditText mBankCardEt;
-    private EditText mMoneyEt;
-    private Button mCommitBtn;
+    private RecyclerView mRecycler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,19 +43,11 @@ public class TiXianHistoryActivity extends BaseActivity {
             }
         });
         mTitleTv = (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText("提现");
+        mTitleTv.setText("提现记录");
         mFunctionTv = (TextView) findViewById(R.id.toolbar_right_text);
-        mFunctionTv.setVisibility(View.VISIBLE);
-        mFunctionTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mFunctionTv.setVisibility(View.GONE);
 
-            }
-        });
-
-        mNameEt = (EditText) findViewById(R.id.tixian_et_name);
-        mBankCardEt = (EditText) findViewById(R.id.tixian_et_bankcard);
-        mMoneyEt = (EditText) findViewById(R.id.tixian_et_money);
-        mCommitBtn = (Button) findViewById(R.id.tixian_btn_commit);
+        mRecycler= (RecyclerView) findViewById(R.id.tixian_history_recycler);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
     }
 }
