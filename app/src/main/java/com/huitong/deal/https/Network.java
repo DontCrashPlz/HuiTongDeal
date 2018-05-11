@@ -4,8 +4,10 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.CommitOrderEntity;
+import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
@@ -416,8 +418,28 @@ public class Network {
      * @param appToken
      * @return
      */
-    public Observable<HttpResult<ArrayList<CommodityListEntity>>> getCommodityList(String appToken){
+    public Observable<HttpResult<ArrayList<CommodityDetailEntity>>> getCommodityList(String appToken){
         return apiService.getCommodityList(appToken);
+    }
+
+    /**
+     * 获取产品详情
+     * @param appToken
+     * @param stockId
+     * @return
+     */
+    public Observable<HttpResult<CommodityDetailEntity>> getCommodityDetail(String appToken, String stockId){
+        return apiService.getCommodityDetail(appToken, stockId);
+    }
+
+    /**
+     * 获取产品杠杆列表
+     * @param appToken
+     * @param stockCode
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<LeverageEntity>>> getLeverageList(String appToken, String stockCode){
+        return apiService.getLeverageList(appToken, stockCode);
     }
 
     /**

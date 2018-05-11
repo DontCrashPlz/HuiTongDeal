@@ -3,7 +3,7 @@ package com.huitong.deal.beans;
 /**
  * Created by Zheng on 2018/5/7.
  */
-
+@Deprecated
 public class CommodityListEntity {
     //浮动比例
     private float float_rate;

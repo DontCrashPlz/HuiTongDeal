@@ -4,8 +4,10 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.CommitOrderEntity;
+import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
@@ -82,7 +84,13 @@ public interface ApiService {
     Observable<HttpResult<TiXianHistoryEntity>> getTiXianHistoryDetail(@Query("appToken") String appToken, @Query("id") String id);
 
     @GET("/api/stm/stock/stockList")
-    Observable<HttpResult<ArrayList<CommodityListEntity>>> getCommodityList(@Query("appToken") String appToken);
+    Observable<HttpResult<ArrayList<CommodityDetailEntity>>> getCommodityList(@Query("appToken") String appToken);
+
+    @GET("/api/stm/stock/getStockdetail")
+    Observable<HttpResult<CommodityDetailEntity>> getCommodityDetail(@Query("appToken") String appToken, @Query("stockId") String stockId);
+
+    @GET("/api/stm/stock/getLeverageList")
+    Observable<HttpResult<ArrayList<LeverageEntity>>> getLeverageList(@Query("appToken") String appToken, @Query("stockCode") String stockCode);
 
     @GET("/api/common/user/isExistMobile")
     Observable<HttpResult<String>> isExistMobile(@Query("mobile") String mobile);

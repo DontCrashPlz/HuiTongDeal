@@ -15,6 +15,7 @@ import com.huitong.deal.activities.HomeActivity;
 import com.huitong.deal.activities.LoginActivity;
 import com.huitong.deal.adapters.MarketListAdapter;
 import com.huitong.deal.apps.MyApplication;
+import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LoginEntity;
@@ -63,15 +64,15 @@ public class HomeMarketFragment extends BaseFragment {
         if (token!= null && token.length()> 0){
             addNetWork(
                     Observable.interval(1, TimeUnit.SECONDS)
-                            .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<CommodityListEntity>>>>() {
+                            .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<CommodityDetailEntity>>>>() {
                                 @Override
-                                public ObservableSource<HttpResult<ArrayList<CommodityListEntity>>> apply(Long aLong) throws Exception {
+                                public ObservableSource<HttpResult<ArrayList<CommodityDetailEntity>>> apply(Long aLong) throws Exception {
                                     return Network.getInstance().getCommodityList(token);
                                 }
                             })
-                            .filter(new Predicate<HttpResult<ArrayList<CommodityListEntity>>>() {
+                            .filter(new Predicate<HttpResult<ArrayList<CommodityDetailEntity>>>() {
                                 @Override
-                                public boolean test(HttpResult<ArrayList<CommodityListEntity>> arrayListHttpResult) throws Exception {
+                                public boolean test(HttpResult<ArrayList<CommodityDetailEntity>> arrayListHttpResult) throws Exception {
                                     if ("success".equals(arrayListHttpResult.getStatus())){
                                         return true;
                                     }
@@ -79,9 +80,9 @@ public class HomeMarketFragment extends BaseFragment {
                                 }
                             })
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<HttpResult<ArrayList<CommodityListEntity>>>() {
+                            .subscribe(new Consumer<HttpResult<ArrayList<CommodityDetailEntity>>>() {
                                 @Override
-                                public void accept(HttpResult<ArrayList<CommodityListEntity>> arrayListHttpResult) throws Exception {
+                                public void accept(HttpResult<ArrayList<CommodityDetailEntity>> arrayListHttpResult) throws Exception {
                                     if (arrayListHttpResult.getData().size()> 0){
                                         mAdapter.setNewData(arrayListHttpResult.getData());
                                         mAdapter.notifyDataSetChanged();

@@ -144,8 +144,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/market_detail_info"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:tl_textUnselectColor="@android:color/white"
-        app:tl_textSelectColor="#1B82D2" />
+        app:tl_textSelectColor="#1B82D2"
+        app:tl_indicator_color="#1B82D2"
+        app:tl_indicator_gravity="BOTTOM"
+        app:tl_indicator_height="1dp"
+        app:tl_indicator_width="40dp"
+        app:tl_textsize="@dimen/textSize_15"/>
 
     <FrameLayout
         android:id="@+id/market_detail_framelayout"
