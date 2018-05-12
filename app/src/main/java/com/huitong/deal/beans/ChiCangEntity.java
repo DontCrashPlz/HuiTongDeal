@@ -1,10 +1,12 @@
 package com.huitong.deal.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Zheng on 2018/5/6.
  */
 
-public class ChiCangEntity {
+public class ChiCangEntity implements Serializable {
     //杠杆
     private int leverage;
     //产品名称

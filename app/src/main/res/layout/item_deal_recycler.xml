@@ -4,13 +4,15 @@
     android:layout_height="60dp"
     android:layout_marginTop="1dp">
     <LinearLayout
+        android:id="@+id/item_deal_panel"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="@color/background_black_light"
+        android:background="@drawable/recycler_background_black_selector"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:clickable="true">
 
         <RelativeLayout
             android:layout_width="0dp"

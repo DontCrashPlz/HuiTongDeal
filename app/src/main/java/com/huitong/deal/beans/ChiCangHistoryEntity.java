@@ -1,10 +1,12 @@
 package com.huitong.deal.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Zheng on 2018/5/6.
  */
 
-public class ChiCangHistoryEntity {
+public class ChiCangHistoryEntity implements Serializable {
     //杠杆值
     private int leverage;
     //产品编码
@@ -12,77 +14,55 @@ public class ChiCangHistoryEntity {
     //购买类型
     private int buy_type;
     //平仓价
-    private int end_price;
+    private float end_price;
     //订单金额
-    private int order_money;
+    private float order_money;
     //备注
     private String remark;
     //account_status
     private int account_status;
-
     //止盈率
-    private int gain_rate;
-
+    private float gain_rate;
     //盈亏
-    private int gain;
-
+    private float gain;
     //isgain
     private boolean isgain;
-
     //持仓编号
     private String position_no;
-
     //deletestatus
     private boolean deletestatus;
-
     //id
     private int id;
-
     //point_price
-    private int point_price;
-
+    private float point_price;
     //购买价格
-    private int buy_pirce;
-
+    private float buy_pirce;
     //产品名称
     private String stock_name;
-
     //购买数量
     private int buy_count;
-
     //平仓时间
     private String end_time;
-
     //服务费
-    private int service_fee;
-
+    private float service_fee;
     //现价
-    private int now_price;
-
+    private float now_price;
     //服务费率
     private float fee_rate;
-
     //购买时间
     private String buy_time;
-
     //user_id
     private int user_id;
-
     //addtime
     private String addtime;
-
     //止盈价格
     private float gain_price;
-
     //止损率
-    private int lose_rate;
-
+    private float lose_rate;
     //order_state
     private String order_state;
-
     //close_type
     private int close_type;
-
     //止损价格
     private float lose_price;
 
@@ -112,19 +92,19 @@ public class ChiCangHistoryEntity {
         this.buy_type = buy_type;
     }
 
-    public int getEnd_price() {
+    public float getEnd_price() {
         return end_price;
     }
 
-    public void setEnd_price(int end_price) {
+    public void setEnd_price(float end_price) {
         this.end_price = end_price;
     }
 
-    public int getOrder_money() {
+    public float getOrder_money() {
         return order_money;
     }
 
-    public void setOrder_money(int order_money) {
+    public void setOrder_money(float order_money) {
         this.order_money = order_money;
     }
 
@@ -144,23 +124,23 @@ public class ChiCangHistoryEntity {
         this.account_status = account_status;
     }
 
-    public int getGain_rate() {
+    public float getGain_rate() {
         return gain_rate;
     }
 
-    public void setGain_rate(int gain_rate) {
+    public void setGain_rate(float gain_rate) {
         this.gain_rate = gain_rate;
     }
 
-    public int getGain() {
+    public float getGain() {
         return gain;
     }
 
-    public void setGain(int gain) {
+    public void setGain(float gain) {
         this.gain = gain;
     }
 
-    public boolean isgain() {
+    public boolean isIsgain() {
         return isgain;
     }
 
@@ -192,19 +172,19 @@ public class ChiCangHistoryEntity {
         this.id = id;
     }
 
-    public int getPoint_price() {
+    public float getPoint_price() {
         return point_price;
     }
 
-    public void setPoint_price(int point_price) {
+    public void setPoint_price(float point_price) {
         this.point_price = point_price;
     }
 
-    public int getBuy_pirce() {
+    public float getBuy_pirce() {
         return buy_pirce;
     }
 
-    public void setBuy_pirce(int buy_pirce) {
+    public void setBuy_pirce(float buy_pirce) {
         this.buy_pirce = buy_pirce;
     }
 
@@ -232,19 +212,19 @@ public class ChiCangHistoryEntity {
         this.end_time = end_time;
     }
 
-    public int getService_fee() {
+    public float getService_fee() {
         return service_fee;
     }
 
-    public void setService_fee(int service_fee) {
+    public void setService_fee(float service_fee) {
         this.service_fee = service_fee;
     }
 
-    public int getNow_price() {
+    public float getNow_price() {
         return now_price;
     }
 
-    public void setNow_price(int now_price) {
+    public void setNow_price(float now_price) {
         this.now_price = now_price;
     }
 
@@ -288,11 +268,11 @@ public class ChiCangHistoryEntity {
         this.gain_price = gain_price;
     }
 
-    public int getLose_rate() {
+    public float getLose_rate() {
         return lose_rate;
     }
 
-    public void setLose_rate(int lose_rate) {
+    public void setLose_rate(float lose_rate) {
         this.lose_rate = lose_rate;
     }
 

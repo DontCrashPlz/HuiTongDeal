@@ -208,7 +208,7 @@ public class Network {
         HashMap<String, String> params= new HashMap<>();
         params.put("mobile", mobile);
         params.put("smsCode", smsCode);
-        params.put("useType", "userFindPass");
+        params.put("useType", NetParams.VERIFICATION_USERTYPT_FINDPASS);
         params.put("password", password);
         return apiService.resetPassword(params);
     }

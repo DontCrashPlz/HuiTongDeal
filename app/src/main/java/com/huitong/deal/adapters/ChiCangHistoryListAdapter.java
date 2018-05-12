@@ -10,32 +10,34 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.huitong.deal.R;
 import com.huitong.deal.activities.ChiCangDetailActivity;
+import com.huitong.deal.activities.ChiCangHistoryDetailActivity;
 import com.huitong.deal.beans.ChiCangEntity;
+import com.huitong.deal.beans.ChiCangHistoryEntity;
 
 /**
  * Created by Zheng on 2018/4/26.
  */
 
-public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangListAdapter.ChiCangListHolder> {
+public class ChiCangHistoryListAdapter extends BaseQuickAdapter<ChiCangHistoryEntity, ChiCangHistoryListAdapter.ChiCangListHolder> {
 
     private int colorGreen= Color.rgb(0, 246, 1);
     private int colorOrange= Color.rgb(255, 63, 0);
 
-    public ChiCangListAdapter(int layoutResId) {
+    public ChiCangHistoryListAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(ChiCangListHolder helper, final ChiCangEntity item) {
+    protected void convert(ChiCangListHolder helper, final ChiCangHistoryEntity item) {
         helper.mPanelLly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(mContext, ChiCangDetailActivity.class);
+                Intent intent= new Intent(mContext, ChiCangHistoryDetailActivity.class);
                 intent.putExtra("chicang_detail_entity", item);
                 mContext.startActivity(intent);
             }
         });
-        helper.mNameTv.setText(item.getStockname());
+        helper.mNameTv.setText(item.getStock_name());
         if (item.getBuy_type()== 0){
             helper.mIconTv.setText("回购");
         }else {
@@ -43,7 +45,7 @@ public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangL
         }
         helper.mIconRemarkTv.setText(item.getStock_no());
         helper.mText2.setText(String.valueOf(item.getNow_price()));
-        helper.mText3.setText(String.valueOf(item.getCurpoint()));
+        helper.mText3.setText(String.valueOf(item.getEnd_price()));
         helper.mText4.setText(String.valueOf(item.getGain()));
         float currentGain= item.getGain();
         if (currentGain> 0F){

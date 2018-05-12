@@ -8,7 +8,9 @@
         android:layout_height="30dp"
         android:background="@color/background_black_light"
         android:gravity="center_vertical"
-        android:layout_marginTop="6dp">
+        android:layout_marginTop="6dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,7 +18,7 @@
             android:text="名称"
             android:textSize="@dimen/textSize_14"
             android:textColor="@android:color/white"
-            android:gravity="center"/>
+            android:gravity="left"/>
         <TextView
             android:id="@+id/deal_text2"
             android:layout_width="wrap_content"
@@ -43,7 +45,7 @@
             android:text="盈亏"
             android:textSize="@dimen/textSize_14"
             android:textColor="@android:color/white"
-            android:gravity="center"/>
+            android:gravity="right"/>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
