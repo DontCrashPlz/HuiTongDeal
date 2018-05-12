@@ -94,7 +94,7 @@ public class MarketDetailActivity extends BaseActivity {
             return;
         }
         if (stock_code== null || stock_code.length()< 1){
-            showShortToast("获取产品杠杆失败");
+            showShortToast("获取产品编码失败");
             return;
         }
 
@@ -257,32 +257,32 @@ public class MarketDetailActivity extends BaseActivity {
         switch (chartTag){
             case FRAGMENT_TAG_TIME:{//分时图
                 manager.beginTransaction()
-                        .replace(R.id.market_detail_framelayout, TimeChartFragment.newInstance(""))
+                        .replace(R.id.market_detail_framelayout, TimeChartFragment.newInstance(stock_code))
                         .commit();
                 break;
             }
             case FRAGMENT_TAG_5_K:{//5分钟K线图
                 manager.beginTransaction()
-                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(KLineChartFragment.KLINE_TAG_5_MINUTE))
+                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(stock_code, KLineChartFragment.KLINE_TAG_5_MINUTE))
                         .commit();
                 break;
             }
             case FRAGMENT_TAG_30_K:{//30分钟K线图
                 manager.beginTransaction()
-                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(KLineChartFragment.KLINE_TAG_30_MINUTE))
+                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(stock_code, KLineChartFragment.KLINE_TAG_30_MINUTE))
                         .addToBackStack(null)
                         .commit();
                 break;
             }
             case FRAGMENT_TAG_60_K:{//60分钟K线图
                 manager.beginTransaction()
-                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(KLineChartFragment.KLINE_TAG_60_MINUTE))
+                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(stock_code, KLineChartFragment.KLINE_TAG_60_MINUTE))
                         .commit();
                 break;
             }
             case FRAGMENT_TAG_DAY_K:{//1天K线图
                 manager.beginTransaction()
-                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(KLineChartFragment.KLINE_TAG_1_DAY))
+                        .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(stock_code, KLineChartFragment.KLINE_TAG_1_DAY))
                         .addToBackStack(null)
                         .commit();
                 break;

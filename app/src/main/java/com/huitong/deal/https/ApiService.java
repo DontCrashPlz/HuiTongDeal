@@ -7,11 +7,13 @@ import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.KLineEntity;
 import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
 import com.huitong.deal.beans.TiXianHistoryQueryParam;
+import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
 
@@ -91,6 +93,12 @@ public interface ApiService {
 
     @GET("/api/stm/stock/getLeverageList")
     Observable<HttpResult<ArrayList<LeverageEntity>>> getLeverageList(@Query("appToken") String appToken, @Query("stockCode") String stockCode);
+
+    @GET("/api/stm/stock/getStockTimeLine")
+    Observable<HttpResult<TimeLineEntity>> getTimeLine(@Query("appToken") String appToken, @Query("stockCode") String stockCode);
+
+    @GET("/api/stm/stock/getStockKLine")
+    Observable<HttpResult<KLineEntity>> getKLine(@Query("appToken") String appToken, @Query("stockCode") String stockCode, @Query("kType") String kType);
 
     @GET("/api/common/user/isExistMobile")
     Observable<HttpResult<String>> isExistMobile(@Query("mobile") String mobile);

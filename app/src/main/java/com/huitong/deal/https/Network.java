@@ -7,11 +7,13 @@ import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.KLineEntity;
 import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
 import com.huitong.deal.beans.TiXianHistoryQueryParam;
+import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
 
@@ -264,10 +266,8 @@ public class Network {
             String mobile,
             String useTypr){
         HashMap<String, String> params= new HashMap<>();
-        params.put("smsLog.receiveMobile", mobile);
-        params.put("smsLog.useType", useTypr);
-        params.put("smsLog.userType", "shopUser");
-        params.put("smsLog.SystemCode", "shop");
+        params.put("mobile", mobile);
+        params.put("type", useTypr);
         return apiService.getVerificationCode(params);
     }
 
@@ -440,6 +440,27 @@ public class Network {
      */
     public Observable<HttpResult<ArrayList<LeverageEntity>>> getLeverageList(String appToken, String stockCode){
         return apiService.getLeverageList(appToken, stockCode);
+    }
+
+    /**
+     * 获取产品分时图
+     * @param appToken
+     * @param stockCode
+     * @return
+     */
+    public Observable<HttpResult<TimeLineEntity>> getTimeLine(String appToken, String stockCode){
+        return apiService.getTimeLine(appToken, stockCode);
+    }
+
+    /**
+     * 获取产品K线图
+     * @param appToken
+     * @param stockCode
+     * @param kType
+     * @return
+     */
+    public Observable<HttpResult<KLineEntity>> getKLine(String appToken, String stockCode, String kType){
+        return apiService.getKLine(appToken, stockCode, kType);
     }
 
     /**

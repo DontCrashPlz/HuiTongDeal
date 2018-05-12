@@ -6,9 +6,9 @@ package com.huitong.deal.https;
 
 public class NetParams {
     //验证码的几种userType
-    public static final String VERIFICATION_USERTYPT_REG= "userReg";
-    public static final String VERIFICATION_USERTYPT_LOGIN= "userLogin";
-    public static final String VERIFICATION_USERTYPT_FINDPASS= "userFindPass";
-    public static final String VERIFICATION_USERTYPT_CHANGEPASS= "userChangePass";
-    public static final String VERIFICATION_USERTYPT_SETPAYPASS= "userSetPayPass";
+    public static final String VERIFICATION_USERTYPT_REG= "shop_reg";
+    public static final String VERIFICATION_USERTYPT_LOGIN= "shop_login";
+    public static final String VERIFICATION_USERTYPT_FINDPASS= "shop_find_pwd";
+    public static final String VERIFICATION_USERTYPT_CHANGEPASS= "shop_change_pwd";
+    public static final String VERIFICATION_USERTYPT_SETPAYPASS= "shop_set_pay_pwd";
 }

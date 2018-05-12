@@ -23,6 +23,7 @@ import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
 
 import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -118,16 +119,23 @@ public class SignInFragment extends BaseFragment {
 
                 addNetWork(Network.getInstance().isExistMobile(mobile)
                         .subscribeOn(Schedulers.io())//io线程上执行检查号码的网络请求
-                        .observeOn(AndroidSchedulers.mainThread())//io线程上处理注册网络请求
+                        .observeOn(Schedulers.io())//io线程上处理注册网络请求
                         .flatMap(new Function<HttpResult<String>, ObservableSource<HttpResult<String>>>() {//根据检查号码的结果决定是否注册
                             @Override
                             public ObservableSource<HttpResult<String>> apply(HttpResult<String> stringHttpResult) throws Exception {
+                                final HttpResult<String> result= new HttpResult<>();
                                 if ("error".equals(stringHttpResult.getStatus())){
-                                    showShortToast(stringHttpResult.getDescription());
+                                    result.setDescription(stringHttpResult.getDescription());
                                 }else if ("success".equals(stringHttpResult.getStatus())){
                                     return Network.getInstance().doRigister(mobile, verification, password, inviteCode, address);
                                 }
-                                return null;
+                                return new ObservableSource<HttpResult<String>>() {
+                                    @Override
+                                    public void subscribe(Observer<? super HttpResult<String>> observer) {
+                                        result.setStatus("error");
+                                        observer.onNext(result);
+                                    }
+                                };
                             }
                         })
                         .observeOn(AndroidSchedulers.mainThread())//回到主线程处理注册结果

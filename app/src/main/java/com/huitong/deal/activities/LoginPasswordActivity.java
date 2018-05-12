@@ -95,9 +95,9 @@ public class LoginPasswordActivity extends BaseActivity {
                             .subscribe(new Consumer<HttpResult<String>>() {
                                 @Override
                                 public void accept(HttpResult<String> stringHttpResult) throws Exception {
-                                    if ("error".equals(stringHttpResult.getStatus())){
+                                    if ("error".equals(stringHttpResult.getStatus())) {
                                         showShortToast(stringHttpResult.getDescription());
-                                    }else if ("success".equals(stringHttpResult.getStatus())){
+                                    } else if ("success".equals(stringHttpResult.getStatus())) {
                                         showShortToast("修改完成");
                                         finish();
                                     }
