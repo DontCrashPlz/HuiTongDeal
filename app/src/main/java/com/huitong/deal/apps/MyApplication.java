@@ -2,12 +2,17 @@ package com.huitong.deal.apps;
 
 import android.widget.Toast;
 
+import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.UserInfoEntity;
+import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseApplication;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.ScreenUtils;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
+
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Zheng on 2018/4/20.
@@ -113,6 +118,24 @@ public class MyApplication extends BaseApplication {
             return true;
         }
         return false;
+    }
+    public void refreshUser(){
+        if (appToken!= null && appToken.length()> 0){
+            Network.getInstance().getUserInfo(appToken)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
+                        @Override
+                        public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
+                            if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
+                                Toast.makeText(getApplicationContext(), userInfoDataEntityHttpResult.getDescription(), Toast.LENGTH_SHORT).show();
+                            }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
+                                if (userInfoDataEntityHttpResult.getData()!= null)
+                                    appUser= userInfoDataEntityHttpResult.getData();
+                            }
+                        }
+                    });
+        }
     }
 
 }

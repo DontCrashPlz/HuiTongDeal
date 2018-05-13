@@ -4,4 +4,8 @@
     <string name="hint_withdraw_deposit">最多提现 %1$s</string>
     <string name="hint_tixian_money">提现金额 %1s$</string>
 
+    <string name="xiadan_dialog_buycount">手数:  %1$s</string>
+    <string name="xiadan_dialog_maxcount">(每手%1$s， 最多可买%2$s手)</string>
+    <string name="xiadan_dialog_shouxufei">手续费 %1$s</string>
+
 </resources>

@@ -1,5 +1,7 @@
 package com.huitong.deal.https;
 
+import android.util.Log;
+
 import com.huitong.deal.beans.BillEntity;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
@@ -306,6 +308,7 @@ public class Network {
         params.put("feerate", feerate);
         params.put("leverage", leverage);
         params.put("buyType", buyType);
+        Log.e("xiaDanParam", params.toString());
         return apiService.commitOrder(params);
     }
 

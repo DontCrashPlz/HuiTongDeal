@@ -1,14 +1,25 @@
 package com.huitong.deal.activities;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -16,6 +27,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
+import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.DealTableEntity;
@@ -30,6 +42,7 @@ import com.huitong.deal.fragments.SignInSuccessFragment;
 import com.huitong.deal.fragments.TimeChartFragment;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -70,7 +83,7 @@ public class MarketDetailActivity extends BaseActivity {
     private TextView mYesterdayTv;
 
     private CommonTabLayout mTabLayout;
-    private FrameLayout mChartFly;
+//    private FrameLayout mChartFly;
 
     private Button mRenGouBtn;
     private Button mHuiGouBtn;
@@ -205,20 +218,20 @@ public class MarketDetailActivity extends BaseActivity {
             }
         });
 
-        mChartFly = (FrameLayout) findViewById(R.id.market_detail_framelayout);
+//        mChartFly = (FrameLayout) findViewById(R.id.market_detail_framelayout);
 
         mRenGouBtn= (Button) findViewById(R.id.market_detail_btn_rengou);
         mRenGouBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showShortToast("认购");
+                showXiaDanDialog(getRealContext(), 0);
             }
         });
         mHuiGouBtn= (Button) findViewById(R.id.market_detail_btn_huigou);
         mHuiGouBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showShortToast("回购");
+                showXiaDanDialog(getRealContext(), 1);
             }
         });
     }
@@ -251,6 +264,11 @@ public class MarketDetailActivity extends BaseActivity {
             mRenGouBtn.setClickable(true);
             mHuiGouBtn.setBackgroundResource(R.drawable.button_background_green_selector);
             mHuiGouBtn.setClickable(true);
+        }
+
+        if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+            dialogCurPrice.setText(String.valueOf(entity.getNow_price()));
+            nowPrice= String.valueOf(entity.getNow_price());
         }
     }
 
@@ -292,6 +310,277 @@ public class MarketDetailActivity extends BaseActivity {
                 showShortToast("页面切换失败");
                 break;
         }
+    }
+
+    /**************************下单Dialog相关*******************************/
+    private Dialog xiaDanDialog;
+//    private ImageView dialogCancel;
+    private CommonTabLayout dialogTabLayout;
+    private TextView dialogStockName;
+    private TextView dialogStockStatus;
+    private TextView dialogCurPrice;
+    private RadioButton dialogRbtn_100;
+    private RadioButton dialogRbtn_50;
+    private RadioButton dialogRbtn_1;
+    private TextView dialogBuyCount;
+    private TextView dialogMaxCount;
+    private EditText dialogEditText;
+    private TextView dialogBuyPrice;
+    private TextView dialogServerPrice;
+    private Button dialogButton;
+
+    private String nowPrice;
+    private LeverageEntity leverageEntity;
+    private int buyCount;
+    private int buyType;
+    private int maxCount;
+
+    private ArrayList<CustomTabEntity> tabEntities;
+
+    private void showXiaDanDialog(Context context, int currentTab){
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_xiadan_dialog, null);
+        // 设置style 控制默认dialog带来的边距问题
+        xiaDanDialog= new Dialog(context, R.style.custom_dialog_no_titlebar);
+        xiaDanDialog.setContentView(view);
+        xiaDanDialog.show();
+
+//        dialogCancel=  view.findViewById(R.id.tixian_dialog_cancel);
+//        dialogCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                xiaDanDialog.dismiss();
+//            }
+//        });
+
+        dialogTabLayout= view.findViewById(R.id.tixian_dialog_tab);
+        tabEntities= new ArrayList<>();
+        tabEntities.add(new DealTableEntity("认购", 0, 0));
+        tabEntities.add(new DealTableEntity("回购", 0, 0));
+        dialogTabLayout.setTabData(tabEntities);
+        dialogTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                if (position== 0){
+                    buyType= 2;
+                }else if (position== 1){
+                    buyType= 1;
+                }
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+        dialogTabLayout.setCurrentTab(currentTab);
+        if (currentTab== 0){
+            buyType= 2;
+        }else if (currentTab== 1){
+            buyType= 1;
+        }
+
+        dialogStockName= view.findViewById(R.id.tixian_dialog_name);
+        dialogStockName.setText(stock_name);
+
+        dialogStockStatus= view.findViewById(R.id.tixian_dialog_status);
+
+        dialogCurPrice= view.findViewById(R.id.tixian_dialog_price);
+
+        dialogRbtn_100= view.findViewById(R.id.tixian_dialog_rbtn_100);
+        dialogRbtn_50= view.findViewById(R.id.tixian_dialog_rbtn_50);
+        dialogRbtn_1= view.findViewById(R.id.tixian_dialog_rbtn_1);
+        dealLeverage();
+
+        dialogBuyCount= view.findViewById(R.id.tixian_dialog_buycount);
+        dialogBuyCount.setText(String.format(getString(R.string.xiadan_dialog_buycount), "0"));
+        dialogMaxCount= view.findViewById(R.id.tixian_dialog_maxcount);
+        dialogMaxCount.setText(String.format(getString(R.string.xiadan_dialog_maxcount), "0", "0"));
+        dialogEditText= view.findViewById(R.id.tixian_dialog_edittext);
+        dialogEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().trim()== null || s.toString().trim().length()< 1){
+                    return;
+                }
+                int value= Integer.parseInt(s.toString().trim());
+                if (value> maxCount) {
+                    value= maxCount;
+                    dialogEditText.setText(String.valueOf(value));
+                }
+                if (value== 0){
+                    return;
+                }
+                dialogBuyCount.setText(
+                        String.format(
+                                getString(R.string.xiadan_dialog_buycount),
+                                String.valueOf(value)));
+                float zongJia= leverageEntity.getPrice()*value;
+                float shouXuFei= zongJia*leverageEntity.getFeeRate();
+                dialogBuyPrice.setText(String.valueOf(zongJia));
+                dialogServerPrice.setText(String.format(
+                        getString(R.string.xiadan_dialog_shouxufei),
+                        String.valueOf(shouXuFei)));
+
+                buyCount= value;
+            }
+        });
+
+        dialogBuyPrice= view.findViewById(R.id.tixian_dialog_buyprice);
+        dialogServerPrice= view.findViewById(R.id.tixian_dialog_serverprice);
+        dialogButton= view.findViewById(R.id.tixian_dialog_xiadan);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xiaDan();
+            }
+        });
+
+        // 设置相关位置，一定要在 show()之后
+        Window window = xiaDanDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.BOTTOM;
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+    }
+
+    /**
+     * 提交下单请求
+     */
+    private void xiaDan(){
+        if (appToken!= null && appToken.length()> 0){
+
+            if (leverageEntity== null){
+                showShortToast("请选择杠杆");
+                return;
+            }
+            if (buyCount== 0){
+                showShortToast("请填写手数");
+                return;
+            }
+
+            addNetWork(Network.getInstance().commitOrder(
+                    appToken,
+                    stockid,
+                    stock_code,
+                    nowPrice,
+                    String.valueOf(leverageEntity.getPrice()),
+                    String.valueOf(buyCount),
+                    String.valueOf(leverageEntity.getFeeRate()),
+                    String.valueOf(leverageEntity.getLeverage()),
+                    String.valueOf(buyType))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<HttpResult<CommitOrderEntity>>() {
+                        @Override
+                        public void accept(HttpResult<CommitOrderEntity> commitOrderEntityHttpResult) throws Exception {
+                            if ("error".equals(commitOrderEntityHttpResult.getStatus())){
+                                showShortToast(commitOrderEntityHttpResult.getDescription());
+                            }else if ("success".equals(commitOrderEntityHttpResult.getStatus())){
+                                showShortToast("下单成功");
+                                if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+                                    xiaDanDialog.dismiss();
+                                }
+                                MyApplication.getInstance().refreshUser();
+                            }
+                        }
+                    }));
+        }
+    }
+
+    /**
+     * 处理杠杆列表
+     */
+    private void dealLeverage(){
+        if (mLeverageList== null || mLeverageList.size()< 1){
+            showShortToast("杠杆列表无效");
+            if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+                xiaDanDialog.dismiss();
+                return;
+            }
+        }
+        dialogRbtn_100.setClickable(false);
+        dialogRbtn_100.setVisibility(View.INVISIBLE);
+        dialogRbtn_50.setClickable(false);
+        dialogRbtn_50.setVisibility(View.INVISIBLE);
+        dialogRbtn_1.setClickable(false);
+        dialogRbtn_1.setVisibility(View.INVISIBLE);
+        for (final LeverageEntity entity : mLeverageList){
+            if (entity.getLeverage()== 100){
+                dialogRbtn_100.setClickable(true);
+                dialogRbtn_100.setVisibility(View.VISIBLE);
+                dialogRbtn_100.setText(entity.getLeverageName());
+                dialogRbtn_100.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked){
+                            leverageEntity= entity;
+                            computeMaxCount();
+                            dialogMaxCount.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_maxcount),
+                                            String.valueOf(leverageEntity.getPrice()),
+                                            String.valueOf(maxCount)));
+                        }
+                    }
+                });
+            }else if(entity.getLeverage()== 50){
+                dialogRbtn_50.setClickable(true);
+                dialogRbtn_50.setVisibility(View.VISIBLE);
+                dialogRbtn_50.setText(entity.getLeverageName());
+                dialogRbtn_50.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked){
+                            leverageEntity= entity;
+                            computeMaxCount();
+                            dialogMaxCount.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_maxcount),
+                                            String.valueOf(leverageEntity.getPrice()),
+                                            String.valueOf(maxCount)));
+                        }
+                    }
+                });
+            }else if(entity.getLeverage()== 1){
+                dialogRbtn_1.setClickable(true);
+                dialogRbtn_1.setVisibility(View.VISIBLE);
+                dialogRbtn_1.setText(entity.getLeverageName());
+                dialogRbtn_1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked){
+                            leverageEntity= entity;
+                            computeMaxCount();
+                            dialogMaxCount.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_maxcount),
+                                            String.valueOf(leverageEntity.getPrice()),
+                                            String.valueOf(maxCount)));
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    private void computeMaxCount(){
+        float balance= MyApplication.appUser.getUserinfo().getAvailablebalance();
+        float danJia= leverageEntity.getPrice();
+        float fuWuFeiLv= leverageEntity.getFeeRate();
+        float danBiZongJia= danJia + danJia*fuWuFeiLv;
+        maxCount= (int) (balance/danBiZongJia);
     }
 
 }

@@ -6,6 +6,7 @@
     android:background="#F6F6F6">
 
     <ImageView
+        android:id="@+id/tixian_dialog_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/close"
@@ -19,7 +20,12 @@
         app:tl_textSelectColor="#FF3F00"
         app:tl_textUnselectColor="#666666"
         app:tl_underline_color="#E5E5E5"
-        app:tl_underline_height="1dp"/>
+        app:tl_underline_height="1dp"
+        app:tl_indicator_color="#FF3F00"
+        app:tl_indicator_gravity="BOTTOM"
+        app:tl_indicator_height="1dp"
+        app:tl_indicator_width="60dp"
+        app:tl_textsize="@dimen/textSize_16"/>
 
     <View
         android:layout_width="match_parent"
@@ -95,20 +101,38 @@
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
         <RadioButton
+            android:id="@+id/tixian_dialog_rbtn_100"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="100"/>
+            android:text="100"
+            android:background="@drawable/radiobtn_background_orange"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
         <RadioButton
+            android:id="@+id/tixian_dialog_rbtn_50"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="50"/>
+            android:text="50"
+            android:background="@drawable/radiobtn_background_orange"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
         <RadioButton
+            android:id="@+id/tixian_dialog_rbtn_1"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="基础合约"/>
+            android:text="基础合约"
+            android:background="@drawable/radiobtn_background_orange"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
     </RadioGroup>
 
     <View
@@ -126,45 +150,83 @@
         android:paddingTop="15dp"
         android:paddingLeft="10dp">
         <TextView
+            android:id="@+id/tixian_dialog_buycount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="手数:  "
+            android:text="@string/xiadan_dialog_buycount"
             android:textColor="#333333"
             android:textSize="@dimen/textSize_15"/>
         <TextView
+            android:id="@+id/tixian_dialog_maxcount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="50"
-            android:textColor="#333333"
-            android:textSize="@dimen/textSize_15"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(每手0.00 ， 最多可买100手)"
+            android:text="@string/xiadan_dialog_maxcount"
             android:textColor="#666666"
             android:textSize="@dimen/textSize_12"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
     <RelativeLayout
-
+        android:id="@+id/tixian_dialog_panel_edittext"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/tixian_dialog_panel_shoushu">
         <EditText
+            android:id="@+id/tixian_dialog_edittext"
             android:layout_width="70dp"
             android:layout_height="match_parent"
-            android:text="50"
             android:textSize="@dimen/textSize_14"
             android:textColor="#333333"
             android:background="@drawable/edittext_background_white_corners_hollow"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="10dp"
+            android:inputType="number"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#E5E5E5"
-        android:layout_below="@+id/tixian_dialog_panel_shoushu"/>
+        android:layout_below="@+id/tixian_dialog_panel_edittext"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/tixian_dialog_panel_edittext"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tixian_dialog_buyprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.00"
+            android:textColor="@color/background_button_orange"
+            android:textSize="@dimen/textSize_18"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:drawableRight="@mipmap/voucher_07"
+            android:drawablePadding="5dp"/>
+        <TextView
+            android:id="@+id/tixian_dialog_serverprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/xiadan_dialog_shouxufei"
+            android:textSize="@dimen/textSize_12"
+            android:textColor="#666666"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:id="@+id/tixian_dialog_xiadan"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="#FF9800"
+            android:text="下单"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textSize_24"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
