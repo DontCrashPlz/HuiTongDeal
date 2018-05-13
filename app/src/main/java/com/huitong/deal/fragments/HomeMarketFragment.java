@@ -88,6 +88,7 @@ public class HomeMarketFragment extends BaseFragment {
                                         mAdapter.notifyDataSetChanged();
                                     }else {
                                         mAdapter.setEmptyView(R.layout.layout_recycler_empty);
+                                        clearNetWork();
                                     }
                                 }
                             }));

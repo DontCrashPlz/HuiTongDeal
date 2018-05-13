@@ -72,6 +72,16 @@ public class TiXianActivity extends BaseActivity {
         mNameEt = (EditText) findViewById(R.id.tixian_et_name);
         mBankCardEt = (EditText) findViewById(R.id.tixian_et_bankcard);
         mMoneyEt = (EditText) findViewById(R.id.tixian_et_money);
+        if (MyApplication.appUser!= null){
+            if (MyApplication.appUser.getUserinfo()!= null){
+                float availableBalance= MyApplication.appUser.getUserinfo().getAvailablebalance();
+                mMoneyEt.setHint(String.format(getString(R.string.hint_withdraw_deposit), String.valueOf(availableBalance)));
+            }else {
+                mMoneyEt.setHint("请输入提现金额");
+            }
+        }else {
+            mMoneyEt.setHint("请输入提现金额");
+        }
         mCommitBtn = (Button) findViewById(R.id.tixian_btn_commit);
         mCommitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +126,8 @@ public class TiXianActivity extends BaseActivity {
                                 showShortToast(stringHttpResult.getDescription());
                             }else if ("success".equals(stringHttpResult.getStatus())){
                                 //todo 提现成功
+                                showShortToast("提现成功");
+                                finish();
                             }
                         }
                     }));
@@ -131,6 +143,7 @@ public class TiXianActivity extends BaseActivity {
 
         final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);
         final TextView tipTv= view.findViewById(R.id.paypass_dialog_tv_tip);
+        tipTv.setText(String.format(getString(R.string.hint_tixian_money), money));
 
         // 监听
         view.findViewById(R.id.paypass_dialog_btn_cancel).setOnClickListener(new View.OnClickListener() {

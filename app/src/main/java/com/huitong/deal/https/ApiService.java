@@ -1,8 +1,10 @@
 package com.huitong.deal.https;
 
+import com.huitong.deal.beans.BillEntity;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
+import com.huitong.deal.beans.ChongZhiEntity;
 import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
@@ -105,4 +107,13 @@ public interface ApiService {
 
     @GET("/api/common/user/isExistUserName")
     Observable<HttpResult<String>> isExistUserName(@Query("userName") String userName);
+
+    @GET("/api/stm/precharge/userPrecharge")
+    Observable<HttpResult<ChongZhiEntity>> chongZhi(@Query("appToken") String appToken, @Query("amount") String amount);
+
+    /*******************账单*****************/
+    @GET("/api/stm/user/account")
+    Observable<HttpResult<ListDataEntity<BillEntity, ChiCangHistoryQueryParam>>> getBill(@QueryMap Map<String, String> params);
+    @GET("/api/stm/user/account/getBillDetail")
+    Observable<HttpResult<BillEntity>> getBillDetail(@Query("appToken") String appToken, @Query("id") String id);
 }

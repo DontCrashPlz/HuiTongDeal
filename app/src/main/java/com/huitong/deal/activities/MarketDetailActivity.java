@@ -82,6 +82,8 @@ public class MarketDetailActivity extends BaseActivity {
     private ArrayList<LeverageEntity> mLeverageList= new ArrayList<>();
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
+    private String appToken;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,16 +108,16 @@ public class MarketDetailActivity extends BaseActivity {
 
         initUI();
 
-        final String token= MyApplication.getInstance().getToken();
-        loadLeverageData(token, stock_code);
+        appToken= MyApplication.getInstance().getToken();
+        loadLeverageData(appToken, stock_code);
 
-        if (token!= null && token.length()> 0){
+        if (appToken!= null && appToken.length()> 0){
             addNetWork(
                     Observable.interval(1, TimeUnit.SECONDS)
                             .flatMap(new Function<Long, ObservableSource<HttpResult<CommodityDetailEntity>>>() {
                                 @Override
                                 public ObservableSource<HttpResult<CommodityDetailEntity>> apply(Long aLong) throws Exception {
-                                    return Network.getInstance().getCommodityDetail(token, stockid);
+                                    return Network.getInstance().getCommodityDetail(appToken, stockid);
                                 }
                             })
                             .filter(new Predicate<HttpResult<CommodityDetailEntity>>() {
@@ -137,7 +139,6 @@ public class MarketDetailActivity extends BaseActivity {
                                 }
                             }));
         }
-
 
         changeChart(0);
 

@@ -1,8 +1,10 @@
 package com.huitong.deal.https;
 
+import com.huitong.deal.beans.BillEntity;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
+import com.huitong.deal.beans.ChongZhiEntity;
 import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
@@ -479,6 +481,41 @@ public class Network {
      */
     public Observable<HttpResult<String>> isExistUserName(String userName){
         return apiService.isExistUserName(userName);
+    }
+
+    /**
+     * 充值
+     * @param appToken
+     * @param amount
+     * @return
+     */
+    public Observable<HttpResult<ChongZhiEntity>> chongZhi(String appToken, String amount){
+        return apiService.chongZhi(appToken, amount);
+    }
+
+    /**
+     * 获取账单列表
+     * @param appToken
+     * @param pageNumber
+     * @return
+     */
+    public Observable<HttpResult<ListDataEntity<BillEntity, ChiCangHistoryQueryParam>>> getBill(String appToken, int pageNumber){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("billType", "-1");
+        params.put("pageSize", "20");
+        params.put("pageNumber", String.valueOf(pageNumber));
+        return apiService.getBill(params);
+    }
+
+    /**
+     * 获取账单详情
+     * @param appToken
+     * @param id
+     * @return
+     */
+    public Observable<HttpResult<BillEntity>> getBillDetail(String appToken, String id){
+        return apiService.getBillDetail(appToken, id);
     }
 
 }

@@ -45,12 +45,12 @@ public class UserInfoEntity {
     private String lastloginip;
     private String logincount;
     private int headid;
-    private int availablebalance;
+    private float availablebalance;
     private int gold;
-    private int balance;
+    private float balance;
 
     private String cardfaceid;
-    private int integral;
+    private float integral;
     private String carbackid;
     private boolean deletestatus;
     private int id;
@@ -116,11 +116,11 @@ public class UserInfoEntity {
         this.headid = headid;
     }
 
-    public int getAvailablebalance() {
+    public float getAvailablebalance() {
         return availablebalance;
     }
 
-    public void setAvailablebalance(int availablebalance) {
+    public void setAvailablebalance(float availablebalance) {
         this.availablebalance = availablebalance;
     }
 
@@ -132,11 +132,11 @@ public class UserInfoEntity {
         this.gold = gold;
     }
 
-    public int getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 
@@ -148,11 +148,11 @@ public class UserInfoEntity {
         this.cardfaceid = cardfaceid;
     }
 
-    public int getIntegral() {
+    public float getIntegral() {
         return integral;
     }
 
-    public void setIntegral(int integral) {
+    public void setIntegral(float integral) {
         this.integral = integral;
     }
 

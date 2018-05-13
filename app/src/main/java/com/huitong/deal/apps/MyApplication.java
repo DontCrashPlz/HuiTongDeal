@@ -2,6 +2,7 @@ package com.huitong.deal.apps;
 
 import android.widget.Toast;
 
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.UserInfoEntity;
 import com.zheng.zchlibrary.apps.BaseApplication;
 import com.zheng.zchlibrary.utils.LogUtil;
@@ -101,21 +102,17 @@ public class MyApplication extends BaseApplication {
     }
 
     /********************** UserEntity相关方法 *************************/
-//    //全局UserEntity
-//    public static UserInfoEntity appUser;
-//    //是否存在全局UserEntity对象
-//    public boolean isHadUser(){
-//        if (appUser== null){
-//            return false;
-//        }
-//        if (appUser.getUserid()!= null && appUser.getUserid().length()>0){
-//            return true;
-//        }
-//        return false;
-//    }
-//    //根据token加载用户信息
-//    private void loadUser(String token){
-//
-//    }
+    //全局UserEntity
+    public static UserInfoDataEntity appUser;
+    //是否存在全局UserEntity对象
+    public boolean isHadUser(){
+        if (appUser== null){
+            return false;
+        }
+        if (appUser.getId()> 0){
+            return true;
+        }
+        return false;
+    }
 
 }

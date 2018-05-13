@@ -7,12 +7,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.WindowManager;
 
 import com.huitong.deal.R;
+import com.huitong.deal.apps.MyApplication;
+import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.fragments.ForgetPasswordFragment;
 import com.huitong.deal.fragments.LoginWithPasswordFragment;
 import com.huitong.deal.fragments.LoginWithVerificationFragment;
 import com.huitong.deal.fragments.SignInFragment;
 import com.huitong.deal.fragments.SignInSuccessFragment;
+import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Zheng on 2018/4/12.
@@ -37,6 +44,24 @@ public class LoginActivity extends BaseActivity {
         manager.beginTransaction()
                 .replace(R.id.fragment, LoginWithPasswordFragment.newInstance(""))
                 .commit();
+
+        String appToken= MyApplication.getInstance().getToken();
+        if (appToken!= null && appToken.length()> 0){
+            addNetWork(Network.getInstance().getUserInfo(appToken)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
+                        @Override
+                        public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
+                            if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
+                                showShortToast(userInfoDataEntityHttpResult.getDescription());
+                            }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
+                                if (userInfoDataEntityHttpResult.getData()!= null)
+                                    MyApplication.appUser= userInfoDataEntityHttpResult.getData();
+                            }
+                        }
+                    }));
+        }
 
     }
 

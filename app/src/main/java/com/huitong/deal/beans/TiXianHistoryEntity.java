@@ -5,20 +5,20 @@ package com.huitong.deal.beans;
  */
 
 public class TiXianHistoryEntity {
-    private int after_balance;
+    private float after_balance;
     private String cach_account;
     private String cach_bark_branch;
     private String cach_user_name;
     private String cach_bark;
     private String refuse_reason;
-    private int service_fee;
-    private int before_balance;
+    private float service_fee;
+    private float before_balance;
     private String remark;
     private String cach_no;
     private String pay_time;
     private String pay_trade_no;
     private String cach_time;
-    private int cach_amount;
+    private float cach_amount;
     private int user_id;
     private String addtime;
     private int admin_id;
@@ -27,11 +27,11 @@ public class TiXianHistoryEntity {
     private int id;
     private int status;
 
-    public int getAfter_balance() {
+    public float getAfter_balance() {
         return after_balance;
     }
 
-    public void setAfter_balance(int after_balance) {
+    public void setAfter_balance(float after_balance) {
         this.after_balance = after_balance;
     }
 
@@ -75,19 +75,19 @@ public class TiXianHistoryEntity {
         this.refuse_reason = refuse_reason;
     }
 
-    public int getService_fee() {
+    public float getService_fee() {
         return service_fee;
     }
 
-    public void setService_fee(int service_fee) {
+    public void setService_fee(float service_fee) {
         this.service_fee = service_fee;
     }
 
-    public int getBefore_balance() {
+    public float getBefore_balance() {
         return before_balance;
     }
 
-    public void setBefore_balance(int before_balance) {
+    public void setBefore_balance(float before_balance) {
         this.before_balance = before_balance;
     }
 
@@ -131,11 +131,11 @@ public class TiXianHistoryEntity {
         this.cach_time = cach_time;
     }
 
-    public int getCach_amount() {
+    public float getCach_amount() {
         return cach_amount;
     }
 
-    public void setCach_amount(int cach_amount) {
+    public void setCach_amount(float cach_amount) {
         this.cach_amount = cach_amount;
     }
 

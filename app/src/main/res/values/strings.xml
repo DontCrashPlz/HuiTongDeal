@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">HuiTong Deal</string>
     
-    <string name="hint_withdraw_deposit">最多提现%1$s</string>
+    <string name="hint_withdraw_deposit">最多提现 %1$s</string>
+    <string name="hint_tixian_money">提现金额 %1s$</string>
+
 </resources>

@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +15,7 @@ import com.zheng.zchlibrary.apps.BaseActivity;
  * Created by Zheng on 2018/4/16.
  */
 
-public class TiXianHistoryActivity extends BaseActivity {
+public class ChongZhiHistoryActivity extends BaseActivity {
 
     private ImageView mBackIv;
     private TextView mTitleTv;

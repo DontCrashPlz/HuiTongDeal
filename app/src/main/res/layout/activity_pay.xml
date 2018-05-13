@@ -23,6 +23,7 @@
             android:textSize="@dimen/textSize_16"
             android:paddingLeft="10dp"/>
         <EditText
+            android:id="@+id/chongzhi_money"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -47,7 +48,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/background_black_light"
+        android:id="@+id/chongzhi_kuajie"
+        android:background="@drawable/recycler_background_black_selector"
+        android:clickable="true"
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -86,7 +89,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/background_black_light"
+        android:id="@+id/chongzhi_alipay"
+        android:background="@drawable/recycler_background_black_selector"
+        android:clickable="true"
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -125,7 +130,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/background_black_light"
+        android:id="@+id/chongzhi_weixin"
+        android:background="@drawable/recycler_background_black_selector"
+        android:clickable="true"
         android:layout_marginTop="1dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

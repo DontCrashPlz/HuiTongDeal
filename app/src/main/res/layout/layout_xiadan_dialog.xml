@@ -146,14 +146,25 @@
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:layout_below="@+id/tixian_dialog_panel_shoushu">
-
-
-
+        <EditText
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:text="50"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="#333333"
+            android:background="@drawable/edittext_background_white_corners_hollow"
+            android:layout_marginLeft="10dp"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E5E5E5"
+        android:layout_below="@+id/tixian_dialog_panel_shoushu"/>
 
 </RelativeLayout>

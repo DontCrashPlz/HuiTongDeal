@@ -38,10 +38,10 @@ public class MarketListAdapter extends BaseQuickAdapter<CommodityDetailEntity, M
         helper.mNameTv.setText(item.getStock_name());
         helper.mPriceTv.setText(String.valueOf(item.getNow_price()));
         helper.mFloatTv.setText(String.valueOf(item.getFloat_rate()));
-        if (item.getFloat_rate()> 0F){
-            helper.mFloatTv.setTextColor(Color.rgb(255, 63, 0));
-        }else {
+        if (item.getFloat_rate()< 0){
             helper.mFloatTv.setTextColor(Color.rgb(0, 246, 1));
+        }else {
+            helper.mFloatTv.setTextColor(Color.rgb(255, 63, 0));
         }
     }
 

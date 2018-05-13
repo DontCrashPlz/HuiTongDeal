@@ -11,11 +11,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.activities.BillActivity;
+import com.huitong.deal.activities.ChongZhiActivity;
 import com.huitong.deal.activities.LoginActivity;
 import com.huitong.deal.activities.LoginPasswordActivity;
 import com.huitong.deal.activities.PayPasswordActivity;
 import com.huitong.deal.activities.RealNameActivity;
 import com.huitong.deal.activities.TiXianActivity;
+import com.huitong.deal.apps.MyApplication;
 import com.zheng.zchlibrary.apps.BaseFragment;
 
 /**
@@ -31,6 +34,8 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         instance.setArguments(args);
         return instance;
     }
+
+    private TextView mBillTv;
 
     private TextView mPropertyTv;
     private TextView mBalanceTv;
@@ -54,9 +59,23 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void initUI(View view) {
+
+        mBillTv= view.findViewById(R.id.toolbar_right_icon);
+        mBillTv.setOnClickListener(this);
+
         mPropertyTv= view.findViewById(R.id.home_mine_property);
         mBalanceTv= view.findViewById(R.id.home_mine_balance);
         mSecurityTv= view.findViewById(R.id.home_mine_security);
+        if (MyApplication.appUser!= null){
+            if (MyApplication.appUser.getUserinfo()!= null){
+                float availableBalance= MyApplication.appUser.getUserinfo().getAvailablebalance();
+                float integral= MyApplication.appUser.getUserinfo().getIntegral();
+                mPropertyTv.setText(String.valueOf(availableBalance + integral));
+                mBalanceTv.setText(String.valueOf(availableBalance));
+                mSecurityTv.setText(String.valueOf(integral));
+            }
+        }
+
         mTiXianBtn= view.findViewById(R.id.home_mine_btn_tixian);
         mTiXianBtn.setOnClickListener(this);
         mChongZhiBtn= view.findViewById(R.id.home_mine_btn_chongzhi);
@@ -77,10 +96,14 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         int vId= v.getId();
         switch (vId){
+            case R.id.toolbar_right_icon:
+                startActivity(new Intent(getRealContext(), BillActivity.class));
+                break;
             case R.id.home_mine_btn_tixian:
                 startActivity(new Intent(getRealContext(), TiXianActivity.class));
                 break;
             case R.id.home_mine_btn_chongzhi:
+                startActivity(new Intent(getRealContext(), ChongZhiActivity.class));
                 break;
             case R.id.home_mine_rly_realname:
                 startActivity(new Intent(getRealContext(), RealNameActivity.class));

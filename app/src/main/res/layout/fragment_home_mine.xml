@@ -67,7 +67,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="账户余额"
+                    android:text="购物券"
                     android:textSize="@dimen/textSize_13"
                     android:textColor="#60FFFFFF"
                     android:layout_below="@+id/home_mine_balance"
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="证券资产"
+                    android:text="提货券"
                     android:textSize="@dimen/textSize_13"
                     android:textColor="#60FFFFFF"
                     android:layout_below="@+id/home_mine_security"
