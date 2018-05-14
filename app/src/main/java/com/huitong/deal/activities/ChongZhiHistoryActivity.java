@@ -8,20 +8,38 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.huitong.deal.R;
+import com.huitong.deal.adapters.BillListAdapter;
+import com.huitong.deal.adapters.ChongZhiListAdapter;
+import com.huitong.deal.apps.MyApplication;
+import com.huitong.deal.beans.BillEntity;
+import com.huitong.deal.beans.ChiCangHistoryQueryParam;
+import com.huitong.deal.beans.ChongZhiHistoryEntity;
+import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.ListDataEntity;
+import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Zheng on 2018/4/16.
  */
 
-public class ChongZhiHistoryActivity extends BaseActivity {
+public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private ImageView mBackIv;
     private TextView mTitleTv;
     private TextView mFunctionTv;
 
     private RecyclerView mRecycler;
+    private ChongZhiListAdapter mAdapter;
+
+    private String appToken;
+    private int currentPage= 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,5 +65,48 @@ public class ChongZhiHistoryActivity extends BaseActivity {
 
         mRecycler= (RecyclerView) findViewById(R.id.tixian_history_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
+        mAdapter= new ChongZhiListAdapter(R.layout.item_pay_recycler_green);
+        mAdapter.setOnLoadMoreListener(this, mRecycler);
+        mRecycler.setAdapter(mAdapter);
+
+        appToken= MyApplication.getInstance().getToken();
+
+        requestNetData();
+    }
+
+    private void requestNetData(){
+        if (appToken!= null && appToken.length()> 0){
+            addNetWork(Network.getInstance().getChongZhiHistory(appToken, currentPage)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>>() {
+                        @Override
+                        public void accept(HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>> listDataEntityHttpResult) throws Exception {
+                            if ("error".equals(listDataEntityHttpResult.getStatus())){
+                                mAdapter.loadMoreFail();
+                                showShortToast(listDataEntityHttpResult.getDescription());
+                            }else if ("success".equals(listDataEntityHttpResult.getStatus())){
+                                if (listDataEntityHttpResult.getData().getList().size()> 0){
+                                    mAdapter.addData(listDataEntityHttpResult.getData().getList());
+                                    mAdapter.loadMoreComplete();
+                                }else {
+                                    mAdapter.loadMoreFail();
+                                    if (currentPage== 1){
+                                        mAdapter.setEmptyView(R.layout.layout_recycler_empty);
+                                    }
+                                }
+                                if (listDataEntityHttpResult.getData().isLast()){
+                                    mAdapter.loadMoreEnd();
+                                }
+                            }
+                        }
+                    }));
+        }
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        currentPage+= 1;
+        requestNetData();
     }
 }

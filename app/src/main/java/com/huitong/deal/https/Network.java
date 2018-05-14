@@ -7,6 +7,7 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.ChongZhiEntity;
+import com.huitong.deal.beans.ChongZhiHistoryEntity;
 import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
@@ -15,6 +16,9 @@ import com.huitong.deal.beans.KLineEntity;
 import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
+import com.huitong.deal.beans.PayEntity;
+import com.huitong.deal.beans.PayStatusEntity;
+import com.huitong.deal.beans.PayTypeEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
 import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
@@ -28,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -404,8 +409,8 @@ public class Network {
      * @param appToken
      * @return
      */
-    public Observable<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>> getTiXianHistory(String appToken){
-        return apiService.getTiXianHistory(appToken);
+    public Observable<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>> getTiXianHistory(String appToken, int pageNumber){
+        return apiService.getTiXianHistory(appToken, String.valueOf(pageNumber));
     }
 
     /**
@@ -497,6 +502,20 @@ public class Network {
     }
 
     /**
+     * 获取充值列表
+     * @param appToken
+     * @param pageNumber
+     * @return
+     */
+    public Observable<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>> getChongZhiHistory(String appToken, int pageNumber){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("pageSize", "20");
+        params.put("splitpage", String.valueOf(pageNumber));
+        return apiService.getChongZhiHistory(params);
+    }
+
+    /**
      * 获取账单列表
      * @param appToken
      * @param pageNumber
@@ -519,6 +538,47 @@ public class Network {
      */
     public Observable<HttpResult<BillEntity>> getBillDetail(String appToken, String id){
         return apiService.getBillDetail(appToken, id);
+    }
+
+    /**
+     * 获取支付列表
+     * @param appToken
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<PayTypeEntity>>> getPayList(String appToken){
+        return apiService.getPayList(appToken, "app");
+    }
+
+    /**
+     * 请求支付
+     * @param appToken
+     * @param orderNo
+     * @param payType
+     * @return
+     */
+    public Observable<HttpResult<PayEntity>> requestPay(String appToken, String orderNo, String payType){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("orderNo", orderNo);
+        params.put("orderType", "precharge");
+        params.put("payType", payType);
+        params.put("terminalTyoe", "app");
+        return apiService.requestPay(params);
+    }
+
+    /**
+     * 支付状态
+     * @param appToken
+     * @param orderNo
+     * @return
+     */
+    public Observable<HttpResult<PayStatusEntity>> queryPay(String appToken, String orderNo){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("orderNo", orderNo);
+        params.put("orderType", "precharge");
+        params.put("terminalTyoe", "app");
+        return apiService.queryPay(params);
     }
 
 }

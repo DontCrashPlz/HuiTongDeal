@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.zheng.zchlibrary.interfaces.*;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.utils.NetworkUtil;
 import com.zheng.zchlibrary.utils.ToastUtils;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -59,10 +61,19 @@ public class BaseFragment extends Fragment implements IBaseView {
     }
 
     public void addNetWork(Disposable disposable){
-        if (compositeDisposable== null){
-            compositeDisposable= new CompositeDisposable();
+        if (!NetworkUtil.isNetworkAvailable(getRealContext())){
+            showShortToast("网络不可用");
+            return;
         }
-        compositeDisposable.add(disposable);
+        try {
+            if (compositeDisposable== null){
+                compositeDisposable= new CompositeDisposable();
+            }
+            compositeDisposable.add(disposable);
+        } catch (Exception e){
+            Log.e("exception", e.toString());
+            showShortToast("网络异常");
+        }
     }
 
     public void clearNetWork(){

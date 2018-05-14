@@ -1,10 +1,12 @@
 package com.huitong.deal.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by Zheng on 2018/5/6.
  */
 
-public class TiXianHistoryEntity {
+public class TiXianHistoryEntity implements Serializable {
     private float after_balance;
     private String cach_account;
     private String cach_bark_branch;

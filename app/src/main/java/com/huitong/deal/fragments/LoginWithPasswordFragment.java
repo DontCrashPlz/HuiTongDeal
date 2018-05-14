@@ -18,6 +18,9 @@ import com.huitong.deal.activities.LoginActivity;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LoginEntity;
+import com.huitong.deal.https.BaseObserver;
+import com.huitong.deal.https.ErrorTransformer;
+import com.huitong.deal.https.ExceptionHandle;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
@@ -127,21 +130,21 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
                         .subscribe(new Consumer<HttpResult<LoginEntity>>() {
                             @Override
                             public void accept(HttpResult<LoginEntity> loginEntityHttpResult) throws Exception {
-                                if ("error".equals(loginEntityHttpResult.getStatus())){
+                                if ("error".equals(loginEntityHttpResult.getStatus())) {
                                     showShortToast(loginEntityHttpResult.getDescription());
-                                }else if ("success".equals(loginEntityHttpResult.getStatus())){
-                                    String token= loginEntityHttpResult.getData().getApptoken();
+                                } else if ("success".equals(loginEntityHttpResult.getStatus())) {
+                                    String token = loginEntityHttpResult.getData().getApptoken();
                                     Log.e("token", token);
-                                    if (token== null || token.length()< 1){
+                                    if (token == null || token.length() < 1) {
                                         showShortToast("登录错误：token无效");
-                                    }else {
+                                    } else {
                                         SharedPrefUtils.put(getRealContext(), SP_TAG_USERNAME, userName);
-                                        if (mRememberCb.isChecked()){
+                                        if (mRememberCb.isChecked()) {
                                             SharedPrefUtils.put(getRealContext(), SP_TAG_REMEMBER, true);
                                             SharedPrefUtils.put(getRealContext(), SP_TAG_PASSWORD, password);
-                                        }else {
+                                        } else {
                                             SharedPrefUtils.put(getRealContext(), SP_TAG_REMEMBER, false);
-                                            if (SharedPrefUtils.contains(getRealContext(), SP_TAG_PASSWORD)){
+                                            if (SharedPrefUtils.contains(getRealContext(), SP_TAG_PASSWORD)) {
                                                 SharedPrefUtils.remove(getContext(), SP_TAG_PASSWORD);
                                             }
                                         }

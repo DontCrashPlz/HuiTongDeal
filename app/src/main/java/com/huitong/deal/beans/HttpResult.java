@@ -42,6 +42,13 @@ public class HttpResult<T> {
         this.status = status;
     }
 
+    public boolean isSuccess(){
+        if ("success".equals(getStatus())){
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "HttpResult{" +

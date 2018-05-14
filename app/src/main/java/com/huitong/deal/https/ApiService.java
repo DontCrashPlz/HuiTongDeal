@@ -5,6 +5,7 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.ChongZhiEntity;
+import com.huitong.deal.beans.ChongZhiHistoryEntity;
 import com.huitong.deal.beans.CommitOrderEntity;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
@@ -13,6 +14,9 @@ import com.huitong.deal.beans.KLineEntity;
 import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.beans.LoginEntity;
+import com.huitong.deal.beans.PayEntity;
+import com.huitong.deal.beans.PayStatusEntity;
+import com.huitong.deal.beans.PayTypeEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
 import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
@@ -82,7 +86,7 @@ public interface ApiService {
     Observable<HttpResult<String>> tiXian(@QueryMap Map<String, String> params);
 
     @GET("/api/stm/cach/queryCach")
-    Observable<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>> getTiXianHistory(@Query("appToken") String appToken);
+    Observable<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>> getTiXianHistory(@Query("appToken") String appToken, @Query("pageNumber") String pageNumber);
 
     @GET("/api/stm/cach/getCachDetail")
     Observable<HttpResult<TiXianHistoryEntity>> getTiXianHistoryDetail(@Query("appToken") String appToken, @Query("id") String id);
@@ -108,12 +112,23 @@ public interface ApiService {
     @GET("/api/common/user/isExistUserName")
     Observable<HttpResult<String>> isExistUserName(@Query("userName") String userName);
 
+    /*******************充值*****************/
     @GET("/api/stm/precharge/userPrecharge")
     Observable<HttpResult<ChongZhiEntity>> chongZhi(@Query("appToken") String appToken, @Query("amount") String amount);
+    @GET("/api/stm/precharge/queryPrecharge")
+    Observable<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>> getChongZhiHistory(@QueryMap Map<String, String> params);
 
     /*******************账单*****************/
     @GET("/api/stm/user/account")
     Observable<HttpResult<ListDataEntity<BillEntity, ChiCangHistoryQueryParam>>> getBill(@QueryMap Map<String, String> params);
     @GET("/api/stm/user/account/getBillDetail")
     Observable<HttpResult<BillEntity>> getBillDetail(@Query("appToken") String appToken, @Query("id") String id);
+
+    /*******************支付*****************/
+    @GET("/api/pay/getPayList")
+    Observable<HttpResult<ArrayList<PayTypeEntity>>> getPayList(@Query("appToken") String appToken, @Query("terminalType") String terminalType);
+    @GET("/api/pay/requestPay")
+    Observable<HttpResult<PayEntity>> requestPay(@QueryMap Map<String, String> params);
+    @GET("/api/pay/queryPay")
+    Observable<HttpResult<PayStatusEntity>> queryPay(@QueryMap Map<String, String> params);
 }
