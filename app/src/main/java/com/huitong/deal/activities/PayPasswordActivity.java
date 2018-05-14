@@ -25,6 +25,7 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -93,6 +94,12 @@ public class PayPasswordActivity extends BaseActivity {
                                     mGetVerificationBtn.setClickable(false);
                                 }
                             }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
+                            }
                         }));
             }
         });
@@ -142,6 +149,12 @@ public class PayPasswordActivity extends BaseActivity {
                             }else if ("success".equals(stringHttpResult.getStatus())){
                                 showSuccessDialog(getRealContext());
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
         }

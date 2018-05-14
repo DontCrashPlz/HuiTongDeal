@@ -25,6 +25,7 @@ import com.huitong.deal.beans.PayEntity;
 import com.huitong.deal.beans.PayTypeEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import java.util.ArrayList;
@@ -138,6 +139,12 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
                                 }
                             }
                         }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
+                        }
                     }));
         }
     }
@@ -181,7 +188,8 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            showShortToast(throwable.toString());
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
         }

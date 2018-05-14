@@ -20,6 +20,7 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -91,6 +92,12 @@ public class LoginWithVerificationFragment extends BaseFragment implements View.
                                     mGetVerificationBtn.setClickable(false);
                                 }
                             }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
+                            }
                         }));
                 break;
             case R.id.login_btn_login:
@@ -122,6 +129,12 @@ public class LoginWithVerificationFragment extends BaseFragment implements View.
                                         getActivity().finish();
                                     }
                                 }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
                             }
                         }));
                 break;

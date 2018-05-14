@@ -20,6 +20,7 @@ import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -129,6 +130,12 @@ public class TiXianActivity extends BaseActivity {
                                 showShortToast("提现成功");
                                 finish();
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
         }

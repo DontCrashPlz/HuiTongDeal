@@ -33,6 +33,7 @@ import com.huitong.deal.beans.TimeLineDataEntity;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -144,15 +145,15 @@ public class KLineChartFragment extends BaseFragment {
         xAxis.setTextSize(9);//设置字体
         xAxis.setTextColor(Color.WHITE);//设置字体颜色
         xAxis.setAvoidFirstLastClipping(true);//图表将避免第一个和最后一个标签条目被减掉在图表或屏幕的边缘
-        xAxis.setValueFormatter(new IAxisValueFormatter() {
-
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                DateFormat dateFormat = new SimpleDateFormat("MM-dd");
-                Date date= new Date((long) value);
-                return dateFormat.format(date);
-            }
-        });
+//        xAxis.setValueFormatter(new IAxisValueFormatter() {
+//
+//            @Override
+//            public String getFormattedValue(float value, AxisBase axis) {
+//                DateFormat dateFormat = new SimpleDateFormat("MM-dd");
+//                Date date= new Date((long) value);
+//                return dateFormat.format(date);
+//            }
+//        });
         xAxis.setLabelCount(5, true);
 
         YAxis leftAxis = mCandleChart.getAxisLeft();
@@ -193,7 +194,7 @@ public class KLineChartFragment extends BaseFragment {
                                             float time= date.getTime();
                                             yVals1.add(
                                                     new CandleEntry(
-                                                            time,
+                                                            i,
                                                             Float.parseFloat(list.get(3)),
                                                             Float.parseFloat(list.get(4)),
                                                             Float.parseFloat(list.get(1)),
@@ -218,7 +219,13 @@ public class KLineChartFragment extends BaseFragment {
                                         mCandleChart.invalidate();
                                     }
                                 }
-                            }));
+                            }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        LogUtil.d("throwable", throwable.toString());
+                        showShortToast("网络请求失败");
+                    }
+                }));
 //        if (token!= null && token.length()> 0){
 //            addNetWork(
 //                    Observable.interval(5, TimeUnit.SECONDS)

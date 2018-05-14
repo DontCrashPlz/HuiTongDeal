@@ -13,6 +13,7 @@ import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -129,6 +130,12 @@ public class ChiCangDetailActivity extends BaseActivity {
                                         finish();
                                     }
                                 }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    LogUtil.d("throwable", throwable.toString());
+                                    showShortToast("网络请求失败");
+                                }
                             }));
                 }
             }
@@ -159,6 +166,12 @@ public class ChiCangDetailActivity extends BaseActivity {
                                     if (chiCangEntityHttpResult.getData()!= null){
                                         refreshUI(chiCangEntityHttpResult.getData());
                                     }
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    LogUtil.d("throwable", throwable.toString());
+                                    showShortToast("网络请求失败");
                                 }
                             }));
         }

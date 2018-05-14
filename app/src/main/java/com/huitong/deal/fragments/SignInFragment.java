@@ -21,6 +21,7 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
@@ -88,6 +89,12 @@ public class SignInFragment extends BaseFragment {
                                     mGetVerificationBtn.setClickable(false);
                                 }
                             }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
+                            }
                         }));
             }
         });
@@ -147,6 +154,12 @@ public class SignInFragment extends BaseFragment {
                                 }else if ("success".equals(stringHttpResult.getStatus())){
                                     ((LoginActivity)getActivity()).changeFragment(LoginActivity.FRAGMENT_TAG_SIGNSUCCESS);
                                 }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
                             }
                         }));
 

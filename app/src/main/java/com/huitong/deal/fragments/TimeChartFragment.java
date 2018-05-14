@@ -23,6 +23,7 @@ import com.huitong.deal.beans.TimeLineDataEntity;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -143,8 +144,13 @@ public class TimeChartFragment extends BaseFragment {
                             }
                         }
                     }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        LogUtil.d("throwable", throwable.toString());
+                        showShortToast("网络请求失败");
+                    }
                 }));
-
 
         return mView;
     }

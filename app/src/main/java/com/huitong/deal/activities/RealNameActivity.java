@@ -14,6 +14,7 @@ import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -113,6 +114,12 @@ public class RealNameActivity extends BaseActivity {
                                 showShortToast("认证完成");
                                 finish();
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
                 }

@@ -15,6 +15,7 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -71,6 +72,12 @@ public class ForgetPasswordFragment extends BaseFragment {
                                     mGetVerificationBtn.setClickable(false);
                                 }
                             }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
+                            }
                         }));
             }
         });
@@ -105,6 +112,12 @@ public class ForgetPasswordFragment extends BaseFragment {
                                     showShortToast("密码已重置");
                                     ((LoginActivity)getActivity()).changeFragment(LoginActivity.FRAGMENT_TAG_PASSWORD);
                                 }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
                             }
                         }));
             }

@@ -17,6 +17,7 @@ import com.huitong.deal.beans.PayStatusEntity;
 import com.huitong.deal.beans.PayTypeEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import java.util.ArrayList;
 
@@ -120,6 +121,12 @@ public class PayActivity extends BaseActivity {
                                     mButton2.setBackgroundColor(Color.GRAY);
                                 }
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
         }

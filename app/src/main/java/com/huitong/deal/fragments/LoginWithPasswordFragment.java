@@ -23,6 +23,7 @@ import com.huitong.deal.https.ErrorTransformer;
 import com.huitong.deal.https.ExceptionHandle;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -153,6 +154,12 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
                                         getActivity().finish();
                                     }
                                 }
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+                                LogUtil.d("throwable", throwable.toString());
+                                showShortToast("网络请求失败");
                             }
                         }));
                 break;

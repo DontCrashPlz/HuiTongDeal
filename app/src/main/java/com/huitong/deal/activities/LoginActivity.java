@@ -45,24 +45,6 @@ public class LoginActivity extends BaseActivity {
                 .replace(R.id.fragment, LoginWithPasswordFragment.newInstance(""))
                 .commit();
 
-        String appToken= MyApplication.getInstance().getToken();
-        if (appToken!= null && appToken.length()> 0){
-            addNetWork(Network.getInstance().getUserInfo(appToken)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
-                        @Override
-                        public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
-                            if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
-                                showShortToast(userInfoDataEntityHttpResult.getDescription());
-                            }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
-                                if (userInfoDataEntityHttpResult.getData()!= null)
-                                    MyApplication.appUser= userInfoDataEntityHttpResult.getData();
-                            }
-                        }
-                    }));
-        }
-
     }
 
     public void changeFragment(int fragmentTag){

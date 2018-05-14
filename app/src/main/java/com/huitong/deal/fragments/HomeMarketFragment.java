@@ -21,6 +21,7 @@ import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -90,6 +91,12 @@ public class HomeMarketFragment extends BaseFragment {
                                         mAdapter.setEmptyView(R.layout.layout_recycler_empty);
                                         clearNetWork();
                                     }
+                                }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    LogUtil.d("throwable", throwable.toString());
+                                    showShortToast("网络请求失败");
                                 }
                             }));
         }

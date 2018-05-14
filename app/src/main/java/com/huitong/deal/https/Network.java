@@ -2,6 +2,7 @@ package com.huitong.deal.https;
 
 import android.util.Log;
 
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.BillEntity;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
@@ -24,12 +25,15 @@ import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
+import com.zheng.zchlibrary.utils.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Response;
@@ -98,6 +102,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<LoginEntity>> doLoginWithAccount(String userName, String password){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<LoginEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<LoginEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("type", "account");
         params.put("userName", userName);
@@ -116,6 +131,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<LoginEntity>> doLoginWithMobile(String mobile, String smsCode){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<LoginEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<LoginEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("type", "mobile");
         params.put("mobile", mobile);
@@ -141,6 +167,17 @@ public class Network {
                                                      String password,
                                                      String userNo,
                                                      String address){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("mobile", mobile);
         params.put("smsCode", smsCode);
@@ -164,6 +201,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<UserInfoDataEntity>> getUserInfo(String appToken){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<UserInfoDataEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<UserInfoDataEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getUserInfo(appToken);
     }
 
@@ -183,6 +231,17 @@ public class Network {
                                                           String sex,
                                                           String nation,
                                                           String address){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("ShopUser.trueName", realName);
@@ -201,6 +260,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<String>> checkMobile(String mobile){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.checkMobile(mobile);
     }
 
@@ -214,6 +284,17 @@ public class Network {
     public Observable<HttpResult<String>> resetPassword(String mobile,
                                                         String smsCode,
                                                         String password){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("mobile", mobile);
         params.put("smsCode", smsCode);
@@ -234,6 +315,17 @@ public class Network {
                                                          String oldpassword,
                                                          String password,
                                                          String repassword){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("oldpassword", oldpassword);
@@ -256,6 +348,17 @@ public class Network {
                                                          String mobile,
                                                          String password,
                                                          String payPassword){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("smsCode", smsCode);
@@ -274,6 +377,17 @@ public class Network {
     public Observable<HttpResult<VerificationCodeEntity>> getVerificationCode(
             String mobile,
             String useTypr){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<VerificationCodeEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<VerificationCodeEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("mobile", mobile);
         params.put("type", useTypr);
@@ -303,6 +417,17 @@ public class Network {
             String feerate,
             String leverage,
             String buyType){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<CommitOrderEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<CommitOrderEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("stockId", stockId);
@@ -323,6 +448,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ArrayList<ChiCangEntity>>> getChiCangList(String appToken){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ArrayList<ChiCangEntity>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ArrayList<ChiCangEntity>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getChiCangList(appToken);
     }
 
@@ -335,6 +471,17 @@ public class Network {
     public Observable<HttpResult<ListDataEntity<ChiCangHistoryEntity,ChiCangHistoryQueryParam>>> getChiCangHistoryList(
             String appToken,
             String pageNumber){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<ChiCangHistoryEntity,ChiCangHistoryQueryParam>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<ChiCangHistoryEntity,ChiCangHistoryQueryParam>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("pageSize", "8");
@@ -349,6 +496,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ChiCangEntity>> getChiCangDetail(String appToken, String positionNo){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ChiCangEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ChiCangEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getChiCangDetail(appToken, positionNo);
     }
 
@@ -359,6 +517,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ChiCangHistoryEntity>> getChiCangHistoryDetail(String appToken, String orderNo){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ChiCangHistoryEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ChiCangHistoryEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getChiCangHistoryDetail(appToken, orderNo);
     }
 
@@ -372,6 +541,17 @@ public class Network {
     public Observable<HttpResult<Boolean>> pingCang(String appToken,
                                                     String positionNo,
                                                     String closePrice){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<Boolean>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<Boolean>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("positionNo", positionNo);
@@ -395,6 +575,17 @@ public class Network {
             String cardNum,
             String tiXianNum,
             String payPassword){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("stmCach.cach_user_name", name);
@@ -410,6 +601,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>> getTiXianHistory(String appToken, int pageNumber){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getTiXianHistory(appToken, String.valueOf(pageNumber));
     }
 
@@ -420,6 +622,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<TiXianHistoryEntity>> getTiXianHistoryDetail(String appToken, String id){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<TiXianHistoryEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<TiXianHistoryEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getTiXianHistoryDetail(appToken, id);
     }
 
@@ -429,6 +642,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ArrayList<CommodityDetailEntity>>> getCommodityList(String appToken){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ArrayList<CommodityDetailEntity>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ArrayList<CommodityDetailEntity>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getCommodityList(appToken);
     }
 
@@ -439,6 +663,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<CommodityDetailEntity>> getCommodityDetail(String appToken, String stockId){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<CommodityDetailEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<CommodityDetailEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getCommodityDetail(appToken, stockId);
     }
 
@@ -449,6 +684,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ArrayList<LeverageEntity>>> getLeverageList(String appToken, String stockCode){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ArrayList<LeverageEntity>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ArrayList<LeverageEntity>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getLeverageList(appToken, stockCode);
     }
 
@@ -459,6 +705,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<TimeLineEntity>> getTimeLine(String appToken, String stockCode){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<TimeLineEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<TimeLineEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getTimeLine(appToken, stockCode);
     }
 
@@ -470,6 +727,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<KLineEntity>> getKLine(String appToken, String stockCode, String kType){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<KLineEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<KLineEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getKLine(appToken, stockCode, kType);
     }
 
@@ -479,6 +747,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<String>> isExistMobile(String mobile){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.isExistMobile(mobile);
     }
 
@@ -488,6 +767,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<String>> isExistUserName(String userName){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<String>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.isExistUserName(userName);
     }
 
@@ -498,6 +788,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ChongZhiEntity>> chongZhi(String appToken, String amount){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ChongZhiEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ChongZhiEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.chongZhi(appToken, amount);
     }
 
@@ -508,6 +809,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>> getChongZhiHistory(String appToken, int pageNumber){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("pageSize", "20");
@@ -522,6 +834,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ListDataEntity<BillEntity, ChiCangHistoryQueryParam>>> getBill(String appToken, int pageNumber){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<BillEntity, ChiCangHistoryQueryParam>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<BillEntity, ChiCangHistoryQueryParam>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("billType", "-1");
@@ -537,6 +860,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<BillEntity>> getBillDetail(String appToken, String id){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<BillEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<BillEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getBillDetail(appToken, id);
     }
 
@@ -546,6 +880,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<ArrayList<PayTypeEntity>>> getPayList(String appToken){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ArrayList<PayTypeEntity>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ArrayList<PayTypeEntity>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         return apiService.getPayList(appToken, "app");
     }
 
@@ -557,6 +902,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<PayEntity>> requestPay(String appToken, String orderNo, String payType){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<PayEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<PayEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("orderNo", orderNo);
@@ -573,6 +929,17 @@ public class Network {
      * @return
      */
     public Observable<HttpResult<PayStatusEntity>> queryPay(String appToken, String orderNo){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<PayStatusEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<PayStatusEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
         HashMap<String, String> params= new HashMap<>();
         params.put("appToken", appToken);
         params.put("orderNo", orderNo);

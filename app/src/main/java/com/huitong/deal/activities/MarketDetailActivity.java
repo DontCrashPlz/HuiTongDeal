@@ -42,6 +42,7 @@ import com.huitong.deal.fragments.SignInSuccessFragment;
 import com.huitong.deal.fragments.TimeChartFragment;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
 import java.util.ArrayList;
@@ -150,6 +151,12 @@ public class MarketDetailActivity extends BaseActivity {
                                         refreshUI(commodityDetailEntityHttpResult.getData());
                                     }
                                 }
+                            }, new Consumer<Throwable>() {
+                                @Override
+                                public void accept(Throwable throwable) throws Exception {
+                                    LogUtil.d("throwable", throwable.toString());
+                                    showShortToast("网络请求失败");
+                                }
                             }));
         }
 
@@ -174,6 +181,12 @@ public class MarketDetailActivity extends BaseActivity {
                                 if (arrayListHttpResult.getData().size()> 0)
                                     mLeverageList= arrayListHttpResult.getData();
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
         }
@@ -289,7 +302,6 @@ public class MarketDetailActivity extends BaseActivity {
             case FRAGMENT_TAG_30_K:{//30分钟K线图
                 manager.beginTransaction()
                         .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(stock_code, KLineChartFragment.KLINE_TAG_30_MINUTE))
-                        .addToBackStack(null)
                         .commit();
                 break;
             }
@@ -302,7 +314,6 @@ public class MarketDetailActivity extends BaseActivity {
             case FRAGMENT_TAG_DAY_K:{//1天K线图
                 manager.beginTransaction()
                         .replace(R.id.market_detail_framelayout, KLineChartFragment.newInstance(stock_code, KLineChartFragment.KLINE_TAG_1_DAY))
-                        .addToBackStack(null)
                         .commit();
                 break;
             }
@@ -494,6 +505,12 @@ public class MarketDetailActivity extends BaseActivity {
                                 }
                                 MyApplication.getInstance().refreshUser();
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
                         }
                     }));
         }

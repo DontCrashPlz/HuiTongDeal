@@ -20,6 +20,7 @@ import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.ListDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -99,6 +100,13 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
                                     mAdapter.loadMoreEnd();
                                 }
                             }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            LogUtil.d("throwable", throwable.toString());
+                            showShortToast("网络请求失败");
+                            mAdapter.loadMoreFail();
                         }
                     }));
         }
