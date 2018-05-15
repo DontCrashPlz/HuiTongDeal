@@ -106,4 +106,9 @@ public class DealFragment extends BaseFragment {
 
         return mView;
     }
+
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

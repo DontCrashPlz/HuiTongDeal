@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.huitong.deal.R;
 import com.huitong.deal.activities.HomeActivity;
@@ -29,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -51,6 +54,8 @@ public class HomeMarketFragment extends BaseFragment {
     private RecyclerView mRecycler;
     private MarketListAdapter mAdapter;
 
+    private ProgressBar progressBar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +65,8 @@ public class HomeMarketFragment extends BaseFragment {
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
         mAdapter= new MarketListAdapter(R.layout.item_market_recycler);
         mRecycler.setAdapter(mAdapter);
+
+        progressBar= mView.findViewById(R.id.progressBar);
 
         final String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){
@@ -84,6 +91,7 @@ public class HomeMarketFragment extends BaseFragment {
                             .subscribe(new Consumer<HttpResult<ArrayList<CommodityDetailEntity>>>() {
                                 @Override
                                 public void accept(HttpResult<ArrayList<CommodityDetailEntity>> arrayListHttpResult) throws Exception {
+                                    dismissProgressBar();
                                     if (arrayListHttpResult.getData().size()> 0){
                                         mAdapter.setNewData(arrayListHttpResult.getData());
                                         mAdapter.notifyDataSetChanged();
@@ -95,12 +103,40 @@ public class HomeMarketFragment extends BaseFragment {
                             }, new Consumer<Throwable>() {
                                 @Override
                                 public void accept(Throwable throwable) throws Exception {
+                                    dismissProgressBar();
                                     LogUtil.d("throwable", throwable.toString());
                                     showShortToast("网络请求失败");
+                                }
+                            }, new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    dismissProgressBar();
+                                }
+                            }, new Consumer<Disposable>() {
+                                @Override
+                                public void accept(Disposable disposable) throws Exception {
+                                    showProgressBar();
                                 }
                             }));
         }
 
         return mView;
+    }
+
+    private void showProgressBar(){
+        if (progressBar!= null && !progressBar.isShown()){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void dismissProgressBar(){
+        if (progressBar!= null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void initProgressDialog() {
+
     }
 }

@@ -1,5 +1,6 @@
 package com.huitong.deal.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -15,8 +16,11 @@ import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -41,6 +45,18 @@ public class LoginPasswordActivity extends BaseActivity {
         setContentView(R.layout.activity_login_password);
 
         initUI();
+    }
+
+    @Override
+    public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在提交修改...");
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clearNetWork();
+            }
+        });
     }
 
     private void initUI() {
@@ -96,6 +112,7 @@ public class LoginPasswordActivity extends BaseActivity {
                             .subscribe(new Consumer<HttpResult<String>>() {
                                 @Override
                                 public void accept(HttpResult<String> stringHttpResult) throws Exception {
+                                    dismissDialog();
                                     if ("error".equals(stringHttpResult.getStatus())) {
                                         showShortToast(stringHttpResult.getDescription());
                                     } else if ("success".equals(stringHttpResult.getStatus())) {
@@ -106,8 +123,19 @@ public class LoginPasswordActivity extends BaseActivity {
                             }, new Consumer<Throwable>() {
                                 @Override
                                 public void accept(Throwable throwable) throws Exception {
+                                    dismissDialog();
                                     LogUtil.d("throwable", throwable.toString());
                                     showShortToast("网络请求失败");
+                                }
+                            }, new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    dismissDialog();
+                                }
+                            }, new Consumer<Disposable>() {
+                                @Override
+                                public void accept(Disposable disposable) throws Exception {
+                                    showDialog();
                                 }
                             }));
                 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,6 +24,8 @@ import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -39,6 +42,8 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
     private RecyclerView mRecycler;
     private ChongZhiListAdapter mAdapter;
 
+    private ProgressBar progressBar;
+
     private String appToken;
     private int currentPage= 1;
 
@@ -48,6 +53,11 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
         setContentView(R.layout.activity_withdraw_deposit_history);
 
         initUI();
+    }
+
+    @Override
+    public void initProgressDialog() {
+
     }
 
     private void initUI() {
@@ -70,6 +80,8 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
         mAdapter.setOnLoadMoreListener(this, mRecycler);
         mRecycler.setAdapter(mAdapter);
 
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
+
         appToken= MyApplication.getInstance().getToken();
 
         requestNetData();
@@ -83,6 +95,7 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
                     .subscribe(new Consumer<HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>>>() {
                         @Override
                         public void accept(HttpResult<ListDataEntity<ChongZhiHistoryEntity, ChiCangHistoryQueryParam>> listDataEntityHttpResult) throws Exception {
+                            dismissProgressBar();
                             if ("error".equals(listDataEntityHttpResult.getStatus())){
                                 mAdapter.loadMoreFail();
                                 showShortToast(listDataEntityHttpResult.getDescription());
@@ -104,9 +117,20 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            dismissProgressBar();
                             LogUtil.d("throwable", throwable.toString());
                             showShortToast("网络请求失败");
                             mAdapter.loadMoreFail();
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            dismissProgressBar();
+                        }
+                    }, new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            if (currentPage== 1) showProgressBar();
                         }
                     }));
         }
@@ -116,5 +140,17 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
     public void onLoadMoreRequested() {
         currentPage+= 1;
         requestNetData();
+    }
+
+    private void showProgressBar(){
+        if (progressBar!= null && !progressBar.isShown()){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void dismissProgressBar(){
+        if (progressBar!= null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

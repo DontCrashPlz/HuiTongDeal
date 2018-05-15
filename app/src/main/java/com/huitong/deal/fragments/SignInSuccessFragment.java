@@ -40,4 +40,9 @@ public class SignInSuccessFragment extends BaseFragment {
 
         return mView;
     }
+
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

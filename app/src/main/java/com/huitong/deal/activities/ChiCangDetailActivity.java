@@ -1,5 +1,6 @@
 package com.huitong.deal.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -14,12 +15,15 @@ import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -123,6 +127,7 @@ public class ChiCangDetailActivity extends BaseActivity {
                             .subscribe(new Consumer<HttpResult<Boolean>>() {
                                 @Override
                                 public void accept(HttpResult<Boolean> booleanHttpResult) throws Exception {
+                                    dismissDialog();
                                     if ("error".equals(booleanHttpResult.getStatus())){
                                         showShortToast(booleanHttpResult.getDescription());
                                     }else if ("success".equals(booleanHttpResult.getStatus())){
@@ -133,8 +138,19 @@ public class ChiCangDetailActivity extends BaseActivity {
                             }, new Consumer<Throwable>() {
                                 @Override
                                 public void accept(Throwable throwable) throws Exception {
+                                    dismissDialog();
                                     LogUtil.d("throwable", throwable.toString());
                                     showShortToast("网络请求失败");
+                                }
+                            }, new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    dismissDialog();
+                                }
+                            }, new Consumer<Disposable>() {
+                                @Override
+                                public void accept(Disposable disposable) throws Exception {
+                                    showDialog();
                                 }
                             }));
                 }
@@ -175,6 +191,18 @@ public class ChiCangDetailActivity extends BaseActivity {
                                 }
                             }));
         }
+    }
+
+    @Override
+    public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在提交平仓申请...");
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clearNetWork();
+            }
+        });
     }
 
     private void refreshUI(ChiCangEntity entity){

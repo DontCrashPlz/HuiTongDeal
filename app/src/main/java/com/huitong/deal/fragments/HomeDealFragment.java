@@ -94,4 +94,9 @@ public class HomeDealFragment extends BaseFragment {
 
         return mView;
     }
+
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

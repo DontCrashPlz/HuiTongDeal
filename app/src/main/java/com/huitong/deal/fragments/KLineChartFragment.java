@@ -56,7 +56,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Zheng on 2018/4/13.
  */
-
+@Deprecated
 public class KLineChartFragment extends BaseFragment {
 
     public static final int KLINE_TAG_5_MINUTE= 1;
@@ -345,4 +345,8 @@ public class KLineChartFragment extends BaseFragment {
         return new CandleData(candleDataSet);
     }
 
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

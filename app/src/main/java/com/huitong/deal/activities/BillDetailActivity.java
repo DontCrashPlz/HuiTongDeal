@@ -92,4 +92,9 @@ public class BillDetailActivity extends BaseActivity {
 //        }
 
     }
+
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

@@ -37,7 +37,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Zheng on 2018/4/13.
  */
-
+@Deprecated
 public class TimeChartFragment extends BaseFragment {
 
     public static TimeChartFragment newInstance(String stockCode){
@@ -153,5 +153,10 @@ public class TimeChartFragment extends BaseFragment {
                 }));
 
         return mView;
+    }
+
+    @Override
+    public void initProgressDialog() {
+
     }
 }

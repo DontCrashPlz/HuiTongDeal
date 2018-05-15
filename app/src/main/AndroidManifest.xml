@@ -34,6 +34,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.MarketDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".activities.MarketDetailActivity2"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.ChiCangDetailActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.ChiCangHistoryDetailActivity"

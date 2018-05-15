@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.zheng.zchlibrary.interfaces.IBaseView;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.ToastUtils;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -22,11 +18,13 @@ import io.reactivex.disposables.Disposable;
  * Created by Zheng on 2017/10/16.
  */
 
-public class BaseActivity extends AppCompatActivity implements IBaseView {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
 
     private final String ACTIVITY_TAG= this.getClass().getSimpleName();
 
     public CompositeDisposable compositeDisposable;
+
+    public ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +38,8 @@ public class BaseActivity extends AppCompatActivity implements IBaseView {
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
         }
+
+        initProgressDialog();
     }
 
     @Override
@@ -74,5 +74,25 @@ public class BaseActivity extends AppCompatActivity implements IBaseView {
             compositeDisposable= new CompositeDisposable();
         }
         compositeDisposable.add(disposable);
+    }
+
+    public void clearNetWork(){
+        if (compositeDisposable != null) {
+            compositeDisposable.clear();
+        }
+    }
+
+    public abstract void initProgressDialog();
+
+    public void showDialog(){
+        if (dialog!= null && !dialog.isShowing()){
+            dialog.show();
+        }
+    }
+
+    public void dismissDialog(){
+        if (dialog!= null && dialog.isShowing()){
+            dialog.dismiss();
+        }
     }
 }

@@ -122,4 +122,9 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
                 break;
         }
     }
+
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

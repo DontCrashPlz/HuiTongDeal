@@ -47,6 +47,11 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void initProgressDialog() {
+
+    }
+
     public void changeFragment(int fragmentTag){
         switch (fragmentTag){
             case 0:{//密码登录页面

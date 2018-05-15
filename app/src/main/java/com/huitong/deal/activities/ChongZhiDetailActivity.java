@@ -80,4 +80,9 @@ public class ChongZhiDetailActivity extends BaseActivity {
         mBalanceTv.setText(String.valueOf(entity.getAfter_balance()));
 
     }
+
+    @Override
+    public void initProgressDialog() {
+
+    }
 }

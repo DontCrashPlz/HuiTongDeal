@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -26,6 +27,8 @@ import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -42,6 +45,8 @@ public class TiXianHistoryActivity extends BaseActivity implements BaseQuickAdap
     private RecyclerView mRecycler;
     private TiXianListAdapter mAdapter;
 
+    private ProgressBar progressBar;
+
     private String appToken;
     private int currentPage= 1;
 
@@ -51,6 +56,11 @@ public class TiXianHistoryActivity extends BaseActivity implements BaseQuickAdap
         setContentView(R.layout.activity_withdraw_deposit_history);
 
         initUI();
+    }
+
+    @Override
+    public void initProgressDialog() {
+
     }
 
     private void initUI() {
@@ -73,6 +83,8 @@ public class TiXianHistoryActivity extends BaseActivity implements BaseQuickAdap
         mAdapter.setOnLoadMoreListener(this, mRecycler);
         mRecycler.setAdapter(mAdapter);
 
+        progressBar= (ProgressBar) findViewById(R.id.progressBar);
+
         appToken= MyApplication.getInstance().getToken();
 
         requestNetData();
@@ -86,6 +98,7 @@ public class TiXianHistoryActivity extends BaseActivity implements BaseQuickAdap
                     .subscribe(new Consumer<HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>>>() {
                         @Override
                         public void accept(HttpResult<ListDataEntity<TiXianHistoryEntity, TiXianHistoryQueryParam>> listDataEntityHttpResult) throws Exception {
+                            dismissProgressBar();
                             if ("error".equals(listDataEntityHttpResult.getStatus())){
                                 mAdapter.loadMoreFail();
                                 showShortToast(listDataEntityHttpResult.getDescription());
@@ -107,9 +120,20 @@ public class TiXianHistoryActivity extends BaseActivity implements BaseQuickAdap
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            dismissProgressBar();
                             LogUtil.d("throwable", throwable.toString());
                             showShortToast("网络请求失败");
                             mAdapter.loadMoreFail();
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            dismissProgressBar();
+                        }
+                    }, new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            if (currentPage== 1) showProgressBar();
                         }
                     }));
         }
@@ -119,5 +143,17 @@ public class TiXianHistoryActivity extends BaseActivity implements BaseQuickAdap
     public void onLoadMoreRequested() {
         currentPage+= 1;
         requestNetData();
+    }
+
+    private void showProgressBar(){
+        if (progressBar!= null && !progressBar.isShown()){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void dismissProgressBar(){
+        if (progressBar!= null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+        }
     }
 }

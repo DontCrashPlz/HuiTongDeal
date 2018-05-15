@@ -59,7 +59,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Zheng on 2018/4/12.
  */
-
+@Deprecated
 public class MarketDetailActivity extends BaseActivity {
 
     private final int FRAGMENT_TAG_TIME= 0;
@@ -161,6 +161,11 @@ public class MarketDetailActivity extends BaseActivity {
         }
 
         changeChart(0);
+
+    }
+
+    @Override
+    public void initProgressDialog() {
 
     }
 

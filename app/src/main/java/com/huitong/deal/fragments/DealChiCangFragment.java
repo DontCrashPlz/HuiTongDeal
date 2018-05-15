@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
@@ -24,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -47,6 +50,8 @@ public class DealChiCangFragment extends BaseFragment {
     private RecyclerView mRecycler;
     private ChiCangListAdapter mAdapter;
 
+    private ProgressBar progressBar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,6 +67,9 @@ public class DealChiCangFragment extends BaseFragment {
         mAdapter= new ChiCangListAdapter(R.layout.item_deal_recycler);
         mRecycler.setAdapter(mAdapter);
         mAdapter.bindToRecyclerView(mRecycler);
+
+        progressBar= mView.findViewById(R.id.progressBar);
+
         final String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){
             addNetWork(
@@ -85,6 +93,7 @@ public class DealChiCangFragment extends BaseFragment {
                             .subscribe(new Consumer<HttpResult<ArrayList<ChiCangEntity>>>() {
                                 @Override
                                 public void accept(HttpResult<ArrayList<ChiCangEntity>> arrayListHttpResult) throws Exception {
+                                    dismissProgressBar();
                                     if (arrayListHttpResult.getData().size()> 0){
                                         mAdapter.setNewData(arrayListHttpResult.getData());
                                         mAdapter.notifyDataSetChanged();
@@ -96,12 +105,40 @@ public class DealChiCangFragment extends BaseFragment {
                             }, new Consumer<Throwable>() {
                                 @Override
                                 public void accept(Throwable throwable) throws Exception {
+                                    dismissProgressBar();
                                     LogUtil.d("throwable", throwable.toString());
                                     showShortToast("网络请求失败");
+                                }
+                            }, new Action() {
+                                @Override
+                                public void run() throws Exception {
+                                    dismissProgressBar();
+                                }
+                            }, new Consumer<Disposable>() {
+                                @Override
+                                public void accept(Disposable disposable) throws Exception {
+                                    showProgressBar();
                                 }
                             }));
         }
 
         return mView;
+    }
+
+    private void showProgressBar(){
+        if (progressBar!= null && !progressBar.isShown()){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void dismissProgressBar(){
+        if (progressBar!= null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void initProgressDialog() {
+
     }
 }

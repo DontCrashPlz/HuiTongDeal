@@ -73,6 +73,11 @@ public class HomeActivity extends BaseActivity implements CompoundButton.OnCheck
         }
     }
 
+    @Override
+    public void initProgressDialog() {
+
+    }
+
     private void initUI(){
 
         mManager= getSupportFragmentManager();

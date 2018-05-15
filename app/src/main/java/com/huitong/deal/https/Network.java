@@ -918,7 +918,7 @@ public class Network {
         params.put("orderNo", orderNo);
         params.put("orderType", "precharge");
         params.put("payType", payType);
-        params.put("terminalTyoe", "app");
+        params.put("terminalType", "app");
         return apiService.requestPay(params);
     }
 

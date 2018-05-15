@@ -46,16 +46,16 @@ public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangL
         helper.mText3.setText(String.valueOf(item.getCurpoint()));
         helper.mText4.setText(String.valueOf(item.getGain()));
         float currentGain= item.getGain();
-        if (currentGain> 0F){
-            helper.mIconTv.setTextColor(colorGreen);
-            helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_green);
-            helper.mText3.setTextColor(colorOrange);
-            helper.mText4.setTextColor(colorOrange);
-        }else {
+        if (currentGain< 0F){
             helper.mIconTv.setTextColor(colorOrange);
             helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_orange);
             helper.mText3.setTextColor(colorGreen);
             helper.mText4.setTextColor(colorGreen);
+        }else {
+            helper.mIconTv.setTextColor(colorGreen);
+            helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_green);
+            helper.mText3.setTextColor(colorOrange);
+            helper.mText4.setTextColor(colorOrange);
         }
     }
 

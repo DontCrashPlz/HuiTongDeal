@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.huitong.deal.R;
 import com.huitong.deal.activities.MarketDetailActivity;
+import com.huitong.deal.activities.MarketDetailActivity2;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 
@@ -28,7 +29,7 @@ public class MarketListAdapter extends BaseQuickAdapter<CommodityDetailEntity, M
         helper.mPanelCly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(mContext, MarketDetailActivity.class);
+                Intent intent= new Intent(mContext, MarketDetailActivity2.class);
                 intent.putExtra("id", String.valueOf(item.getId()));
                 intent.putExtra("stock_name", item.getStock_name());
                 intent.putExtra("stock_code", item.getStock_code());

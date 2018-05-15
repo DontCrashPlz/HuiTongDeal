@@ -1,5 +1,6 @@
 package com.huitong.deal.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,8 +26,11 @@ import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -131,6 +135,7 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
                         .subscribe(new Consumer<HttpResult<LoginEntity>>() {
                             @Override
                             public void accept(HttpResult<LoginEntity> loginEntityHttpResult) throws Exception {
+                                dismissDialog();
                                 if ("error".equals(loginEntityHttpResult.getStatus())) {
                                     showShortToast(loginEntityHttpResult.getDescription());
                                 } else if ("success".equals(loginEntityHttpResult.getStatus())) {
@@ -158,13 +163,36 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                dismissDialog();
                                 LogUtil.d("throwable", throwable.toString());
                                 showShortToast("网络请求失败");
+                            }
+                        }, new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                dismissDialog();
+                            }
+                        }, new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                showDialog();
                             }
                         }));
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在登录...");
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clearNetWork();
+            }
+        });
     }
 }

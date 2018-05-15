@@ -1,5 +1,6 @@
 package com.huitong.deal.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,11 +23,16 @@ import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -87,6 +93,7 @@ public class SignInFragment extends BaseFragment {
                                 }else if ("success".equals(verificationCodeEntityHttpResult.getStatus())){
                                     mGetVerificationBtn.setBackground(getRealContext().getResources().getDrawable(R.drawable.button_background_gary_corners));
                                     mGetVerificationBtn.setClickable(false);
+                                    changeVerificationBtn();
                                 }
                             }
                         }, new Consumer<Throwable>() {
@@ -149,6 +156,7 @@ public class SignInFragment extends BaseFragment {
                         .subscribe(new Consumer<HttpResult<String>>() {
                             @Override
                             public void accept(HttpResult<String> stringHttpResult) throws Exception {
+                                dismissDialog();
                                 if ("error".equals(stringHttpResult.getStatus())){
                                     showShortToast(stringHttpResult.getDescription());
                                 }else if ("success".equals(stringHttpResult.getStatus())){
@@ -158,30 +166,76 @@ public class SignInFragment extends BaseFragment {
                         }, new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
+                                dismissDialog();
                                 LogUtil.d("throwable", throwable.toString());
                                 showShortToast("网络请求失败");
                             }
+                        }, new Action() {
+                            @Override
+                            public void run() throws Exception {
+                                dismissDialog();
+                            }
+                        }, new Consumer<Disposable>() {
+                            @Override
+                            public void accept(Disposable disposable) throws Exception {
+                                showDialog();
+                            }
                         }));
 
-
-//                addNetWork(Network.getInstance().doRigister(mobile, verification, password, inviteCode, address)
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Consumer<HttpResult<String>>() {
-//                            @Override
-//                            public void accept(HttpResult<String> stringHttpResult) throws Exception {
-//                                if ("error".equals(stringHttpResult.getStatus())){
-//                                    showShortToast(stringHttpResult.getDescription());
-//                                }else if ("success".equals(stringHttpResult.getStatus())){
-//                                    ((LoginActivity)getActivity()).changeFragment(LoginActivity.FRAGMENT_TAG_SIGNSUCCESS);
-//                                }
-//                            }
-//                        }));
             }
         });
 
         mReadedCb= mView.findViewById(R.id.login_cb_agreement);
+        mReadedCb.setChecked(true);
 
         return mView;
+    }
+
+    private void changeVerificationBtn(){
+        Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Long>() {
+                    Disposable disposable;
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addNetWork(d);
+                        disposable= d;
+                    }
+
+                    @Override
+                    public void onNext(Long value) {
+                        long i= 30 - value;
+                        mGetVerificationBtn.setText(String.valueOf(i));
+                        if (i== 0){
+                            mGetVerificationBtn.setBackground(getRealContext().getResources().getDrawable(R.drawable.button_background_green_corners_selector));
+                            mGetVerificationBtn.setClickable(true);
+                            mGetVerificationBtn.setText("获取验证码");
+                            disposable.dispose();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在注册...");
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clearNetWork();
+            }
+        });
     }
 }

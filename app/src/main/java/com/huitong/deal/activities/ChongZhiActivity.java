@@ -2,6 +2,7 @@ package com.huitong.deal.activities;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.ArrayList;
 
@@ -34,6 +36,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -66,6 +70,18 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
         appToken=  MyApplication.getInstance().getToken();
 
         initUI();
+    }
+
+    @Override
+    public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在提交充值申请...");
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clearNetWork();
+            }
+        });
     }
 
     private void initUI() {
@@ -176,6 +192,7 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
                     .subscribe(new Consumer<HttpResult<PayEntity>>() {
                         @Override
                         public void accept(HttpResult<PayEntity> payEntityHttpResult) throws Exception {
+                            dismissDialog();
                             if ("error".equals(payEntityHttpResult.getStatus())) {
                                 showShortToast(payEntityHttpResult.getDescription());
                             } else if ("success".equals(payEntityHttpResult.getStatus())) {
@@ -188,8 +205,19 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            dismissDialog();
                             LogUtil.d("throwable", throwable.toString());
                             showShortToast("网络请求失败");
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            dismissDialog();
+                        }
+                    }, new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            showDialog();
                         }
                     }));
         }

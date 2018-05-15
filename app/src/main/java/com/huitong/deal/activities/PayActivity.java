@@ -1,5 +1,6 @@
 package com.huitong.deal.activities;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,10 +19,13 @@ import com.huitong.deal.beans.PayTypeEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -104,6 +108,18 @@ public class PayActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在获取订单...");
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                clearNetWork();
+            }
+        });
+    }
+
     private void queryPayStatus(){
         if (appToken!= null && appToken.length()> 0){
             addNetWork(Network.getInstance().queryPay(appToken, entity.getOrderno())
@@ -112,6 +128,7 @@ public class PayActivity extends BaseActivity {
                     .subscribe(new Consumer<HttpResult<PayStatusEntity>>() {
                         @Override
                         public void accept(HttpResult<PayStatusEntity> payStatusEntityHttpResult) throws Exception {
+                            dismissDialog();
                             if ("error".equals(payStatusEntityHttpResult.getStatus())){
                                 showShortToast(payStatusEntityHttpResult.getDescription());
                             }else if ("success".equals(payStatusEntityHttpResult.getStatus())){
@@ -125,8 +142,19 @@ public class PayActivity extends BaseActivity {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            dismissDialog();
                             LogUtil.d("throwable", throwable.toString());
                             showShortToast("网络请求失败");
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            dismissDialog();
+                        }
+                    }, new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            showDialog();
                         }
                     }));
         }

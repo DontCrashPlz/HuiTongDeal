@@ -109,4 +109,9 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         mTextView11.setText("风险平仓");
     }
 
+    @Override
+    public void initProgressDialog() {
+
+    }
+
 }

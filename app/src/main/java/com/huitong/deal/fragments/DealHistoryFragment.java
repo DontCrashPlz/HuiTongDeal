@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -30,6 +31,8 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
@@ -54,6 +57,8 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
     private RecyclerView mRecycler;
     private ChiCangHistoryListAdapter mAdapter;
 
+    private ProgressBar progressBar;
+
     private String appToken;
     private int currentPage= 1;
 
@@ -72,6 +77,9 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
         mAdapter= new ChiCangHistoryListAdapter(R.layout.item_deal_recycler);
         mAdapter.setOnLoadMoreListener(this, mRecycler);
         mRecycler.setAdapter(mAdapter);
+
+        progressBar= mView.findViewById(R.id.progressBar);
+
         appToken= MyApplication.getInstance().getToken();
 
         requestNetData();
@@ -87,6 +95,7 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
                     .subscribe(new Consumer<HttpResult<ListDataEntity<ChiCangHistoryEntity, ChiCangHistoryQueryParam>>>() {
                         @Override
                         public void accept(HttpResult<ListDataEntity<ChiCangHistoryEntity, ChiCangHistoryQueryParam>> listDataEntityHttpResult) throws Exception {
+                            dismissProgressBar();
                             if ("error".equals(listDataEntityHttpResult.getStatus())){
                                 mAdapter.loadMoreFail();
                                 showShortToast(listDataEntityHttpResult.getDescription());
@@ -108,8 +117,19 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
+                            dismissProgressBar();
                             LogUtil.d("throwable", throwable.toString());
                             showShortToast("网络请求失败");
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+                            dismissProgressBar();
+                        }
+                    }, new Consumer<Disposable>() {
+                        @Override
+                        public void accept(Disposable disposable) throws Exception {
+                            if (currentPage== 1) showProgressBar();
                         }
                     }));
         }
@@ -119,5 +139,22 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
     public void onLoadMoreRequested() {
         currentPage+= 1;
         requestNetData();
+    }
+
+    private void showProgressBar(){
+        if (progressBar!= null && !progressBar.isShown()){
+            progressBar.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void dismissProgressBar(){
+        if (progressBar!= null && progressBar.isShown()){
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void initProgressDialog() {
+
     }
 }
