@@ -10,8 +10,7 @@ import org.json.JSONException;
 import java.net.ConnectException;
 
 import retrofit2.HttpException;
-
-
+@Deprecated
 public class ExceptionHandle {
 
     private static final int UNAUTHORIZED = 401;

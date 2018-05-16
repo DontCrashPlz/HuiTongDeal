@@ -40,37 +40,11 @@ public class HomeActivity extends BaseActivity implements CompoundButton.OnCheck
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        MyApplication.getInstance().refreshUser();
+
         initUI();
 
         mMarketRbtn.setChecked(true);
-
-        String appToken= MyApplication.getInstance().getToken();
-        if (appToken!= null && appToken.length()> 0){
-            addNetWork(Network.getInstance().getUserInfo(appToken)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
-                        @Override
-                        public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
-                            if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
-                                showShortToast(userInfoDataEntityHttpResult.getDescription());
-                            }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
-                                if (userInfoDataEntityHttpResult.getData()!= null)
-                                    MyApplication.appUser= userInfoDataEntityHttpResult.getData();
-                                if (mMineRbtn.isChecked()){
-                                    Fragment fragment= mManager.findFragmentById(R.id.home_fly_fragment);
-
-                                }
-                            }
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            LogUtil.d("throwable", throwable.toString());
-                            showShortToast("网络请求失败");
-                        }
-                    }));
-        }
     }
 
     @Override

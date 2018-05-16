@@ -132,6 +132,7 @@ public class ChiCangDetailActivity extends BaseActivity {
                                         showShortToast(booleanHttpResult.getDescription());
                                     }else if ("success".equals(booleanHttpResult.getStatus())){
                                         showShortToast("平仓成功");
+                                        MyApplication.getInstance().refreshUser();
                                         finish();
                                     }
                                 }

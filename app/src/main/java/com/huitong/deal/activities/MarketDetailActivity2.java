@@ -243,7 +243,7 @@ public class MarketDetailActivity2 extends BaseActivity {
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSetting.setSupportZoom(false);// 用于设置webview放大
         webSetting.setBuiltInZoomControls(false);
-        mWebView.loadUrl("http://47.92.28.185/api/stm/trade/echart/getTimeLine?stockCode=006");
+        mWebView.loadUrl("http://47.92.28.185/api/stm/trade/echart/getTimeLine?stockCode="+ stock_code);
 
     }
 
@@ -408,6 +408,7 @@ public class MarketDetailActivity2 extends BaseActivity {
 
         dialogBuyPrice= view.findViewById(R.id.tixian_dialog_buyprice);
         dialogServerPrice= view.findViewById(R.id.tixian_dialog_serverprice);
+        dialogServerPrice.setText(String.format(getString(R.string.xiadan_dialog_shouxufei), "0"));
         dialogButton= view.findViewById(R.id.tixian_dialog_xiadan);
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -145,6 +145,7 @@ public class TiXianActivity extends BaseActivity {
                             }else if ("success".equals(stringHttpResult.getStatus())){
                                 //todo 提现成功
                                 showShortToast("提现成功");
+                                MyApplication.getInstance().refreshUser();
                                 finish();
                             }
                         }

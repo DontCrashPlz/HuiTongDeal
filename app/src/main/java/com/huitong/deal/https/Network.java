@@ -944,7 +944,7 @@ public class Network {
         params.put("appToken", appToken);
         params.put("orderNo", orderNo);
         params.put("orderType", "precharge");
-        params.put("terminalTyoe", "app");
+        params.put("terminalType", "app");
         return apiService.queryPay(params);
     }
 

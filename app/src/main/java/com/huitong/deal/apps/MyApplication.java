@@ -71,6 +71,7 @@ public class MyApplication extends BaseApplication {
             SharedPrefUtils.remove(getApplicationContext(), TOKEN_TAG);
         }
         SharedPrefUtils.put(getApplicationContext(), TOKEN_TAG, token);
+        appToken= token;
     }
     //设置token值
     public String getToken(){
@@ -120,6 +121,7 @@ public class MyApplication extends BaseApplication {
         return false;
     }
     public void refreshUser(){
+        LogUtil.e("MyApplication", "refreshUser");
         if (appToken!= null && appToken.length()> 0){
             Network.getInstance().getUserInfo(appToken)
                     .subscribeOn(Schedulers.io())

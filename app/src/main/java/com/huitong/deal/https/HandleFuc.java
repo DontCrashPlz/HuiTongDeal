@@ -3,7 +3,7 @@ package com.huitong.deal.https;
 import com.huitong.deal.beans.HttpResult;
 
 import io.reactivex.functions.Function;
-
+@Deprecated
 public class HandleFuc<T> implements Function<HttpResult<T>, T> {
     @Override
     public T apply(HttpResult<T> response) throws Exception {

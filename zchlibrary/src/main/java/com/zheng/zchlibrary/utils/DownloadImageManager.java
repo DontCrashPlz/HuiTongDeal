@@ -1,6 +1,6 @@
 package com.zheng.zchlibrary.utils;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Environment;
 
 import java.io.BufferedInputStream;
@@ -11,12 +11,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * 下载工具类，用于版本更新
- * Created by Zheng on 2016/8/26.
+ * Created by Zheng on 2018/5/16.
  */
-public class DownloadManager {
 
-    public static File getFileFromServer(String path, ProgressDialog pd) throws Exception{
+public class DownloadImageManager {
+
+    public static File getFileFromServer(Context context, String path, String fileName) throws Exception{
         //如果相等的话表示当前的sdcard挂载在手机上并且是可用的
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
             URL url = new URL(path);
@@ -25,9 +25,8 @@ public class DownloadManager {
             //获取到文件的大小
 //            pd.setMax(conn.getContentLength());
             int contentLength= conn.getContentLength();
-            pd.setMax(100);
             InputStream is = conn.getInputStream();
-            File file = new File(Environment.getExternalStorageDirectory(), "汇通交易.apk");
+            File file = new File(context.getFilesDir(), fileName);
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
             byte[] buffer = new byte[1024];
@@ -38,7 +37,7 @@ public class DownloadManager {
                 for (int i=0;i<10000;i++){}
                 total+= len;
                 //获取当前下载量
-                pd.setProgress((total*100)/contentLength);
+//                pd.setProgress((total*100)/contentLength);
             }
             fos.close();
             bis.close();
@@ -49,4 +48,5 @@ public class DownloadManager {
             return null;
         }
     }
+
 }

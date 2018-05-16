@@ -1,6 +1,8 @@
 package com.zheng.zchlibrary.apps;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import com.tencent.smtt.sdk.QbSdk;
@@ -46,7 +48,7 @@ public class BaseApplication extends Application {
             @Override
             public void onViewInitFinished(boolean b) {
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-                Toast.makeText(getApplicationContext(), "加载内核是否成功:"+b, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "加载内核是否成功:"+b, Toast.LENGTH_SHORT).show();
                 LogUtil.e("@@","加载内核是否成功:"+b);
             }
         });

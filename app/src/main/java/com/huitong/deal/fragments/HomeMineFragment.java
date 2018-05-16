@@ -117,6 +117,11 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
             case R.id.home_mine_rly_aboutus:
                 break;
             case R.id.home_mine_rly_logout:
+                Intent intent= new Intent(getRealContext(), LoginActivity.class);
+                intent.putExtra("launcher_tag", 1);
+                startActivity(intent);
+                showShortToast("注销成功");
+                getActivity().finish();
                 break;
             default:
                 break;

@@ -7,7 +7,7 @@ import io.reactivex.ObservableTransformer;
 /**
  * Created by Zheng on 2018/5/14.
  */
-
+@Deprecated
 public class ErrorTransformer<T> implements ObservableTransformer{
 
     @Override

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@drawable/edittext_background_white_corners_hollow">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="版本更新"
+        android:textColor="#444444"
+        android:textSize="20dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="60dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/update_info_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="版本更新信息"
+        android:textSize="16dp"
+        android:textColor="#444444"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="start"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/layout_exit_dialog_cancel"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="22dp"
+            android:text="取消"
+            android:textSize="18dp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/darker_gray"/>
+
+        <Button
+            android:id="@+id/layout_exit_dialog_ok"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:text="更新"
+            android:textSize="18dp"
+            android:textColor="@android:color/white"
+            android:background="#fe4d4d"/>
+
+    </LinearLayout>
+
+</LinearLayout>

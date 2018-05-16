@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="14dp">
+        android:layout_marginBottom="8dp">
 
         <ImageView
             android:id="@+id/toolbar_user"
@@ -27,7 +27,9 @@
             android:text="我的"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
 
         <TextView
             android:id="@+id/toolbar_right_icon"
@@ -40,7 +42,10 @@
             android:drawablePadding="9dp"
             android:paddingRight="10dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/toolbar_title"
+            android:layout_alignTop="@+id/toolbar_title"
+            android:gravity="center"/>
 
     </RelativeLayout>
 

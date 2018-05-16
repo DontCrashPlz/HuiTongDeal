@@ -6,8 +6,7 @@ import android.widget.Toast;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-
-
+@Deprecated
 public abstract class BaseObserver<T> implements Observer<T> {
     private Context context;
     public BaseObserver(Context context) {
