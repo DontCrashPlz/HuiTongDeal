@@ -57,6 +57,7 @@ public class LoginActivity extends BaseActivity {
                 .replace(R.id.fragment, LoginWithPasswordFragment.newInstance(""))
                 .commit();
 
+        //launcher_tag标识是从哪里启动的LoginActivity，0表示正常启动，1表示用户退出登录
         mLauncherTag= getIntent().getIntExtra("launcher_tag", 0);
 
         if (mLauncherTag!= 0) return;

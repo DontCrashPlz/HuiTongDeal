@@ -20,6 +20,7 @@ import com.huitong.deal.activities.RealNameActivity;
 import com.huitong.deal.activities.TiXianActivity;
 import com.huitong.deal.apps.MyApplication;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.utils.SharedPrefUtils;
 
 /**
  * Created by Zheng on 2018/4/13.
@@ -117,6 +118,7 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
             case R.id.home_mine_rly_aboutus:
                 break;
             case R.id.home_mine_rly_logout:
+                SharedPrefUtils.remove(getRealContext(), MyApplication.TOKEN_TAG);
                 Intent intent= new Intent(getRealContext(), LoginActivity.class);
                 intent.putExtra("launcher_tag", 1);
                 startActivity(intent);

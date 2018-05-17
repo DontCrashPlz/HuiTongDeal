@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.huitong.deal.R;
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.UserInfoEntity;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.beans.UpdateInfoEntity;
@@ -136,7 +137,11 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent= new Intent();
         if (SharedPrefUtils.contains(this, APP_LAUNCHED_TAG)
                 && (boolean)(SharedPrefUtils.get(this, APP_LAUNCHED_TAG, true))){
-            intent.setClass(this, LoginActivity.class);
+            if (MyApplication.getInstance().isHadToken()){
+                intent.setClass(this, HomeActivity.class);
+            }else {
+                intent.setClass(this, LoginActivity.class);
+            }
         }else {
             intent.setClass(this, GuideViewActivity.class);
         }

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.math.BigDecimal;
+
 /**
  * 全局工具类
  * 这里定义一些全局使用的工具方法
@@ -44,6 +46,15 @@ public class Tools {
         WindowManager.LayoutParams params = window.getAttributes();
         params.gravity = Gravity.CENTER;
         window.setAttributes(params);
+    }
+
+    public static String formatFloat(float f){
+        BigDecimal b = new BigDecimal(f);
+        LogUtil.d("formatFloat before", "" + f );
+        //  b.setScale(2,  BigDecimal.ROUND_HALF_UP)  表明四舍五入，保留两位小数
+        f = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
+        LogUtil.d("formatFloat after", "" + f );
+        return "" + f;
     }
 
 }

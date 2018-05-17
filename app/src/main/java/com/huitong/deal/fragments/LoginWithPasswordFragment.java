@@ -4,12 +4,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -58,6 +60,7 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
     private Button mLoginBtn;
     private EditText mUserNameEt;
     private EditText mPasswordEt;
+    private CheckBox mSeePasswordCb;
     private CheckBox mRememberCb;
 
     @Nullable
@@ -79,6 +82,17 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
 
         mUserNameEt= mView.findViewById(R.id.login_et_username);
         mPasswordEt= mView.findViewById(R.id.login_et_password);
+        mSeePasswordCb= mView.findViewById(R.id.login_cb_see_password);
+        mSeePasswordCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+                }else {
+                    mPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
         mRememberCb= mView.findViewById(R.id.login_cb_remember2);
 
         if (SharedPrefUtils.contains(getRealContext(), SP_TAG_USERNAME)){
