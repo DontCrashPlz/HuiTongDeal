@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -19,6 +20,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -38,6 +40,7 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.utils.Tools;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.ArrayList;
@@ -110,7 +113,7 @@ public class MarketDetailActivity2 extends BaseActivity {
 
         if (appToken!= null && appToken.length()> 0){
             addNetWork(
-                    Observable.interval(1, TimeUnit.SECONDS)
+                    Observable.interval(2, TimeUnit.SECONDS)
                             .flatMap(new Function<Long, ObservableSource<HttpResult<CommodityDetailEntity>>>() {
                                 @Override
                                 public ObservableSource<HttpResult<CommodityDetailEntity>> apply(Long aLong) throws Exception {
@@ -200,6 +203,7 @@ public class MarketDetailActivity2 extends BaseActivity {
             mTitleTv.setText(stock_name);
         }
         mStatusTv = (TextView) findViewById(R.id.toolbar_icon);
+        mStatusTv.setText(stock_code);
 
         mPriceTv = (TextView) findViewById(R.id.market_detail_price);
         mFloatTv = (TextView) findViewById(R.id.market_detail_float);
@@ -249,21 +253,21 @@ public class MarketDetailActivity2 extends BaseActivity {
 
     private void refreshUI(CommodityDetailEntity entity){
 //        mTitleTv.setText(entity.getStock_name());
-        mStatusTv.setText(entity.getState_name());
-        if (entity.getStock_state()== 1){
-            mStatusTv.setBackgroundColor(Color.rgb(255, 152, 0));
-        }else {
-            mStatusTv.setBackgroundColor(Color.rgb(204, 204, 204));
-        }
+//        mStatusTv.setText(entity.getState_name());
+//        if (entity.getStock_state()== 1){
+//            mStatusTv.setBackgroundColor(Color.rgb(255, 152, 0));
+//        }else {
+//            mStatusTv.setBackgroundColor(Color.rgb(204, 204, 204));
+//        }
 
-        mPriceTv.setText(String.valueOf(entity.getNow_price()));
-        mFloatTv.setText(String.valueOf(entity.getFloat_rate()));
+        mPriceTv.setText(Tools.formatFloat(entity.getNow_price()));
+        mFloatTv.setText(Tools.formatFloat(entity.getFloat_rate()) + "%");
         mNumberTv.setText(entity.getCur_date() + " " + entity.getCur_time());
 
-        mHighTv.setText(String.valueOf(entity.getHighest()));
-        mLowTv.setText(String.valueOf(entity.getLowest()));
-        mTodayTv.setText(String.valueOf(entity.getOpen_price()));
-        mYesterdayTv.setText(String.valueOf(entity.getClose_price()));
+        mHighTv.setText(Tools.formatFloat(entity.getHighest()));
+        mLowTv.setText(Tools.formatFloat(entity.getLowest()));
+        mTodayTv.setText(Tools.formatFloat(entity.getOpen_price()));
+        mYesterdayTv.setText(Tools.formatFloat(entity.getClose_price()));
 
         if (entity.getStock_state()== 0 || entity.getTrade_state()== 0){
             mRenGouBtn.setBackgroundColor(Color.rgb(204, 204, 204));
@@ -278,7 +282,7 @@ public class MarketDetailActivity2 extends BaseActivity {
         }
 
         if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
-            dialogCurPrice.setText(String.valueOf(entity.getNow_price()));
+            dialogCurPrice.setText(Tools.formatFloat(entity.getNow_price()));
             nowPrice= String.valueOf(entity.getNow_price());
         }
     }
@@ -295,7 +299,11 @@ public class MarketDetailActivity2 extends BaseActivity {
     private RadioButton dialogRbtn_1;
     private TextView dialogBuyCount;
     private TextView dialogMaxCount;
-    private EditText dialogEditText;
+//    private EditText dialogEditText;
+    private AppCompatSeekBar dialogSeekBar;
+    private Button dialogSubtractBtn;
+    private EditText dialogBuyCountEt;
+    private Button dialogPlusBtn;
     private TextView dialogBuyPrice;
     private TextView dialogServerPrice;
     private Button dialogButton;
@@ -314,14 +322,6 @@ public class MarketDetailActivity2 extends BaseActivity {
         xiaDanDialog= new Dialog(context, R.style.custom_dialog_no_titlebar);
         xiaDanDialog.setContentView(view);
         xiaDanDialog.show();
-
-//        dialogCancel=  view.findViewById(R.id.tixian_dialog_cancel);
-//        dialogCancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                xiaDanDialog.dismiss();
-//            }
-//        });
 
         dialogTabLayout= view.findViewById(R.id.tixian_dialog_tab);
         tabEntities= new ArrayList<>();
@@ -354,20 +354,59 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogStockName.setText(stock_name);
 
         dialogStockStatus= view.findViewById(R.id.tixian_dialog_status);
+        dialogStockStatus.setText(stock_code);
 
         dialogCurPrice= view.findViewById(R.id.tixian_dialog_price);
-
         dialogRbtn_100= view.findViewById(R.id.tixian_dialog_rbtn_100);
         dialogRbtn_50= view.findViewById(R.id.tixian_dialog_rbtn_50);
         dialogRbtn_1= view.findViewById(R.id.tixian_dialog_rbtn_1);
-        dealLeverage();
-
         dialogBuyCount= view.findViewById(R.id.tixian_dialog_buycount);
         dialogBuyCount.setText(String.format(getString(R.string.xiadan_dialog_buycount), "0"));
         dialogMaxCount= view.findViewById(R.id.tixian_dialog_maxcount);
         dialogMaxCount.setText(String.format(getString(R.string.xiadan_dialog_maxcount), "0", "0"));
-        dialogEditText= view.findViewById(R.id.tixian_dialog_edittext);
-        dialogEditText.addTextChangedListener(new TextWatcher() {
+        dialogSeekBar= view.findViewById(R.id.tixian_dialog_seekbar);
+        dialogSubtractBtn= view.findViewById(R.id.tixian_dialog_btn_subtract);
+        dialogBuyCountEt= view.findViewById(R.id.tixian_dialog_et_buycount);
+        dialogPlusBtn= view.findViewById(R.id.tixian_dialog_btn_plus);
+        dialogBuyPrice= view.findViewById(R.id.tixian_dialog_buyprice);
+        dialogServerPrice= view.findViewById(R.id.tixian_dialog_serverprice);
+        dialogServerPrice.setText(String.format(getString(R.string.xiadan_dialog_shouxufei), "0"));
+        dialogButton= view.findViewById(R.id.tixian_dialog_xiadan);
+        dialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xiaDan();
+            }
+        });
+
+        dealLeverage();
+
+        dialogSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                dialogBuyCountEt.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        dialogSubtractBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buyCount> 1){
+                    buyCount -= 1;
+                    dialogBuyCountEt.setText(String.valueOf(buyCount));
+                }
+            }
+        });
+        dialogBuyCountEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -386,7 +425,11 @@ public class MarketDetailActivity2 extends BaseActivity {
                 int value= Integer.parseInt(s.toString().trim());
                 if (value> maxCount) {
                     value= maxCount;
-                    dialogEditText.setText(String.valueOf(value));
+                    dialogBuyCountEt.setText(String.valueOf(value));
+                }
+                if (value< 0){
+                    value= 0;
+                    dialogBuyCountEt.setText(String.valueOf(value));
                 }
                 if (value== 0){
                     return;
@@ -405,17 +448,16 @@ public class MarketDetailActivity2 extends BaseActivity {
                 buyCount= value;
             }
         });
-
-        dialogBuyPrice= view.findViewById(R.id.tixian_dialog_buyprice);
-        dialogServerPrice= view.findViewById(R.id.tixian_dialog_serverprice);
-        dialogServerPrice.setText(String.format(getString(R.string.xiadan_dialog_shouxufei), "0"));
-        dialogButton= view.findViewById(R.id.tixian_dialog_xiadan);
-        dialogButton.setOnClickListener(new View.OnClickListener() {
+        dialogPlusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                xiaDan();
+                if (buyCount< 100){
+                    buyCount += 1;
+                    dialogBuyCountEt.setText(String.valueOf(buyCount));
+                }
             }
         });
+        dialogSeekBar.setProgress(50);
 
         // 设置相关位置，一定要在 show()之后
         Window window = xiaDanDialog.getWindow();
@@ -563,6 +605,13 @@ public class MarketDetailActivity2 extends BaseActivity {
                 });
             }
         }
+        if (mLeverageList.get(0).getLeverage()== 100){
+            dialogRbtn_100.setChecked(true);
+        }else if (mLeverageList.get(0).getLeverage()== 50){
+            dialogRbtn_50.setChecked(true);
+        }else if (mLeverageList.get(0).getLeverage()== 1){
+            dialogRbtn_1.setChecked(true);
+        }
     }
 
     private void computeMaxCount(){
@@ -571,6 +620,10 @@ public class MarketDetailActivity2 extends BaseActivity {
         float fuWuFeiLv= leverageEntity.getFeeRate();
         float danBiZongJia= danJia + danJia*fuWuFeiLv;
         maxCount= (int) (balance/danBiZongJia);
+        if (maxCount> 100) maxCount= 100;
+        if (buyCount> 0){
+            dialogBuyCountEt.setText(String.valueOf(buyCount));
+        }
     }
 
 }

@@ -73,7 +73,7 @@ public class DealChiCangFragment extends BaseFragment {
         final String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){
             addNetWork(
-                    Observable.interval(1, TimeUnit.SECONDS)
+                    Observable.interval(3, TimeUnit.SECONDS)
                             .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<ChiCangEntity>>>>() {
                                 @Override
                                 public ObservableSource<HttpResult<ArrayList<ChiCangEntity>>> apply(Long aLong) throws Exception {

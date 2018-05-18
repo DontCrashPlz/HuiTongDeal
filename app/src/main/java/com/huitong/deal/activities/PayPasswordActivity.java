@@ -32,6 +32,7 @@ import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -54,6 +55,8 @@ public class PayPasswordActivity extends BaseActivity {
     private Button mGetVerificationBtn;
 
     private Button mNextBtn;
+
+    private Dialog mSuccessDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -169,6 +172,7 @@ public class PayPasswordActivity extends BaseActivity {
                                 showShortToast(stringHttpResult.getDescription());
                             }else if ("success".equals(stringHttpResult.getStatus())){
                                 showSuccessDialog(getRealContext());
+                                closeSuccessDialog();
                             }
                         }
                     }, new Consumer<Throwable>() {
@@ -233,11 +237,11 @@ public class PayPasswordActivity extends BaseActivity {
     private void showSuccessDialog(Context context){
         View view = LayoutInflater.from(context).inflate(R.layout.layout_paypass_success_dialog, null);
         // 设置style 控制默认dialog带来的边距问题
-        final Dialog dialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
-        dialog.setContentView(view);
-        dialog.show();
+        mSuccessDialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
+        mSuccessDialog.setContentView(view);
+        mSuccessDialog.show();
 
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+        mSuccessDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
                 finish();
@@ -245,7 +249,7 @@ public class PayPasswordActivity extends BaseActivity {
         });
 
         // 设置相关位置，一定要在 show()之后
-        Window window = dialog.getWindow();
+        Window window = mSuccessDialog.getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         WindowManager.LayoutParams params = window.getAttributes();
         params.gravity = Gravity.CENTER;
@@ -286,6 +290,20 @@ public class PayPasswordActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    private void closeSuccessDialog(){
+        if (mSuccessDialog== null || !mSuccessDialog.isShowing())
+            return;
+        addNetWork(Observable.timer(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        mSuccessDialog.dismiss();
+                    }
+                }));
     }
 
 }

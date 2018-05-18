@@ -85,10 +85,12 @@ public class ChiCangDetailActivity extends BaseActivity {
         postionNo= mEntity.getPosition_no();
 
         mTextView2= (TextView) findViewById(R.id.chicang_detail_text2);
-        if (mEntity.getBuy_type()== 0){
+        if (mEntity.getBuy_type()== 1){
             mTextView2.setText("回购");
-        }else {
+        }else if (mEntity.getBuy_type()== 2){
             mTextView2.setText("认购");
+        }else {
+            mTextView2.setText("未知");
         }
 
         mTextView3= (TextView) findViewById(R.id.chicang_detail_text3);
@@ -157,6 +159,11 @@ public class ChiCangDetailActivity extends BaseActivity {
                 }
             }
         });
+        if (mEntity.getLeverage()== 1){
+            mPingCangBtn.setVisibility(View.VISIBLE);
+        }else {
+            mPingCangBtn.setVisibility(View.GONE);
+        }
 
         if (appToken!= null && appToken.length()> 0){
             addNetWork(

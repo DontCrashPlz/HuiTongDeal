@@ -102,7 +102,7 @@ public class PayActivity extends BaseActivity {
         mMoneyTv.setText("支付金额： " + entity.getTotal_fee());
 
         mStatusTv= (TextView) findViewById(R.id.pay_detail_status);
-        mStatusTv.setText("支付状态： " + "待支付");
+        mStatusTv.setText("待支付");
 
         mButton1= (Button) findViewById(R.id.pay_detail_btn1);
         mButton1.setOnClickListener(new View.OnClickListener() {

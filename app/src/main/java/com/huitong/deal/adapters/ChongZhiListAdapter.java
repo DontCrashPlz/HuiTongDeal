@@ -39,7 +39,7 @@ public class ChongZhiListAdapter extends BaseQuickAdapter<ChongZhiHistoryEntity,
         });
 
         helper.mTimeTv.setText(item.getAddtime());
-        helper.mMoneyTv.setText(String.valueOf(item.getAmount()));
+        helper.mMoneyTv.setText("+" + String.valueOf(item.getAmount()));
     }
 
     class ChongZhiHolder extends BaseViewHolder{

@@ -411,45 +411,45 @@ public class MarketDetailActivity extends BaseActivity {
         dialogBuyCount.setText(String.format(getString(R.string.xiadan_dialog_buycount), "0"));
         dialogMaxCount= view.findViewById(R.id.tixian_dialog_maxcount);
         dialogMaxCount.setText(String.format(getString(R.string.xiadan_dialog_maxcount), "0", "0"));
-        dialogEditText= view.findViewById(R.id.tixian_dialog_edittext);
-        dialogEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().trim()== null || s.toString().trim().length()< 1){
-                    return;
-                }
-                int value= Integer.parseInt(s.toString().trim());
-                if (value> maxCount) {
-                    value= maxCount;
-                    dialogEditText.setText(String.valueOf(value));
-                }
-                if (value== 0){
-                    return;
-                }
-                dialogBuyCount.setText(
-                        String.format(
-                                getString(R.string.xiadan_dialog_buycount),
-                                String.valueOf(value)));
-                float zongJia= leverageEntity.getPrice()*value;
-                float shouXuFei= zongJia*leverageEntity.getFeeRate();
-                dialogBuyPrice.setText(String.valueOf(zongJia));
-                dialogServerPrice.setText(String.format(
-                        getString(R.string.xiadan_dialog_shouxufei),
-                        String.valueOf(shouXuFei)));
-
-                buyCount= value;
-            }
-        });
+//        dialogEditText= view.findViewById(R.id.tixian_dialog_edittext);
+//        dialogEditText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().trim()== null || s.toString().trim().length()< 1){
+//                    return;
+//                }
+//                int value= Integer.parseInt(s.toString().trim());
+//                if (value> maxCount) {
+//                    value= maxCount;
+//                    dialogEditText.setText(String.valueOf(value));
+//                }
+//                if (value== 0){
+//                    return;
+//                }
+//                dialogBuyCount.setText(
+//                        String.format(
+//                                getString(R.string.xiadan_dialog_buycount),
+//                                String.valueOf(value)));
+//                float zongJia= leverageEntity.getPrice()*value;
+//                float shouXuFei= zongJia*leverageEntity.getFeeRate();
+//                dialogBuyPrice.setText(String.valueOf(zongJia));
+//                dialogServerPrice.setText(String.format(
+//                        getString(R.string.xiadan_dialog_shouxufei),
+//                        String.valueOf(shouXuFei)));
+//
+//                buyCount= value;
+//            }
+//        });
 
         dialogBuyPrice= view.findViewById(R.id.tixian_dialog_buyprice);
         dialogServerPrice= view.findViewById(R.id.tixian_dialog_serverprice);

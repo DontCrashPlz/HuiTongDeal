@@ -13,6 +13,7 @@ import com.huitong.deal.activities.MarketDetailActivity;
 import com.huitong.deal.activities.MarketDetailActivity2;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
+import com.zheng.zchlibrary.utils.Tools;
 
 /**
  * Created by Zheng on 2018/4/26.
@@ -37,8 +38,8 @@ public class MarketListAdapter extends BaseQuickAdapter<CommodityDetailEntity, M
             }
         });
         helper.mNameTv.setText(item.getStock_name());
-        helper.mPriceTv.setText(String.valueOf(item.getNow_price()));
-        helper.mFloatTv.setText(String.valueOf(item.getFloat_rate()));
+        helper.mPriceTv.setText(Tools.formatFloat(item.getNow_price()));
+        helper.mFloatTv.setText(Tools.formatFloat(item.getFloat_rate()) + "%");
         if (item.getFloat_rate()< 0){
             helper.mFloatTv.setTextColor(Color.rgb(0, 246, 1));
         }else {

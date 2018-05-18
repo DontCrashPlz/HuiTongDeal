@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.huitong.deal.R;
 import com.huitong.deal.activities.ChiCangDetailActivity;
 import com.huitong.deal.beans.ChiCangEntity;
+import com.zheng.zchlibrary.utils.Tools;
 
 /**
  * Created by Zheng on 2018/4/26.
@@ -36,15 +37,17 @@ public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangL
             }
         });
         helper.mNameTv.setText(item.getStockname());
-        if (item.getBuy_type()== 0){
+        if (item.getBuy_type()== 1){
             helper.mIconTv.setText("回购");
-        }else {
+        }else if (item.getBuy_type()== 2){
             helper.mIconTv.setText("认购");
+        }else {
+            helper.mIconTv.setText("未知");
         }
         helper.mIconRemarkTv.setText(item.getStock_no());
-        helper.mText2.setText(String.valueOf(item.getNow_price()));
-        helper.mText3.setText(String.valueOf(item.getCurpoint()));
-        helper.mText4.setText(String.valueOf(item.getGain()));
+        helper.mText2.setText(Tools.formatFloat(item.getNow_price()));
+        helper.mText3.setText(Tools.formatFloat(item.getCurpoint()));
+        helper.mText4.setText(Tools.formatFloat(item.getGain()) + "%");
         float currentGain= item.getGain();
         if (currentGain< 0F){
             helper.mIconTv.setTextColor(colorOrange);

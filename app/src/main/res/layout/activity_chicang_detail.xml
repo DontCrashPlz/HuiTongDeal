@@ -152,7 +152,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="认购方式"
+            android:text="交易杠杆"
             android:textColor="@android:color/white"
             android:textSize="@dimen/textSize_15"
             android:paddingLeft="10dp"/>

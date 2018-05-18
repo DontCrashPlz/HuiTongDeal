@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.adapters.ChongZhiStyleAdapter;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.ChongZhiEntity;
 import com.huitong.deal.beans.HttpResult;
@@ -53,6 +56,9 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
     private TextView mFunctionTv;
 
     private EditText mMoneyEt;
+
+    private RecyclerView mRecyclerView;
+
     private RelativeLayout mKuaiJieRly;
     private TextView mKuaiJieTv;
     private RelativeLayout mAlipayRly;
@@ -107,6 +113,9 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
 
         mMoneyEt = (EditText) findViewById(R.id.chongzhi_money);
 
+        mRecyclerView= (RecyclerView) findViewById(R.id.recyclerview);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getRealContext()));
+
         mKuaiJieRly = (RelativeLayout) findViewById(R.id.chongzhi_kuaijie);
         mKuaiJieRly.setOnClickListener(this);
         mKuaiJieRly.setClickable(false);
@@ -141,18 +150,19 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
                                 showShortToast(arrayListHttpResult.getDescription());
                             }else if ("success".equals(arrayListHttpResult.getStatus())){
                                 if (arrayListHttpResult.getData().size()> 0){
-                                    for (PayTypeEntity entity : arrayListHttpResult.getData()){
-                                        if ("unitscan".equals(entity.getPaytype()) && entity.getInstall()== 1){
-                                            mKuaiJieRly.setClickable(true);
-                                            mKuaiJieTv.setTextColor(Color.WHITE);
-                                        }else if ("alipay".equals(entity.getPaytype()) && entity.getInstall()== 1){
-                                            mAlipayRly.setClickable(true);
-                                            mAlipayTv.setTextColor(Color.WHITE);
-                                        }else if ("wxpay".equals(entity.getPaytype()) && entity.getInstall()== 1){
-                                            mWeXinRly.setClickable(true);
-                                            mWeiXinTv.setTextColor(Color.WHITE);
-                                        }
-                                    }
+                                    mRecyclerView.setAdapter(new ChongZhiStyleAdapter(ChongZhiActivity.this, arrayListHttpResult.getData()));
+//                                    for (PayTypeEntity entity : arrayListHttpResult.getData()){
+//                                        if ("unitscan".equals(entity.getPaytype()) && entity.getInstall()== 1){
+//                                            mKuaiJieRly.setClickable(true);
+//                                            mKuaiJieTv.setTextColor(Color.WHITE);
+//                                        }else if ("alipay".equals(entity.getPaytype()) && entity.getInstall()== 1){
+//                                            mAlipayRly.setClickable(true);
+//                                            mAlipayTv.setTextColor(Color.WHITE);
+//                                        }else if ("wxpay".equals(entity.getPaytype()) && entity.getInstall()== 1){
+//                                            mWeXinRly.setClickable(true);
+//                                            mWeiXinTv.setTextColor(Color.WHITE);
+//                                        }
+//                                    }
                                 }
                             }
                         }
@@ -166,7 +176,12 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private void doChongZhi(String amount , final String payType){
+    public void doChongZhi(final String payType){
+        String amount= mMoneyEt.getText().toString().trim();
+        if (amount== null || amount.length()< 1){
+            showShortToast("请输入充值金额");
+            return;
+        }
         if (appToken!= null && appToken.length()> 0){
             addNetWork(Network.getInstance().chongZhi(appToken, amount)//调用充值接口
                     .subscribeOn(Schedulers.io())//在io线程进行网络请求
@@ -224,28 +239,27 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-
     @Override
     public void onClick(View v) {
-        String amount= mMoneyEt.getText().toString().trim();
-        if (amount== null || amount.length()< 1){
-            showShortToast("请输入充值金额");
-            return;
-        }
-
-        int vId= v.getId();
-        switch (vId){
-            case R.id.chongzhi_kuaijie:
-                doChongZhi(amount, "unitscan");
-                break;
-            case R.id.chongzhi_alipay:
-                doChongZhi(amount, "alipay");
-                break;
-            case R.id.chongzhi_weixin:
-                doChongZhi(amount, "wxpay");
-                break;
-            default:
-                break;
-        }
+//        String amount= mMoneyEt.getText().toString().trim();
+//        if (amount== null || amount.length()< 1){
+//            showShortToast("请输入充值金额");
+//            return;
+//        }
+//
+//        int vId= v.getId();
+//        switch (vId){
+//            case R.id.chongzhi_kuaijie:
+//                doChongZhi(amount, "unitscan");
+//                break;
+//            case R.id.chongzhi_alipay:
+//                doChongZhi(amount, "alipay");
+//                break;
+//            case R.id.chongzhi_weixin:
+//                doChongZhi(amount, "wxpay");
+//                break;
+//            default:
+//                break;
+//        }
     }
 }

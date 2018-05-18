@@ -166,9 +166,9 @@ public class MyPayPsdInputView extends EditText {
         Log.e("MyPayPsdInputView onMeasure :" , "getWidth = " + getWidth() + " ; getHeight = " + getHeight());
         Log.e("MyPayPsdInputView onMeasure :" , "getPaddingLeft = " + getPaddingLeft() + " ; getPaddingRight = " + getPaddingRight());
 
-        strokeRect.set(0, 0, width, height);
+        strokeRect.set(10, 10, width - 10, height - 10);
 
-        gridWidth= (width - (strokeWidth * 2) - ((maxCount - 1)*divideLineWidth))/maxCount;
+        gridWidth= (width - 20 - (strokeWidth * 2) - ((maxCount - 1)*divideLineWidth))/maxCount;
 
         startX= strokeWidth + gridWidth/2;
         startY= height/2;
@@ -199,11 +199,11 @@ public class MyPayPsdInputView extends EditText {
 
 
         for (int i = 0; i < maxCount - 1; i++) {
-            float divideX= strokeWidth + (i*divideLineWidth) + ((i + 1)*gridWidth);
+            float divideX= 10 + strokeWidth + (i*divideLineWidth) + ((i + 1)*gridWidth);
             canvas.drawLine(divideX,
-                    0,
+                    10,
                     divideX,
-                    height,
+                    height - 10,
                     divideLinePaint);
         }
 

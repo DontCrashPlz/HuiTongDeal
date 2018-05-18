@@ -26,7 +26,7 @@ public class DownloadImageManager {
 //            pd.setMax(conn.getContentLength());
             int contentLength= conn.getContentLength();
             InputStream is = conn.getInputStream();
-            File file = new File(context.getFilesDir(), fileName);
+            File file = new File(context.getExternalFilesDir(""), fileName);
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
             byte[] buffer = new byte[1024];

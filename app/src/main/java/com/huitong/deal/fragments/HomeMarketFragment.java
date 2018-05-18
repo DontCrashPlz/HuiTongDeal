@@ -71,7 +71,7 @@ public class HomeMarketFragment extends BaseFragment {
         final String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){
             addNetWork(
-                    Observable.interval(1, TimeUnit.SECONDS)
+                    Observable.interval(3, TimeUnit.SECONDS)
                             .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<CommodityDetailEntity>>>>() {
                                 @Override
                                 public ObservableSource<HttpResult<ArrayList<CommodityDetailEntity>>> apply(Long aLong) throws Exception {

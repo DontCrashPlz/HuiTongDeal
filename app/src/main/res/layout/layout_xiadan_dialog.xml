@@ -106,6 +106,8 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:text="100"
+            android:textSize="@dimen/textSize_15"
+            android:textColor="@color/radiobtn_textcolor_leverage"
             android:background="@drawable/radiobtn_background_orange"
             android:button="@null"
             android:gravity="center"
@@ -117,6 +119,8 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:text="50"
+            android:textSize="@dimen/textSize_15"
+            android:textColor="@color/radiobtn_textcolor_leverage"
             android:background="@drawable/radiobtn_background_orange"
             android:button="@null"
             android:gravity="center"
@@ -128,6 +132,8 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:text="基础合约"
+            android:textSize="@dimen/textSize_15"
+            android:textColor="@color/radiobtn_textcolor_leverage"
             android:background="@drawable/radiobtn_background_orange"
             android:button="@null"
             android:gravity="center"
@@ -165,24 +171,72 @@
             android:textSize="@dimen/textSize_12"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
-    <RelativeLayout
+
+    <LinearLayout
         android:id="@+id/tixian_dialog_panel_edittext"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@+id/tixian_dialog_panel_shoushu">
-        <EditText
-            android:id="@+id/tixian_dialog_edittext"
-            android:layout_width="70dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="@dimen/textSize_14"
+            android:text="1"
+            android:textColor="#333333"
+            android:textSize="@dimen/textSize_15"
+            android:gravity="center"/>
+        <android.support.v7.widget.AppCompatSeekBar
+            android:id="@+id/tixian_dialog_seekbar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:progressDrawable="@drawable/my_progress_horizontal"
+            android:thumb="@drawable/seekbar_thumb_white_point"
+            android:max="100"
+            android:maxHeight="30dp"
+            android:thumbOffset="1dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="100"
+            android:textColor="#333333"
+            android:textSize="@dimen/textSize_15"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/tixian_dialog_btn_subtract"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:text="-"
+            android:textColor="#333333"
+            android:textSize="@dimen/textSize_15"
+            android:background="#999999"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="10dp"/>
+        <EditText
+            android:id="@+id/tixian_dialog_et_buycount"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/textSize_15"
             android:textColor="#333333"
             android:background="@drawable/edittext_background_white_corners_hollow"
-            android:layout_marginLeft="10dp"
-            android:paddingLeft="10dp"
-            android:inputType="number"/>
-    </RelativeLayout>
+            android:inputType="number"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+        <Button
+            android:id="@+id/tixian_dialog_btn_plus"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:text="+"
+            android:textColor="#333333"
+            android:textSize="@dimen/textSize_15"
+            android:background="#999999"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"/>
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

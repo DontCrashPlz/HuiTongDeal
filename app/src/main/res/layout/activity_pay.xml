@@ -45,6 +45,11 @@
         android:background="@color/background_black_light"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -55,7 +60,8 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="14dp"
-        android:paddingBottom="14dp">
+        android:paddingBottom="14dp"
+        android:visibility="gone">
         <ImageView
             android:id="@+id/icon_yinlian"
             android:layout_width="wrap_content"
@@ -97,7 +103,8 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="14dp"
-        android:paddingBottom="14dp">
+        android:paddingBottom="14dp"
+        android:visibility="gone">
         <ImageView
             android:id="@+id/icon_zhifubao"
             android:layout_width="wrap_content"
@@ -139,7 +146,8 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="14dp"
-        android:paddingBottom="14dp">
+        android:paddingBottom="14dp"
+        android:visibility="gone">
         <ImageView
             android:id="@+id/icon_weixin"
             android:layout_width="wrap_content"

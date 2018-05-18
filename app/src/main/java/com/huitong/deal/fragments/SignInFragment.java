@@ -126,6 +126,14 @@ public class SignInFragment extends BaseFragment {
                     showShortToast("请设置登录密码");
                     return;
                 }
+                if (inviteCode== null || inviteCode.length()< 1){
+                    showShortToast("请输入邀请码");
+                    return;
+                }
+                if (address== null || address.length()< 1){
+                    showShortToast("请设置收货地址");
+                    return;
+                }
                 if (!mReadedCb.isChecked()){
                     showShortToast("请阅读并同意《汇通承诺》");
                     return;

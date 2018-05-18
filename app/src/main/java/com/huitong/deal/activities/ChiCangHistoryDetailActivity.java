@@ -14,6 +14,8 @@ import com.huitong.deal.beans.ChiCangHistoryEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.utils.Tools;
+import com.zheng.zchlibrary.widgets.CustomTabLayout.Tool;
 
 import java.util.concurrent.TimeUnit;
 
@@ -75,17 +77,19 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         mTextView1.setText(mEntity.getPosition_no());
 
         mTextView2= (TextView) findViewById(R.id.chicang_detail_text2);
-        if (mEntity.getBuy_type()== 0){
+        if (mEntity.getBuy_type()== 1){
             mTextView2.setText("回购");
-        }else {
+        }else if (mEntity.getBuy_type()== 2){
             mTextView2.setText("认购");
+        }else {
+            mTextView2.setText("未知");
         }
 
         mTextView3= (TextView) findViewById(R.id.chicang_detail_text3);
-        mTextView3.setText(String.valueOf(mEntity.getBuy_pirce()));
+        mTextView3.setText(Tools.formatFloat(mEntity.getNow_price()));
 
         mTextView4= (TextView) findViewById(R.id.chicang_detail_text4);
-        mTextView4.setText(String.valueOf(mEntity.getEnd_price()));
+        mTextView4.setText(Tools.formatFloat(mEntity.getEnd_price()));
 
         mTextView5= (TextView) findViewById(R.id.chicang_detail_text5);
         mTextView5.setText(String.valueOf(mEntity.getBuy_count()));
@@ -94,19 +98,19 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         mTextView6.setText(String.valueOf(mEntity.getLeverage()));
 
         mTextView7= (TextView) findViewById(R.id.chicang_detail_text7);
-        mTextView7.setText(String.valueOf(mEntity.getOrder_money()));
+        mTextView7.setText(Tools.formatFloat(mEntity.getOrder_money()));
 
         mTextView8= (TextView) findViewById(R.id.chicang_detail_text8);
-        mTextView8.setText(String.valueOf(mEntity.getService_fee()));
+        mTextView8.setText(Tools.formatFloat(mEntity.getService_fee()));
 
         mTextView9= (TextView) findViewById(R.id.chicang_detail_text9);
-        mTextView9.setText(String.valueOf(mEntity.getGain()));
+        mTextView9.setText(Tools.formatFloat(mEntity.getGain()));
 
         mTextView10= (TextView) findViewById(R.id.chicang_detail_text10);
         mTextView10.setText(mEntity.getBuy_time());
 
         mTextView11= (TextView) findViewById(R.id.chicang_detail_text11);
-        mTextView11.setText("风险平仓");
+        mTextView11.setText("已完成");
     }
 
     @Override

@@ -140,7 +140,7 @@ public class MyApplication extends BaseApplication {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
                             LogUtil.d("throwable", throwable.toString());
-                            Toast.makeText(getApplicationContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
