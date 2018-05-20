@@ -47,7 +47,8 @@
         app:layout_constraintTop_toBottomOf="@+id/paypass_dialog_tv_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:background="@null"/>
 
     <Button
         android:id="@+id/paypass_dialog_btn_cancel"

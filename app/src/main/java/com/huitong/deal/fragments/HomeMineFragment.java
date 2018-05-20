@@ -21,6 +21,7 @@ import com.huitong.deal.activities.TiXianActivity;
 import com.huitong.deal.apps.MyApplication;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
+import com.zheng.zchlibrary.utils.Tools;
 
 /**
  * Created by Zheng on 2018/4/13.
@@ -71,9 +72,9 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
             if (MyApplication.appUser.getUserinfo()!= null){
                 float availableBalance= MyApplication.appUser.getUserinfo().getAvailablebalance();
                 float integral= MyApplication.appUser.getUserinfo().getIntegral();
-                mPropertyTv.setText(String.valueOf(availableBalance + integral));
-                mBalanceTv.setText(String.valueOf(availableBalance));
-                mSecurityTv.setText(String.valueOf(integral));
+                mPropertyTv.setText(Tools.formatFloat(availableBalance + integral));
+                mBalanceTv.setText(Tools.formatFloat(availableBalance));
+                mSecurityTv.setText(Tools.formatFloat(integral));
             }
         }
 

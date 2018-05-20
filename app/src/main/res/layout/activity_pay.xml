@@ -33,7 +33,8 @@
             android:hint="请输入充值金额"
             android:textColorHint="#90FFFFFF"
             android:lines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:inputType="number"/>
     </LinearLayout>
 
     <TextView

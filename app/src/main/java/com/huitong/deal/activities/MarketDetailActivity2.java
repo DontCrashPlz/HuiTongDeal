@@ -247,7 +247,8 @@ public class MarketDetailActivity2 extends BaseActivity {
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webSetting.setSupportZoom(false);// 用于设置webview放大
         webSetting.setBuiltInZoomControls(false);
-        mWebView.loadUrl("http://47.92.28.185/api/stm/trade/echart/getTimeLine?stockCode="+ stock_code);
+        String lineUrl= "http://47.92.28.185/api/stm/trade/echart/getTimeLine?stockCode="+ stock_code;
+        mWebView.loadUrl(lineUrl);
 
     }
 
@@ -288,34 +289,41 @@ public class MarketDetailActivity2 extends BaseActivity {
     }
 
     /**************************下单Dialog相关*******************************/
-    private Dialog xiaDanDialog;
+    private Dialog xiaDanDialog;//下单弹窗
 //    private ImageView dialogCancel;
-    private CommonTabLayout dialogTabLayout;
-    private TextView dialogStockName;
-    private TextView dialogStockStatus;
-    private TextView dialogCurPrice;
-    private RadioButton dialogRbtn_100;
-    private RadioButton dialogRbtn_50;
-    private RadioButton dialogRbtn_1;
-    private TextView dialogBuyCount;
-    private TextView dialogMaxCount;
+    private CommonTabLayout dialogTabLayout;//选择认购回购
+    private TextView dialogStockName;//股票名称
+    private TextView dialogStockStatus;//股票状态
+    private TextView dialogCurPrice;//股票现价
+    private RadioButton dialogRbtn_100;//100杠杆
+    private RadioButton dialogRbtn_50;//50杠杆
+    private RadioButton dialogRbtn_1;//1杠杆
+    private TextView dialogBuyCount;//购买手数
+    private TextView dialogMaxCount;//最多购买手数
 //    private EditText dialogEditText;
-    private AppCompatSeekBar dialogSeekBar;
-    private Button dialogSubtractBtn;
-    private EditText dialogBuyCountEt;
-    private Button dialogPlusBtn;
-    private TextView dialogBuyPrice;
-    private TextView dialogServerPrice;
-    private Button dialogButton;
+    private AppCompatSeekBar dialogSeekBar;//滑动条选择购买手数
+    private Button dialogSubtractBtn;//减购买手数按钮
+    private EditText dialogBuyCountEt;//购买手数输入框
+    private Button dialogPlusBtn;//加购买手数按钮
+    private TextView dialogZhiSunTv;//止损率
+    private TextView dialogZhiYingTv;//止盈率
+    private TextView dialogBuyPrice;//购买金额
+    private TextView dialogServerPrice;//服务费
+    private Button dialogButton;//下单按钮
 
-    private String nowPrice;
-    private LeverageEntity leverageEntity;
-    private int buyCount;
-    private int buyType;
-    private int maxCount;
+    private String nowPrice;//股票现价
+    private LeverageEntity leverageEntity;//现在选择的杠杆
+    private int buyCount;//购买手数
+    private int buyType;//购买类型（认购回购）
+    private int maxCount;//最大购买数量
 
     private ArrayList<CustomTabEntity> tabEntities;
 
+    /**
+     * 弹出下单弹窗
+     * @param context
+     * @param currentTab
+     */
     private void showXiaDanDialog(Context context, int currentTab){
         View view = LayoutInflater.from(context).inflate(R.layout.layout_xiadan_dialog, null);
         // 设置style 控制默认dialog带来的边距问题
@@ -368,6 +376,8 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogSubtractBtn= view.findViewById(R.id.tixian_dialog_btn_subtract);
         dialogBuyCountEt= view.findViewById(R.id.tixian_dialog_et_buycount);
         dialogPlusBtn= view.findViewById(R.id.tixian_dialog_btn_plus);
+        dialogZhiSunTv= view.findViewById(R.id.tixian_dialog_tv_zhisunxian);
+        dialogZhiYingTv= view.findViewById(R.id.tixian_dialog_tv_zhiyingxian);
         dialogBuyPrice= view.findViewById(R.id.tixian_dialog_buyprice);
         dialogServerPrice= view.findViewById(R.id.tixian_dialog_serverprice);
         dialogServerPrice.setText(String.format(getString(R.string.xiadan_dialog_shouxufei), "0"));
@@ -375,7 +385,7 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                xiaDan();
+                showConfirmDialog();
             }
         });
 
@@ -407,6 +417,7 @@ public class MarketDetailActivity2 extends BaseActivity {
             }
         });
         dialogBuyCountEt.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -564,6 +575,14 @@ public class MarketDetailActivity2 extends BaseActivity {
                                             getString(R.string.xiadan_dialog_maxcount),
                                             String.valueOf(leverageEntity.getPrice()),
                                             String.valueOf(maxCount)));
+                            dialogZhiSunTv.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_zhisunxian),
+                                            leverageEntity.getLoseRate() * 100 + "%"));
+                            dialogZhiYingTv.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_zhiyingxian),
+                                            leverageEntity.getGainRate() * 100 + "%"));
                         }
                     }
                 });
@@ -582,6 +601,14 @@ public class MarketDetailActivity2 extends BaseActivity {
                                             getString(R.string.xiadan_dialog_maxcount),
                                             String.valueOf(leverageEntity.getPrice()),
                                             String.valueOf(maxCount)));
+                            dialogZhiSunTv.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_zhisunxian),
+                                            leverageEntity.getLoseRate() * 100 + "%"));
+                            dialogZhiYingTv.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_zhiyingxian),
+                                            leverageEntity.getGainRate() * 100 + "%"));
                         }
                     }
                 });
@@ -600,6 +627,14 @@ public class MarketDetailActivity2 extends BaseActivity {
                                             getString(R.string.xiadan_dialog_maxcount),
                                             String.valueOf(leverageEntity.getPrice()),
                                             String.valueOf(maxCount)));
+                            dialogZhiSunTv.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_zhisunxian),
+                                            leverageEntity.getLoseRate() * 100 + "%"));
+                            dialogZhiYingTv.setText(
+                                    String.format(
+                                            getString(R.string.xiadan_dialog_zhiyingxian),
+                                            leverageEntity.getGainRate() * 100 + "%"));
                         }
                     }
                 });
@@ -614,6 +649,9 @@ public class MarketDetailActivity2 extends BaseActivity {
         }
     }
 
+    /**
+     * 计算最大手数
+     */
     private void computeMaxCount(){
         float balance= MyApplication.appUser.getUserinfo().getAvailablebalance();
         float danJia= leverageEntity.getPrice();
@@ -624,6 +662,40 @@ public class MarketDetailActivity2 extends BaseActivity {
         if (buyCount> 0){
             dialogBuyCountEt.setText(String.valueOf(buyCount));
         }
+    }
+
+    /**
+     * 弹出确认下单弹窗
+     */
+    private void showConfirmDialog(){
+        View view = LayoutInflater.from(getRealContext()).inflate(R.layout.layout_dialog_confirm_order, null);
+        // 设置style 控制默认dialog带来的边距问题
+        final Dialog dialog = new Dialog(getRealContext(), R.style.custom_dialog_no_titlebar);
+        dialog.setContentView(view);
+        dialog.show();
+
+        dialog.findViewById(R.id.confirm_dialog_btn_cancel)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+        dialog.findViewById(R.id.confirm_dialog_btn_confirm)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        xiaDan();
+                    }
+                });
+
+        // 设置相关位置，一定要在 show()之后
+        Window window = dialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.CENTER;
+        window.setAttributes(params);
     }
 
 }
