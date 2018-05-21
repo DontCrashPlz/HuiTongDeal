@@ -33,7 +33,7 @@ public class ChongZhiDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tixian_detail);
+        setContentView(R.layout.activity_chongzhi_detail);
 
         entity= (ChongZhiHistoryEntity) getIntent().getSerializableExtra("chongzhi_entity");
         if (entity== null){
@@ -56,19 +56,21 @@ public class ChongZhiDetailActivity extends BaseActivity {
         mIconTv.setVisibility(View.GONE);
 
         mStatusTv=  (TextView) findViewById(R.id.tixian_detail_status);
-        if (entity.getStatus()== 0){
-            mStatusTv.setText("未支付");
-        }else if (entity.getStatus()== 1){
-            mStatusTv.setText("已支付");
-        }else if (entity.getStatus()== 2){
-            mStatusTv.setText("已拒绝");
-        }
+        mStatusTv.setText(entity.getStatusname());
+//        if (entity.getStatus()== 0){
+//            mStatusTv.setText("未支付");
+//        }else if (entity.getStatus()== 1){
+//            mStatusTv.setText("已支付");
+//        }else if (entity.getStatus()== 2){
+//            mStatusTv.setText("已拒绝");
+//        }
 
         mMoneyTv = (TextView) findViewById(R.id.tixian_detail_money);
         mMoneyTv.setText("+"+entity.getAmount());
 
         mTypeTv = (TextView) findViewById(R.id.tixian_detail_type);
-        mTypeTv.setText("未知");
+        if (entity.getPaytypename()!= null && entity.getPaytypename().length()> 0)
+        mTypeTv.setText(entity.getPaytypename());
 
         mTimeTv = (TextView) findViewById(R.id.tixian_detail_time);
         mTimeTv.setText(entity.getAddtime());

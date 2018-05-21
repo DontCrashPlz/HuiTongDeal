@@ -394,7 +394,7 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                dialogBuyCountEt.setText(String.valueOf(progress));
+                dialogBuyCountEt.setText(String.valueOf(progress + 1));
             }
 
             @Override
@@ -468,7 +468,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                 }
             }
         });
-        dialogSeekBar.setProgress(50);
+        dialogSeekBar.setProgress(49);
 
         // 设置相关位置，一定要在 show()之后
         Window window = xiaDanDialog.getWindow();
@@ -687,6 +687,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         xiaDan();
+                        dialog.dismiss();
                     }
                 });
 

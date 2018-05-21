@@ -33,7 +33,7 @@
             android:id="@+id/bill_text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提现金额"
+            android:text="充值金额"
             android:textColor="#80FFFFFF"
             android:textSize="@dimen/textSize_14"
             android:layout_marginTop="16dp"/>
@@ -52,7 +52,7 @@
             android:id="@+id/bill_text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="提现状态"
+            android:text="支付方式"
             android:textColor="#80FFFFFF"
             android:textSize="@dimen/textSize_14"
             android:layout_marginTop="14dp"

@@ -37,16 +37,17 @@ public class TiXianListAdapter extends BaseQuickAdapter<TiXianHistoryEntity, TiX
                 mContext.startActivity(intent);
             }
         });
-        if (item.getStatus()== 0){
-            helper.mStatusTv.setText("未支付");
-            helper.mStatusTv.setTextColor(Color.WHITE);
-        }else if (item.getStatus()== 1){
-            helper.mStatusTv.setText("已支付");
-            helper.mStatusTv.setTextColor(Color.rgb(4, 188, 4));
-        }else if (item.getStatus()== 2){
-            helper.mStatusTv.setText("已拒绝");
-            helper.mStatusTv.setTextColor(Color.WHITE);
-        }
+//        if (item.getStatus()== 0){
+//            helper.mStatusTv.setText("未支付");
+//            helper.mStatusTv.setTextColor(Color.WHITE);
+//        }else if (item.getStatus()== 1){
+//            helper.mStatusTv.setText("已支付");
+//            helper.mStatusTv.setTextColor(Color.rgb(4, 188, 4));
+//        }else if (item.getStatus()== 2){
+//            helper.mStatusTv.setText("已拒绝");
+//            helper.mStatusTv.setTextColor(Color.WHITE);
+//        }
+        helper.mStatusTv.setText(item.getStatusname());
         helper.mTimeTv.setText(item.getCach_time());
         helper.mMoneyTv.setText("-" + item.getCach_amount());
     }

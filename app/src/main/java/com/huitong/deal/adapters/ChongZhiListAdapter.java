@@ -37,7 +37,7 @@ public class ChongZhiListAdapter extends BaseQuickAdapter<ChongZhiHistoryEntity,
                 mContext.startActivity(intent);
             }
         });
-
+        helper.mStatusTv.setText(item.getStatusname());
         helper.mTimeTv.setText(item.getAddtime());
         helper.mMoneyTv.setText("+" + String.valueOf(item.getAmount()));
     }

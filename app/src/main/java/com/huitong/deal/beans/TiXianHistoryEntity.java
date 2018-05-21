@@ -28,6 +28,15 @@ public class TiXianHistoryEntity implements Serializable {
     private boolean deletestatus;
     private int id;
     private int status;
+    private String statusname;
+
+    public String getStatusname() {
+        return statusname;
+    }
+
+    public void setStatusname(String statusname) {
+        this.statusname = statusname;
+    }
 
     public float getAfter_balance() {
         return after_balance;
@@ -221,6 +230,7 @@ public class TiXianHistoryEntity implements Serializable {
                 ", deletestatus=" + deletestatus +
                 ", id=" + id +
                 ", status=" + status +
+                ", statusname='" + statusname + '\'' +
                 '}';
     }
 }

@@ -69,6 +69,24 @@ public class ChongZhiHistoryEntity implements Serializable {
     private int online;
     //充值状态(0 未支付 1已支付 2已取消)
     private int status;
+    private String statusname;
+    private String paytypename;
+
+    public String getPaytypename() {
+        return paytypename;
+    }
+
+    public void setPaytypename(String paytypename) {
+        this.paytypename = paytypename;
+    }
+
+    public String getStatusname() {
+        return statusname;
+    }
+
+    public void setStatusname(String statusname) {
+        this.statusname = statusname;
+    }
 
     public String getFive_level_name() {
         return five_level_name;
@@ -352,6 +370,8 @@ public class ChongZhiHistoryEntity implements Serializable {
                 ", admin_id=" + admin_id +
                 ", online=" + online +
                 ", status=" + status +
+                ", statusname='" + statusname + '\'' +
+                ", paytypename='" + paytypename + '\'' +
                 '}';
     }
 }

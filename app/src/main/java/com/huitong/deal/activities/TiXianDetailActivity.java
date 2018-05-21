@@ -57,19 +57,27 @@ public class TiXianDetailActivity extends BaseActivity {
         mIconTv.setVisibility(View.GONE);
 
         mStatusTv=  (TextView) findViewById(R.id.tixian_detail_status);
-        if (entity.getStatus()== 0){
-            mStatusTv.setText("未支付");
-        }else if (entity.getStatus()== 1){
-            mStatusTv.setText("已支付");
-        }else if (entity.getStatus()== 2){
-            mStatusTv.setText("已拒绝");
-        }
+        mStatusTv.setText(entity.getStatusname());
+//        if (entity.getStatus()== 0){
+//            mStatusTv.setText("未支付");
+//        }else if (entity.getStatus()== 1){
+//            mStatusTv.setText("已支付");
+//        }else if (entity.getStatus()== 2){
+//            mStatusTv.setText("已拒绝");
+//        }
 
         mMoneyTv = (TextView) findViewById(R.id.tixian_detail_money);
         mMoneyTv.setText("-"+entity.getCach_amount());
 
         mTypeTv = (TextView) findViewById(R.id.tixian_detail_type);
-        mTypeTv.setText("未知");
+        if (entity.getStatus()== 0){
+            mTypeTv.setText("未支付");
+        }else if (entity.getStatus()== 1){
+            mTypeTv.setText("已支付");
+        }else if (entity.getStatus()== 2){
+            mTypeTv.setText("已拒绝");
+        }
+//        mTypeTv.setText("未知");
 
         mTimeTv = (TextView) findViewById(R.id.tixian_detail_time);
         mTimeTv.setText(entity.getCach_time());

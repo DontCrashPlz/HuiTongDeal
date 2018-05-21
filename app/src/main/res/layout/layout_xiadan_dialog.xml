@@ -196,8 +196,7 @@
             android:progressDrawable="@drawable/my_progress_horizontal"
             android:thumb="@drawable/seekbar_thumb_white_point"
             android:splitTrack="false"
-            android:max="100"
-            android:min="1"
+            android:max="99"
             android:maxHeight="30dp"
             android:thumbOffset="0dp"/>
         <TextView
