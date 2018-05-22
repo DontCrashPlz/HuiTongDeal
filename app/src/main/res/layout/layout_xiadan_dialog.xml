@@ -182,6 +182,7 @@
         android:layout_marginRight="10dp"
         android:layout_below="@+id/tixian_dialog_panel_shoushu">
         <TextView
+            android:id="@+id/tixian_dialog_tv_mincount"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="1"

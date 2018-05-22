@@ -10,4 +10,9 @@
     <string name="xiadan_dialog_zhisunxian">止损线%1$s</string>
     <string name="xiadan_dialog_zhiyingxian">止盈线%1$s</string>
 
+    <string name="market_detail_high">高： %1$s</string>
+    <string name="market_detail_low">低： %1$s</string>
+    <string name="market_detail_today">开： %1$s</string>
+    <string name="market_detail_yesterday">收： %1$s</string>
+
 </resources>
