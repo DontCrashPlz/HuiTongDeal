@@ -183,7 +183,7 @@
         android:layout_below="@+id/tixian_dialog_panel_shoushu">
         <TextView
             android:id="@+id/tixian_dialog_tv_mincount"
-            android:layout_width="wrap_content"
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             android:text="1"
             android:textColor="#333333"

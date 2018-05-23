@@ -50,10 +50,10 @@ public class Tools {
 
     public static String formatFloat(float f){
         BigDecimal b = new BigDecimal(f);
-        LogUtil.d("formatFloat before", "" + f );
+//        LogUtil.d("formatFloat before", "" + f );
         //  b.setScale(2,  BigDecimal.ROUND_HALF_UP)  表明四舍五入，保留两位小数
         f = b.setScale(2,  BigDecimal.ROUND_HALF_UP).floatValue();
-        LogUtil.d("formatFloat after", "" + f );
+//        LogUtil.d("formatFloat after", "" + f );
         return "" + f;
     }
 

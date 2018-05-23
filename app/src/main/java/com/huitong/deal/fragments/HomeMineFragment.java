@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.activities.AboutUsActivity;
 import com.huitong.deal.activities.BillActivity;
 import com.huitong.deal.activities.ChongZhiActivity;
 import com.huitong.deal.activities.LoginActivity;
@@ -117,6 +118,9 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
                 startActivity(new Intent(getRealContext(), PayPasswordActivity.class));
                 break;
             case R.id.home_mine_rly_aboutus:
+                Intent aboutIntent= new Intent(getRealContext(), AboutUsActivity.class);
+                aboutIntent.putExtra(AboutUsActivity.LAUNCH_TAG, AboutUsActivity.LAUNCH_TAG_ABOUTUS);
+                startActivity(aboutIntent);
                 break;
             case R.id.home_mine_rly_logout:
                 SharedPrefUtils.remove(getRealContext(), MyApplication.TOKEN_TAG);

@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.activities.AboutUsActivity;
 import com.huitong.deal.activities.HomeActivity;
 import com.huitong.deal.activities.LoginActivity;
 import com.huitong.deal.apps.MyApplication;
@@ -61,6 +63,7 @@ public class SignInFragment extends BaseFragment {
     private Button mRegisterBtn;
 
     private CheckBox mReadedCb;
+    private TextView mChengNuoTv;
 
     @Nullable
     @Override
@@ -195,6 +198,15 @@ public class SignInFragment extends BaseFragment {
 
         mReadedCb= mView.findViewById(R.id.login_cb_agreement);
         mReadedCb.setChecked(true);
+        mChengNuoTv= mView.findViewById(R.id.login_tv_chengnuo);
+        mChengNuoTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent aboutIntent= new Intent(getRealContext(), AboutUsActivity.class);
+                aboutIntent.putExtra(AboutUsActivity.LAUNCH_TAG, AboutUsActivity.LAUNCH_TAG_HUITONGXIEYI);
+                startActivity(aboutIntent);
+            }
+        });
 
         return mView;
     }

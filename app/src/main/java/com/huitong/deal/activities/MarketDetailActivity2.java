@@ -90,12 +90,18 @@ public class MarketDetailActivity2 extends BaseActivity {
 
     private String appToken;
 
+    private ProgressDialog mInitDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market_detail2);
 
-        showDialog();
+        mInitDialog= new ProgressDialog(getRealContext());
+        mInitDialog.setLabel("加载中..");
+        if (mInitDialog!= null && !mInitDialog.isShowing()){
+            mInitDialog.show();
+        }
 
         stockid= getIntent().getStringExtra("id");
         stock_name= getIntent().getStringExtra("stock_name");
@@ -136,7 +142,9 @@ public class MarketDetailActivity2 extends BaseActivity {
                             .subscribe(new Consumer<HttpResult<CommodityDetailEntity>>() {
                                 @Override
                                 public void accept(HttpResult<CommodityDetailEntity> commodityDetailEntityHttpResult) throws Exception {
-                                    dismissDialog();
+                                    if (mInitDialog!= null && mInitDialog.isShowing()){
+                                        mInitDialog.dismiss();
+                                    }
                                     if (commodityDetailEntityHttpResult.getData()!= null){
                                         refreshUI(commodityDetailEntityHttpResult.getData());
                                     }
@@ -144,8 +152,10 @@ public class MarketDetailActivity2 extends BaseActivity {
                             }, new Consumer<Throwable>() {
                                 @Override
                                 public void accept(Throwable throwable) throws Exception {
-                                    dismissDialog();
-                                    LogUtil.d("throwable", throwable.toString());
+                                    if (mInitDialog!= null && mInitDialog.isShowing()){
+                                        mInitDialog.dismiss();
+                                    }
+                                    LogUtil.e("throwable", throwable.toString());
                                     showShortToast("网络请求失败");
                                 }
                             }));
@@ -156,13 +166,7 @@ public class MarketDetailActivity2 extends BaseActivity {
     @Override
     public void initProgressDialog() {
         dialog= new ProgressDialog(getRealContext());
-        dialog.setLabel("加载中..");
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                clearNetWork();
-            }
-        });
+        dialog.setLabel("正在提交订单..");
     }
 
     /**
@@ -186,7 +190,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-                            LogUtil.d("throwable", throwable.toString());
+                            LogUtil.e("throwable", throwable.toString());
                             showShortToast("网络请求失败");
                         }
                     }));
@@ -262,6 +266,13 @@ public class MarketDetailActivity2 extends BaseActivity {
         mPriceTv.setText(Tools.formatFloat(entity.getNow_price()));
         mFloatTv.setText(Tools.formatFloat(entity.getFloat_rate()) + "%");
         mNumberTv.setText(entity.getCur_date() + " " + entity.getCur_time());
+        if (entity.getFloat_rate()< 0){
+            mPriceTv.setTextColor(Color.rgb(0, 246, 1));
+            mFloatTv.setTextColor(Color.rgb(0, 246, 1));
+        }else {
+            mPriceTv.setTextColor(Color.rgb(255, 63, 0));
+            mFloatTv.setTextColor(Color.rgb(255, 63, 0));
+        }
 
         mHighTv.setText(String.format(getString(R.string.market_detail_high), Tools.formatFloat(entity.getHighest())));
         mLowTv.setText(String.format(getString(R.string.market_detail_low), Tools.formatFloat(entity.getLowest())));
@@ -285,6 +296,7 @@ public class MarketDetailActivity2 extends BaseActivity {
         }
 
         if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+            LogUtil.e("xiaDanDialog isShowing", "" + xiaDanDialog.isShowing());
             dialogCurPrice.setText(Tools.formatFloat(entity.getNow_price()));
             nowPrice= String.valueOf(entity.getNow_price());
         }
@@ -388,6 +400,15 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LogUtil.e("点击下单按钮时的购买手数", "" + buyCount);
+                if (buyCount > maxCount){
+                    showShortToast("当前余额不能购买" + buyCount + "手");
+                    return;
+                }
+                if (buyCount < minCount){
+                    showShortToast("当前杠杆最低手数为" + minCount);
+                    return;
+                }
                 showConfirmDialog();
             }
         });
@@ -573,6 +594,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                 });
             }
         }
+        //默认选定第一个杠杆
         if (mLeverageList.get(0).getLeverage()== 100){
             dialogRbtn_100.setChecked(true);
         }else if (mLeverageList.get(0).getLeverage()== 50){
@@ -591,9 +613,17 @@ public class MarketDetailActivity2 extends BaseActivity {
         float danJia= leverageEntity.getPrice();
         float fuWuFeiLv= leverageEntity.getFeeRate();
         float danBiZongJia= danJia + danJia*fuWuFeiLv;
-        maxCount= (int) (balance/danBiZongJia);
-        if (maxCount> 100) maxCount= 100;
-        if (maxCount< 0) maxCount= 0;
+        //最大购买手数为可买的手数和100中的最大值
+        int value= (int) (balance/danBiZongJia);
+        LogUtil.d("可购买的最大手数", ""+value);
+        maxCount= Math.min(100, value);
+//        if (maxCount> 100) maxCount= 100;//如果可买超过100手，最多可买100手
+//
+//        if (leverage== 100 || leverage== 50){//如果买不起最低限购量，最多可买0手
+//            if (maxCount< 10) maxCount= 0;
+//        }else if (leverage== 1){
+//            if (maxCount< 1) maxCount= 0;
+//        }
     }
 
     /**
@@ -637,11 +667,9 @@ public class MarketDetailActivity2 extends BaseActivity {
      */
     private void resetSeekBar(final int leverage){
         if (leverage== 100 || leverage== 50){//如果杠杆为100和50，最小手数为10
-            minCount= 10;
             dialogMinCount.setText("10");
-            dialogSeekBar.setMax(89);
+            dialogSeekBar.setMax(90);
         }else if (leverage== 1){//如果杠杆为1，最小手数为1
-            minCount= 1;
             dialogMinCount.setText("1");
             dialogSeekBar.setMax(99);
         }
@@ -664,9 +692,12 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogSubtractBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (buyCount> minCount){
-                    buyCount -= 1;
-                    dialogBuyCountEt.setText(String.valueOf(buyCount));
+                //获取输入框中现在的数字
+                int value= Integer.parseInt(dialogBuyCountEt.getText().toString().trim());
+                //如果输入框的数字大于最小限购值，将输入框中的数字减一
+                if (value> minCount){
+                    value -= 1;
+                    dialogBuyCountEt.setText(String.valueOf(value));
                 }
             }
         });
@@ -683,14 +714,16 @@ public class MarketDetailActivity2 extends BaseActivity {
                     return;
                 }
                 int value= Integer.parseInt(s.toString().trim());
-                LogUtil.e("value", ""+value);
-                if (value> maxCount) {
-                    value= maxCount;
+                LogUtil.e("edittext中输入手数：", ""+value);
+                if (value> 100) {
+                    value= 100;
                     dialogBuyCountEt.setText(String.valueOf(value));
+                    return;
                 }
                 if (value< minCount){
                     value= minCount;
                     dialogBuyCountEt.setText(String.valueOf(value));
+                    return;
                 }
                 dialogBuyCount.setText(
                         String.format(
@@ -708,9 +741,12 @@ public class MarketDetailActivity2 extends BaseActivity {
         dialogPlusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (buyCount< 100){
-                    buyCount += 1;
-                    dialogBuyCountEt.setText(String.valueOf(buyCount));
+                //获取输入框中现在的数字
+                int value= Integer.parseInt(dialogBuyCountEt.getText().toString().trim());
+                //如果输入框的数字小于100，将输入框中的数字加一
+                if (value< 100){
+                    value += 1;
+                    dialogBuyCountEt.setText(String.valueOf(value));
                 }
             }
         });
