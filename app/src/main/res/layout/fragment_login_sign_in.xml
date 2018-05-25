@@ -122,7 +122,7 @@
             android:id="@+id/login_tv_chengnuo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="《汇通承诺》"
+            android:text="《尚品会》"
             android:textSize="@dimen/textSize_12"
             android:textColor="@color/forget_password_textcolor_selector"
             android:clickable="true"/>

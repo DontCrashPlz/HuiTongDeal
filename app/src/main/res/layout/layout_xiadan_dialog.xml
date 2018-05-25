@@ -50,7 +50,8 @@
             android:text="普银合约"
             android:textSize="@dimen/textSize_15"
             android:textColor="#333333"
-            android:paddingLeft="8dp"/>
+            android:paddingLeft="8dp"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tixian_dialog_status"
             android:layout_width="80dp"
@@ -61,7 +62,8 @@
             android:layout_below="@+id/tixian_dialog_name"
             android:background="#FF9800"
             android:layout_marginTop="5dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tixian_dialog_price"
             android:layout_width="wrap_content"
@@ -71,7 +73,6 @@
             android:textColor="#03A303"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:drawableRight="@mipmap/subscription_01"
             android:drawablePadding="10dp"/>
     </RelativeLayout>
 
@@ -218,7 +219,7 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="10dp"/>
-        <EditText
+        <com.huitong.deal.widgets.ClearableEditText
             android:id="@+id/tixian_dialog_et_buycount"
             android:layout_width="40dp"
             android:layout_height="match_parent"

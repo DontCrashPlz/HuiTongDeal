@@ -87,8 +87,10 @@ public class ChiCangDetailActivity extends BaseActivity {
         mTextView2= (TextView) findViewById(R.id.chicang_detail_text2);
         if (mEntity.getBuy_type()== 1){
             mTextView2.setText("回购");
+            mTextView2.setTextColor(MyApplication.colorGreen);
         }else if (mEntity.getBuy_type()== 2){
             mTextView2.setText("认购");
+            mTextView2.setTextColor(MyApplication.colorOrange);
         }else {
             mTextView2.setText("未知");
         }
@@ -216,8 +218,14 @@ public class ChiCangDetailActivity extends BaseActivity {
     private void refreshUI(ChiCangEntity entity){
         mTextView4.setText(String.valueOf(entity.getCurpoint()));
         closePrice= String.valueOf(entity.getCurpoint());
-
         mTextView9.setText(String.valueOf(entity.getGain()));
+        if (entity.getGain()< 0){
+            mTextView4.setTextColor(MyApplication.colorGreen);
+            mTextView9.setTextColor(MyApplication.colorGreen);
+        }else {
+            mTextView4.setTextColor(MyApplication.colorOrange);
+            mTextView9.setTextColor(MyApplication.colorOrange);
+        }
     }
 
 }

@@ -15,4 +15,7 @@
     <string name="market_detail_today">开： %1$s</string>
     <string name="market_detail_yesterday">收： %1$s</string>
 
+    <string name="market_title_username">帐号： %1$s</string>
+    <string name="market_title_balance">购物券余额： ￥ %1$s</string>
+
 </resources>

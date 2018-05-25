@@ -98,7 +98,7 @@ public class BillActivity extends BaseActivity implements BaseQuickAdapter.Reque
                                 }else {
                                     mAdapter.loadMoreFail();
                                     if (currentPage== 1){
-                                        mAdapter.setEmptyView(R.layout.layout_recycler_empty);
+                                        mAdapter.setEmptyView(R.layout.layout_recycler_empty2);
                                     }
                                 }
                                 if (listDataEntityHttpResult.getData().isLast()){

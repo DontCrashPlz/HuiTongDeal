@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -34,6 +35,7 @@ public class HomeDealFragment extends BaseFragment {
         return instance;
     }
 
+    private TextView mTitleTv;
     private CommonTabLayout mTabLayout;
     private ViewPager mViewPager;
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -46,6 +48,8 @@ public class HomeDealFragment extends BaseFragment {
         mTabEntities.add(new DealTableEntity("持仓", R.mipmap.transaction_position_select, R.mipmap.transaction_position));
         mTabEntities.add(new DealTableEntity("历史", R.mipmap.transaction_history_select, R.mipmap.transaction_history));
 
+        mTitleTv= mView.findViewById(R.id.toolbar_title);
+        mTitleTv.setText("交易");
         mTabLayout= mView.findViewById(R.id.home_tly_dealtab);
         mViewPager= mView.findViewById(R.id.home_vp_content);
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {

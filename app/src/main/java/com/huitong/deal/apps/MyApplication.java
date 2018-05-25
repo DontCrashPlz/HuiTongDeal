@@ -1,5 +1,6 @@
 package com.huitong.deal.apps;
 
+import android.graphics.Color;
 import android.widget.Toast;
 
 import com.huitong.deal.beans.HttpResult;
@@ -21,6 +22,9 @@ import io.reactivex.schedulers.Schedulers;
 public class MyApplication extends BaseApplication {
 
     public static final String TOKEN_TAG= "huitong_token";
+
+    public static final int colorGreen= Color.rgb(0, 246, 1);
+    public static final int colorOrange= Color.rgb(255, 63, 0);
 
     private static MyApplication mSingleInstance;
 

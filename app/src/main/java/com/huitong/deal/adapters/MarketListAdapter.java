@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.huitong.deal.R;
 import com.huitong.deal.activities.MarketDetailActivity;
 import com.huitong.deal.activities.MarketDetailActivity2;
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
 import com.zheng.zchlibrary.utils.Tools;
@@ -41,9 +42,11 @@ public class MarketListAdapter extends BaseQuickAdapter<CommodityDetailEntity, M
         helper.mPriceTv.setText(Tools.formatFloat(item.getNow_price()));
         helper.mFloatTv.setText(Tools.formatFloat(item.getFloat_rate()) + "%");
         if (item.getFloat_rate()< 0){
-            helper.mFloatTv.setTextColor(Color.rgb(0, 246, 1));
+            helper.mPriceTv.setTextColor(MyApplication.colorGreen);
+            helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_green);
         }else {
-            helper.mFloatTv.setTextColor(Color.rgb(255, 63, 0));
+            helper.mPriceTv.setTextColor(MyApplication.colorOrange);
+            helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_orange);
         }
     }
 

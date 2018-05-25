@@ -36,11 +36,13 @@ import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.fragments.KLineChartFragment;
 import com.huitong.deal.fragments.TimeChartFragment;
 import com.huitong.deal.https.Network;
+import com.huitong.deal.widgets.ClearableEditText;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.Tools;
+import com.zheng.zchlibrary.widgets.CustomTabLayout.Tool;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.ArrayList;
@@ -318,7 +320,7 @@ public class MarketDetailActivity2 extends BaseActivity {
     private TextView dialogMinCount;
     private AppCompatSeekBar dialogSeekBar;//滑动条选择购买手数
     private Button dialogSubtractBtn;//减购买手数按钮
-    private EditText dialogBuyCountEt;//购买手数输入框
+    private ClearableEditText dialogBuyCountEt;//购买手数输入框
     private Button dialogPlusBtn;//加购买手数按钮
     private TextView dialogZhiSunTv;//止损率
     private TextView dialogZhiYingTv;//止盈率
@@ -332,6 +334,8 @@ public class MarketDetailActivity2 extends BaseActivity {
     private int buyType;//购买类型（认购回购）
     private int minCount;//最小购买数量
     private int maxCount;//最大购买数量
+
+    private TextWatcher mTextWatcher;
 
     private ArrayList<CustomTabEntity> tabEntities;
 
@@ -530,7 +534,6 @@ public class MarketDetailActivity2 extends BaseActivity {
                                             getString(R.string.xiadan_dialog_zhiyingxian),
                                             leverageEntity.getGainRate() * 100 + "%"));
                             resetSeekBar(100);
-                            dialogSeekBar.setProgress(40);
                         }
                     }
                 });
@@ -559,7 +562,6 @@ public class MarketDetailActivity2 extends BaseActivity {
                                             getString(R.string.xiadan_dialog_zhiyingxian),
                                             leverageEntity.getGainRate() * 100 + "%"));
                             resetSeekBar(50);
-                            dialogSeekBar.setProgress(40);
                         }
                     }
                 });
@@ -588,7 +590,6 @@ public class MarketDetailActivity2 extends BaseActivity {
                                             getString(R.string.xiadan_dialog_zhiyingxian),
                                             leverageEntity.getGainRate() * 100 + "%"));
                             resetSeekBar(1);
-                            dialogSeekBar.setProgress(49);
                         }
                     }
                 });
@@ -701,6 +702,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                 }
             }
         });
+        dialogBuyCountEt.clearTextChangedListeners();
         dialogBuyCountEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -731,11 +733,21 @@ public class MarketDetailActivity2 extends BaseActivity {
                                 String.valueOf(value)));
                 float zongJia= leverageEntity.getPrice()*value;
                 float shouXuFei= zongJia*leverageEntity.getFeeRate();
-                dialogBuyPrice.setText(String.valueOf(zongJia));
+                dialogBuyPrice.setText(Tools.formatFloat(zongJia));
                 dialogServerPrice.setText(String.format(
                         getString(R.string.xiadan_dialog_shouxufei),
-                        String.valueOf(shouXuFei)));
+                        Tools.formatFloat(shouXuFei)));
                 buyCount= value;
+
+                if (leverage== 100 || leverage== 50){
+                    if ((value - 10)!= dialogSeekBar.getProgress()){
+                        dialogSeekBar.setProgress(value - 10);
+                    }
+                }else if (leverage== 1){
+                    if ((value - 1)!= dialogSeekBar.getProgress()){
+                        dialogSeekBar.setProgress(value - 1);
+                    }
+                }
             }
         });
         dialogPlusBtn.setOnClickListener(new View.OnClickListener() {
@@ -750,6 +762,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                 }
             }
         });
+        dialogBuyCountEt.setText(String.valueOf(minCount));
     }
 
 }

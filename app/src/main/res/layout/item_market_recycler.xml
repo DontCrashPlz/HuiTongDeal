@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/recycler_background_black_selector"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:layout_marginTop="1dp"
@@ -27,7 +27,7 @@
         android:id="@+id/market_list_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="产品价格"
+        android:text="0.00"
         android:textColor="@android:color/white"
         android:textSize="@dimen/textSize_16"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,13 +37,17 @@
 
     <TextView
         android:id="@+id/market_list_float"
-        android:layout_width="wrap_content"
+        android:layout_width="85dp"
         android:layout_height="wrap_content"
-        android:text="-0.00"
+        android:text="-0.00%"
         android:textColor="@android:color/white"
         android:textSize="@dimen/textSize_16"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/market_float_background_green"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:gravity="center"/>
 
 </android.support.constraint.ConstraintLayout>

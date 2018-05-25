@@ -39,24 +39,24 @@ public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangL
         helper.mNameTv.setText(item.getStockname());
         if (item.getBuy_type()== 1){
             helper.mIconTv.setText("回购");
+            helper.mIconTv.setTextColor(colorGreen);
+            helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_green);
         }else if (item.getBuy_type()== 2){
             helper.mIconTv.setText("认购");
+            helper.mIconTv.setTextColor(colorOrange);
+            helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_orange);
         }else {
             helper.mIconTv.setText("未知");
         }
         helper.mIconRemarkTv.setText(item.getStock_no());
         helper.mText2.setText(Tools.formatFloat(item.getNow_price()));
         helper.mText3.setText(Tools.formatFloat(item.getCurpoint()));
-        helper.mText4.setText(Tools.formatFloat(item.getGain()) + "%");
+        helper.mText4.setText(Tools.formatFloat(item.getGain()));
         float currentGain= item.getGain();
         if (currentGain< 0F){
-            helper.mIconTv.setTextColor(colorOrange);
-            helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_orange);
             helper.mText3.setTextColor(colorGreen);
             helper.mText4.setTextColor(colorGreen);
         }else {
-            helper.mIconTv.setTextColor(colorGreen);
-            helper.mIconTv.setBackgroundResource(R.drawable.textview_background_deal_item_green);
             helper.mText3.setTextColor(colorOrange);
             helper.mText4.setTextColor(colorOrange);
         }

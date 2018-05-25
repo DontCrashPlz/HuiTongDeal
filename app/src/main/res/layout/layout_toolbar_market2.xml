@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
+    android:background="@color/background_black_light">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        <TextView
+            android:id="@+id/toolbar_market_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/market_title_username"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/toolbar_market_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/market_title_balance"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_alignParentBottom="true"/>
+        <TextView
+            android:id="@+id/toolbar_market_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_background_yellow_corners_selector"
+            android:text="购买购物券"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textSize_12"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:clickable="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>

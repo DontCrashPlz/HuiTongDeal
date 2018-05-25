@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.huitong.deal.R;
 import com.huitong.deal.activities.BillDetailActivity;
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.BillEntity;
 import com.huitong.deal.beans.TiXianHistoryEntity;
 
@@ -58,13 +59,13 @@ public class BillListAdapter extends BaseQuickAdapter<BillEntity, BillListAdapte
 
         if (item.isType()){//支出
             helper.mMoneyTv.setText("-" + item.getMoney());
-            helper.mMoneyTv.setTextColor(Color.WHITE);
-            Drawable drawableRight= ContextCompat.getDrawable(mContext,R.mipmap.voucher_02);
+            helper.mMoneyTv.setTextColor(MyApplication.colorGreen);
+            Drawable drawableRight= ContextCompat.getDrawable(mContext,R.mipmap.voucher_06);
             helper.mMoneyTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null);
         }else {//收入
             helper.mMoneyTv.setText("+" + item.getMoney());
-            helper.mMoneyTv.setTextColor(Color.rgb(4, 188, 4));
-            Drawable drawableRight= ContextCompat.getDrawable(mContext,R.mipmap.voucher_06);
+            helper.mMoneyTv.setTextColor(MyApplication.colorOrange);
+            Drawable drawableRight= ContextCompat.getDrawable(mContext,R.mipmap.voucher_07);
             helper.mMoneyTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null);
         }
         helper.mTimeTv.setText(item.getAddtime());

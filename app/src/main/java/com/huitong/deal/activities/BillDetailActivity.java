@@ -1,12 +1,15 @@
 package com.huitong.deal.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.BillEntity;
 import com.zheng.zchlibrary.apps.BaseActivity;
 
@@ -61,35 +64,42 @@ public class BillDetailActivity extends BaseActivity {
         mNumberTv = (TextView) findViewById(R.id.bill_detail_number);
         mNumberTv.setText(entity.getOrderno());
         mBalanceTv = (TextView) findViewById(R.id.bill_detail_balance);
+
         if (entity.isType()){
             mMoneyTv.setText("-" + String.valueOf(entity.getMoney()));
-            mTypeTv.setText("支出");
+//            mTypeTv.setText("支出");
             mBalanceTv.setText(String.valueOf(entity.getBefore_money() - entity.getMoney()));
+            mMoneyTv.setTextColor(MyApplication.colorGreen);
+            Drawable drawableRight= ContextCompat.getDrawable(getRealContext(),R.mipmap.voucher_06);
+            mMoneyTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null);
         }else {
             mMoneyTv.setText("+" + String.valueOf(entity.getMoney()));
-            mTypeTv.setText("收入");
+//            mTypeTv.setText("收入");
             mBalanceTv.setText(String.valueOf(entity.getBefore_money() + entity.getMoney()));
+            mMoneyTv.setTextColor(MyApplication.colorOrange);
+            Drawable drawableRight= ContextCompat.getDrawable(getRealContext(),R.mipmap.voucher_07);
+            mMoneyTv.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableRight, null);
         }
 
-//        if (entity.getFromtype()== 1){
-//            mTypeTv.setText("充值");
-//        }else if (entity.getFromtype()== 2){
-//            mTypeTv.setText("提现");
-//        }else if (entity.getFromtype()== 3){
-//            mTypeTv.setText("转账");
-//        }else if (entity.getFromtype()== 4){
-//            mTypeTv.setText("消费");
-//        }else if (entity.getFromtype()== 5){
-//            mTypeTv.setText("分佣");
-//        }else if (entity.getFromtype()== 6){
-//            mTypeTv.setText("持仓");
-//        }else if (entity.getFromtype()== 7){
-//            mTypeTv.setText("持仓手续费");
-//        }else if (entity.getFromtype()== 8){
-//            mTypeTv.setText("平仓返本");
-//        }else if (entity.getFromtype()== 9){
-//            mTypeTv.setText("平仓核算");
-//        }
+        if (entity.getFromtype()== 1){
+            mTypeTv.setText("充值");
+        }else if (entity.getFromtype()== 2){
+            mTypeTv.setText("提现");
+        }else if (entity.getFromtype()== 3){
+            mTypeTv.setText("转账");
+        }else if (entity.getFromtype()== 4){
+            mTypeTv.setText("消费");
+        }else if (entity.getFromtype()== 5){
+            mTypeTv.setText("分佣");
+        }else if (entity.getFromtype()== 6){
+            mTypeTv.setText("持仓");
+        }else if (entity.getFromtype()== 7){
+            mTypeTv.setText("持仓手续费");
+        }else if (entity.getFromtype()== 8){
+            mTypeTv.setText("平仓返本");
+        }else if (entity.getFromtype()== 9){
+            mTypeTv.setText("平仓核算");
+        }
 
     }
 

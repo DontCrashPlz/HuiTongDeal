@@ -47,15 +47,17 @@ public class LoginActivity extends BaseActivity {
     private UpdateInfoEntity entity;
     private String mCurrentVersion;
 
+    private TextView mTitleTv;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mTitleTv= (TextView) findViewById(R.id.toolbar_title);
+
         manager= getSupportFragmentManager();
-        manager.beginTransaction()
-                .replace(R.id.fragment, LoginWithPasswordFragment.newInstance(""))
-                .commit();
+        changeFragment(FRAGMENT_TAG_PASSWORD);
 
         //launcher_tag标识是从哪里启动的LoginActivity，0表示正常启动，1表示用户退出登录
         mLauncherTag= getIntent().getIntExtra("launcher_tag", 0);
@@ -92,12 +94,14 @@ public class LoginActivity extends BaseActivity {
                 manager.beginTransaction()
                         .replace(R.id.fragment, LoginWithPasswordFragment.newInstance(""))
                         .commit();
+                mTitleTv.setText("帐号登录");
                 break;
             }
             case 1:{//验证码登录页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, LoginWithVerificationFragment.newInstance(""))
                         .commit();
+                mTitleTv.setText("验证码登录");
                 break;
             }
             case 2:{//注册页面
@@ -105,12 +109,14 @@ public class LoginActivity extends BaseActivity {
                         .replace(R.id.fragment, SignInFragment.newInstance(""))
                         .addToBackStack(null)
                         .commit();
+                mTitleTv.setText("注册");
                 break;
             }
             case 3:{//注册成功页面
                 manager.beginTransaction()
                         .replace(R.id.fragment, SignInSuccessFragment.newInstance(""))
                         .commit();
+                mTitleTv.setText("注册成功");
                 break;
             }
             case 4:{//忘记密码页面
@@ -118,6 +124,7 @@ public class LoginActivity extends BaseActivity {
                         .replace(R.id.fragment, ForgetPasswordFragment.newInstance(""))
                         .addToBackStack(null)
                         .commit();
+                mTitleTv.setText("忘记密码");
                 break;
             }
             default:

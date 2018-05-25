@@ -47,6 +47,7 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
     private TextView mTextView9;
     private TextView mTextView10;
     private TextView mTextView11;
+    private TextView mTextView12;
 
     private ChiCangHistoryEntity mEntity;
 
@@ -79,8 +80,10 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         mTextView2= (TextView) findViewById(R.id.chicang_detail_text2);
         if (mEntity.getBuy_type()== 1){
             mTextView2.setText("回购");
+            mTextView2.setTextColor(MyApplication.colorGreen);
         }else if (mEntity.getBuy_type()== 2){
             mTextView2.setText("认购");
+            mTextView2.setTextColor(MyApplication.colorOrange);
         }else {
             mTextView2.setText("未知");
         }
@@ -111,6 +114,17 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
 
         mTextView11= (TextView) findViewById(R.id.chicang_detail_text11);
         mTextView11.setText("已完成");
+
+        mTextView12= (TextView) findViewById(R.id.chicang_detail_text12);
+        mTextView12.setText(mEntity.getEnd_time());
+
+        if (mEntity.getGain()< 0){
+            mTextView4.setTextColor(MyApplication.colorGreen);
+            mTextView9.setTextColor(MyApplication.colorGreen);
+        }else {
+            mTextView4.setTextColor(MyApplication.colorOrange);
+            mTextView9.setTextColor(MyApplication.colorOrange);
+        }
     }
 
     @Override
