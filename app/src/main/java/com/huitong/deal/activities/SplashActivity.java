@@ -135,9 +135,9 @@ public class SplashActivity extends AppCompatActivity {
 
     private void enterApp(UpdateInfoEntity entity){
         Intent intent= new Intent();
-        if (SharedPrefUtils.contains(this, APP_LAUNCHED_TAG)
+        if (SharedPrefUtils.contains(this, APP_LAUNCHED_TAG)//判断是否第一次打开app
                 && (boolean)(SharedPrefUtils.get(this, APP_LAUNCHED_TAG, true))){
-            if (MyApplication.getInstance().isHadToken()){
+            if (MyApplication.getInstance().isHadToken()){//判断是否保存有token
                 intent.setClass(this, HomeActivity.class);
             }else {
                 intent.setClass(this, LoginActivity.class);

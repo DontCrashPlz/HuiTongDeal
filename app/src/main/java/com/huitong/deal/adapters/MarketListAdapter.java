@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -52,7 +53,7 @@ public class MarketListAdapter extends BaseQuickAdapter<CommodityDetailEntity, M
 
     class MarketListHolder extends BaseViewHolder{
 
-        private ConstraintLayout mPanelCly;
+        private LinearLayout mPanelCly;
         private TextView mNameTv;
         private TextView mPriceTv;
         private TextView mFloatTv;

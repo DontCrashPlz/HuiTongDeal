@@ -100,10 +100,10 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
             }
         });
         mTitleTv = (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText("充值");
+        mTitleTv.setText("买购物券");
         mFunctionTv = (TextView) findViewById(R.id.toolbar_right_text);
         mFunctionTv.setVisibility(View.VISIBLE);
-        mFunctionTv.setText("充值记录");
+        mFunctionTv.setText("购买记录");
         mFunctionTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

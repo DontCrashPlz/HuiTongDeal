@@ -8,6 +8,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 /**
+ * 可以清空监听事件的edittext
  * Created by Zheng on 2018/5/25.
  */
 

@@ -8,10 +8,13 @@ import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.UserInfoEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseApplication;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.ScreenUtils;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -124,30 +127,32 @@ public class MyApplication extends BaseApplication {
         }
         return false;
     }
-    public void refreshUser(){
+    public Disposable refreshUser(final IAsyncLoadListener<UserInfoDataEntity> listener){
         LogUtil.e("MyApplication", "refreshUser");
-        if (appToken!= null && appToken.length()> 0){
-            Network.getInstance().getUserInfo(appToken)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
-                        @Override
-                        public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
-                            if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
-                                Toast.makeText(getApplicationContext(), userInfoDataEntityHttpResult.getDescription(), Toast.LENGTH_SHORT).show();
-                            }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
-                                if (userInfoDataEntityHttpResult.getData()!= null)
-                                    appUser= userInfoDataEntityHttpResult.getData();
+        return Network.getInstance().getUserInfo(appToken)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
+                    @Override
+                    public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
+                        if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
+                            listener.onFailure(userInfoDataEntityHttpResult.getDescription());
+                            //Toast.makeText(getApplicationContext(), userInfoDataEntityHttpResult.getDescription(), Toast.LENGTH_SHORT).show();
+                        }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
+                            if (userInfoDataEntityHttpResult.getData()!= null){
+                                appUser= userInfoDataEntityHttpResult.getData();
+                                listener.onSuccess(userInfoDataEntityHttpResult.getData());
                             }
                         }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            LogUtil.d("throwable", throwable.toString());
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        LogUtil.d("throwable", throwable.toString());
+                        listener.onFailure(throwable.toString());
 //                            Toast.makeText(getApplicationContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
+                    }
+                });
     }
 
 }

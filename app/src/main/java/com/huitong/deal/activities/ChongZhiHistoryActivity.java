@@ -70,7 +70,7 @@ public class ChongZhiHistoryActivity extends BaseActivity implements BaseQuickAd
             }
         });
         mTitleTv = (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText("提现记录");
+        mTitleTv.setText("购买记录");
         mFunctionTv = (TextView) findViewById(R.id.toolbar_right_text);
         mFunctionTv.setVisibility(View.GONE);
 

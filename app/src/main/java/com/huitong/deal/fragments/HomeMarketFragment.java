@@ -8,21 +8,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.huitong.deal.R;
-import com.huitong.deal.activities.HomeActivity;
-import com.huitong.deal.activities.LoginActivity;
+import com.huitong.deal.activities.ChongZhiActivity;
 import com.huitong.deal.adapters.MarketListAdapter;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.CommodityDetailEntity;
-import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.HttpResult;
-import com.huitong.deal.beans.LoginEntity;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.utils.Tools;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +35,6 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Zheng on 2018/4/13.
@@ -51,6 +50,9 @@ public class HomeMarketFragment extends BaseFragment {
         return instance;
     }
 
+    private TextView mUserNameTv;
+    private TextView mBalanceTv;
+    private TextView mBuyTv;
     private RecyclerView mRecycler;
     private MarketListAdapter mAdapter;
 
@@ -61,12 +63,40 @@ public class HomeMarketFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mView= inflater.inflate(R.layout.fragment_home_market, container, false);
 
+        mUserNameTv= mView.findViewById(R.id.toolbar_market_username);
+        mBalanceTv= mView.findViewById(R.id.toolbar_market_balance);
+        mBuyTv= mView.findViewById(R.id.toolbar_market_buy);
+
+
         mRecycler= mView.findViewById(R.id.home_market_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
         mAdapter= new MarketListAdapter(R.layout.item_market_recycler);
         mRecycler.setAdapter(mAdapter);
 
         progressBar= mView.findViewById(R.id.progressBar);
+
+        addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+            @Override
+            public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+                mUserNameTv.setText(String.format(
+                        getString(R.string.market_title_username),
+                        userInfoDataEntity.getUsername()));
+                mBalanceTv.setText(String.format(
+                        getString(R.string.market_title_balance),
+                        Tools.formatFloat(userInfoDataEntity.getUserinfo().getAvailablebalance())));
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                showShortToast(msg);
+            }
+        }));
+        mBuyTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getRealContext(), ChongZhiActivity.class));
+            }
+        });
 
         final String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){

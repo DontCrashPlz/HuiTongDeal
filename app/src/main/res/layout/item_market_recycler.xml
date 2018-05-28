@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/recycler_background_black_selector"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
@@ -10,44 +9,38 @@
     android:paddingRight="10dp"
     android:layout_marginTop="1dp"
     android:clickable="true"
-    android:id="@+id/market_list_panel">
+    android:id="@+id/market_list_panel"
+    android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/market_list_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="42"
         android:text="产品名称"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/textSize_16"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:textSize="@dimen/textSize_16" />
 
     <TextView
         android:id="@+id/market_list_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="29"
         android:text="0.00"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/textSize_16"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:textSize="@dimen/textSize_16"/>
 
     <TextView
         android:id="@+id/market_list_float"
-        android:layout_width="85dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="29"
         android:text="-0.00%"
         android:textColor="@android:color/white"
         android:textSize="@dimen/textSize_16"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/market_float_background_green"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
         android:gravity="center"/>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

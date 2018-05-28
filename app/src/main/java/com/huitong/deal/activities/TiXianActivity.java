@@ -19,8 +19,10 @@ import android.widget.TextView;
 import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
@@ -43,6 +45,8 @@ public class TiXianActivity extends BaseActivity {
 
     private EditText mNameEt;
     private EditText mBankCardEt;
+    private EditText mKaiHuHangEt;
+    private EditText mKaiHuZhiHangEt;
     private EditText mMoneyEt;
     private Button mCommitBtn;
 
@@ -88,6 +92,8 @@ public class TiXianActivity extends BaseActivity {
 
         mNameEt = (EditText) findViewById(R.id.tixian_et_name);
         mBankCardEt = (EditText) findViewById(R.id.tixian_et_bankcard);
+        mKaiHuHangEt= (EditText) findViewById(R.id.tixian_et_kaihuhang);
+        mKaiHuZhiHangEt= (EditText) findViewById(R.id.tixian_et_kaihuzhihang);
         mMoneyEt = (EditText) findViewById(R.id.tixian_et_money);
         if (MyApplication.appUser!= null){
             if (MyApplication.appUser.getUserinfo()!= null){
@@ -106,6 +112,8 @@ public class TiXianActivity extends BaseActivity {
                 String name= mNameEt.getText().toString().trim();
                 String bankCard= mBankCardEt.getText().toString().trim();
                 String money= mMoneyEt.getText().toString().trim();
+                String bank= mKaiHuHangEt.getText().toString().trim();
+                String bank_branch= mKaiHuZhiHangEt.getText().toString().trim();
 
                 if (name== null || name.length()< 1){
                     showShortToast("请输入您的姓名");
@@ -119,13 +127,21 @@ public class TiXianActivity extends BaseActivity {
                     showShortToast("请输入您的提现金额");
                     return;
                 }
+                if (bank== null || bank.length()< 1){
+                    showShortToast("请输入您的开户行");
+                    return;
+                }
+                if (bank_branch== null || bank_branch.length()< 1){
+                    showShortToast("请输入您的开户支行");
+                    return;
+                }
 
-                showNextDialog(getRealContext(), name, bankCard, money);
+                showNextDialog(getRealContext(), name, bankCard, money, bank, bank_branch);
             }
         });
     }
 
-    private void doTiXian(String name, String bankCard, String money, String payPassword){
+    private void doTiXian(String name, String bankCard, String money, String payPassword, String bank, String bank_branch){
         String token= MyApplication.getInstance().getToken();
         if (token!= null && token.length()> 0){
             addNetWork(Network.getInstance().tiXian(
@@ -133,7 +149,9 @@ public class TiXianActivity extends BaseActivity {
                     name,
                     bankCard,
                     money,
-                    payPassword)
+                    payPassword,
+                    bank,
+                    bank_branch)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<HttpResult<String>>() {
@@ -145,7 +163,17 @@ public class TiXianActivity extends BaseActivity {
                             }else if ("success".equals(stringHttpResult.getStatus())){
                                 //todo 提现成功
                                 showShortToast("提现成功");
-                                MyApplication.getInstance().refreshUser();
+                                addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+                                    @Override
+                                    public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        showShortToast(msg);
+                                    }
+                                }));
                                 finish();
                             }
                         }
@@ -170,7 +198,12 @@ public class TiXianActivity extends BaseActivity {
         }
     }
 
-    private void showNextDialog(Context context, final String name, final String bankCard, final String money){
+    private void showNextDialog(Context context,
+                                final String name,
+                                final String bankCard,
+                                final String money,
+                                final String bank,
+                                final String bank_branch){
         View view = LayoutInflater.from(context).inflate(R.layout.layout_tixian_paypass_dialog, null);
         // 设置style 控制默认dialog带来的边距问题
         final Dialog dialog = new Dialog(context, R.style.custom_dialog_no_titlebar);
@@ -196,7 +229,7 @@ public class TiXianActivity extends BaseActivity {
                     showShortToast("请输入6位支付密码");
                     return;
                 }
-                doTiXian(name, bankCard, money, payPass);
+                doTiXian(name, bankCard, money, payPass, bank, bank_branch);
                 dialog.dismiss();
             }
         });

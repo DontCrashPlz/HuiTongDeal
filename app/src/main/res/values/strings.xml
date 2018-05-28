@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">汇通兑承</string>
+    <string name="app_name">尚品会</string>
     
     <string name="hint_withdraw_deposit">最多提现 %1$s</string>
     <string name="hint_tixian_money">提现金额 %1$s</string>
@@ -17,5 +17,8 @@
 
     <string name="market_title_username">帐号： %1$s</string>
     <string name="market_title_balance">购物券余额： ￥ %1$s</string>
+
+    <string name="home_mine_balance">购物券： %1$s</string>
+    <string name="home_mine_tihuo">提货券： %1$s</string>
 
 </resources>

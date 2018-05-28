@@ -574,7 +574,9 @@ public class Network {
             String name,
             String cardNum,
             String tiXianNum,
-            String payPassword){
+            String payPassword,
+            String bank,
+            String bank_branch){
         if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
             return Observable.create(new ObservableOnSubscribe<HttpResult<String>>() {
                 @Override
@@ -592,6 +594,8 @@ public class Network {
         params.put("stmCach.cach_account", cardNum);
         params.put("stmCach.cach_amount", tiXianNum);
         params.put("payPass", payPassword);
+        params.put("stmCach.cach_bark", bank);
+        params.put("stmCach.cach_bark_branch", bank_branch);
         return apiService.tiXian(params);
     }
 

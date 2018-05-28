@@ -33,6 +33,7 @@ import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.DealTableEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LeverageEntity;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.fragments.KLineChartFragment;
 import com.huitong.deal.fragments.TimeChartFragment;
 import com.huitong.deal.https.Network;
@@ -40,6 +41,7 @@ import com.huitong.deal.widgets.ClearableEditText;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.Tools;
 import com.zheng.zchlibrary.widgets.CustomTabLayout.Tool;
@@ -266,12 +268,13 @@ public class MarketDetailActivity2 extends BaseActivity {
     private void refreshUI(CommodityDetailEntity entity){
 
         mPriceTv.setText(Tools.formatFloat(entity.getNow_price()));
-        mFloatTv.setText(Tools.formatFloat(entity.getFloat_rate()) + "%");
         mNumberTv.setText(entity.getCur_date() + " " + entity.getCur_time());
         if (entity.getFloat_rate()< 0){
+            mFloatTv.setText("↓ " + Tools.formatFloat(entity.getFloat_rate()) + "%");
             mPriceTv.setTextColor(Color.rgb(0, 246, 1));
             mFloatTv.setTextColor(Color.rgb(0, 246, 1));
         }else {
+            mFloatTv.setText("↑ " + Tools.formatFloat(entity.getFloat_rate()) + "%");
             mPriceTv.setTextColor(Color.rgb(255, 63, 0));
             mFloatTv.setTextColor(Color.rgb(255, 63, 0));
         }
@@ -467,7 +470,17 @@ public class MarketDetailActivity2 extends BaseActivity {
                                 if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
                                     xiaDanDialog.dismiss();
                                 }
-                                MyApplication.getInstance().refreshUser();
+                                addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+                                    @Override
+                                    public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        showShortToast(msg);
+                                    }
+                                }));
                             }
                         }
                     }, new Consumer<Throwable>() {

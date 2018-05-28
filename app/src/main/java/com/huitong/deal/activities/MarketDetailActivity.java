@@ -33,6 +33,7 @@ import com.huitong.deal.beans.CommodityListEntity;
 import com.huitong.deal.beans.DealTableEntity;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LeverageEntity;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.fragments.ForgetPasswordFragment;
 import com.huitong.deal.fragments.KLineChartFragment;
 import com.huitong.deal.fragments.LoginWithPasswordFragment;
@@ -42,6 +43,7 @@ import com.huitong.deal.fragments.SignInSuccessFragment;
 import com.huitong.deal.fragments.TimeChartFragment;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.MyPayPsdInputView;
 
@@ -508,7 +510,17 @@ public class MarketDetailActivity extends BaseActivity {
                                 if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
                                     xiaDanDialog.dismiss();
                                 }
-                                MyApplication.getInstance().refreshUser();
+                                addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+                                    @Override
+                                    public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(String msg) {
+                                        showShortToast(msg);
+                                    }
+                                }));
                             }
                         }
                     }, new Consumer<Throwable>() {

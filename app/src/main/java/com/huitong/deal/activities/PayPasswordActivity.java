@@ -50,7 +50,7 @@ public class PayPasswordActivity extends BaseActivity {
     private TextView mTitleTv;
 
     private EditText mLoginPasswordEt;
-    private EditText mMobileEt;
+    private TextView mMobileEt;
     private EditText mVerificationEt;
     private Button mGetVerificationBtn;
 
@@ -91,16 +91,17 @@ public class PayPasswordActivity extends BaseActivity {
         mTitleTv.setText("设置交易密码");
 
         mLoginPasswordEt= (EditText) findViewById(R.id.paypass_et_loginpass);
-        mMobileEt= (EditText) findViewById(R.id.paypass_et_mobile);
+        mMobileEt= (TextView) findViewById(R.id.paypass_et_mobile);
+        mMobileEt.setText(MyApplication.appUser.getMobile());
         mVerificationEt= (EditText) findViewById(R.id.paypass_et_verification);
 
         mGetVerificationBtn= (Button) findViewById(R.id.paypass_btn_get_verification);
         mGetVerificationBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mobile= mMobileEt.getText().toString().trim();
+                String mobile= MyApplication.appUser.getMobile();
                 if (mobile== null || mobile.length()< 1){
-                    showShortToast("请输入您的手机号");
+                    showShortToast("手机号获取失败");
                     return;
                 }
                 addNetWork(Network.getInstance().getVerificationCode(mobile, NetParams.VERIFICATION_USERTYPT_SETPAYPASS)

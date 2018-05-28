@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:text="没有历史数据"
+    android:text="暂无数据"
     android:textSize="@dimen/textSize_13"
     android:textColor="#A7B2C3"
     android:drawableTop="@mipmap/transaction_no"

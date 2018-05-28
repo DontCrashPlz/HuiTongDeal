@@ -20,7 +20,9 @@ import com.huitong.deal.activities.PayPasswordActivity;
 import com.huitong.deal.activities.RealNameActivity;
 import com.huitong.deal.activities.TiXianActivity;
 import com.huitong.deal.apps.MyApplication;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.zheng.zchlibrary.apps.BaseFragment;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
 import com.zheng.zchlibrary.utils.Tools;
 
@@ -40,7 +42,6 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
 
     private TextView mBillTv;
 
-    private TextView mPropertyTv;
     private TextView mBalanceTv;
     private TextView mSecurityTv;
     private Button mTiXianBtn;
@@ -66,18 +67,8 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         mBillTv= view.findViewById(R.id.toolbar_right_icon);
         mBillTv.setOnClickListener(this);
 
-        mPropertyTv= view.findViewById(R.id.home_mine_property);
         mBalanceTv= view.findViewById(R.id.home_mine_balance);
         mSecurityTv= view.findViewById(R.id.home_mine_security);
-        if (MyApplication.appUser!= null){
-            if (MyApplication.appUser.getUserinfo()!= null){
-                float availableBalance= MyApplication.appUser.getUserinfo().getAvailablebalance();
-                float integral= MyApplication.appUser.getUserinfo().getIntegral();
-                mPropertyTv.setText(Tools.formatFloat(availableBalance + integral));
-                mBalanceTv.setText(Tools.formatFloat(availableBalance));
-                mSecurityTv.setText(Tools.formatFloat(integral));
-            }
-        }
 
         mTiXianBtn= view.findViewById(R.id.home_mine_btn_tixian);
         mTiXianBtn.setOnClickListener(this);
@@ -93,6 +84,27 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         mAboutUsRly.setOnClickListener(this);
         mLogoutRly= view.findViewById(R.id.home_mine_rly_logout);
         mLogoutRly.setOnClickListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+            @Override
+            public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+                mBalanceTv.setText(String.format(
+                        getString(R.string.home_mine_balance),
+                        Tools.formatFloat(userInfoDataEntity.getUserinfo().getAvailablebalance())));
+                mSecurityTv.setText(String.format(
+                        getString(R.string.home_mine_tihuo),
+                        Tools.formatFloat(userInfoDataEntity.getUserinfo().getIntegral())));
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                showShortToast(msg);
+            }
+        }));
     }
 
     @Override

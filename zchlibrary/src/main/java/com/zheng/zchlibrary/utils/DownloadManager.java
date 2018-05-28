@@ -27,7 +27,7 @@ public class DownloadManager {
             int contentLength= conn.getContentLength();
             pd.setMax(100);
             InputStream is = conn.getInputStream();
-            File file = new File(Environment.getExternalStorageDirectory(), "汇通交易.apk");
+            File file = new File(Environment.getExternalStorageDirectory(), "尚品会.apk");
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
             byte[] buffer = new byte[1024];

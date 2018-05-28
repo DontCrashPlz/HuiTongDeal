@@ -51,10 +51,10 @@ public class AboutUsActivity extends BaseActivity {
 
         mLaunchTag= getIntent().getStringExtra(LAUNCH_TAG);
         if (LAUNCH_TAG_HUITONGXIEYI.equals(mLaunchTag)){
-            mTitleTv.setText("汇通承诺");
+            mTitleTv.setText("尚品会承诺");
             url= "http://47.92.28.185/wap/helpcenter/userProtocol";
         }else if (LAUNCH_TAG_ABOUTUS.equals(mLaunchTag)){
-            mTitleTv.setText("关于汇通");
+            mTitleTv.setText("关于尚品会");
             url= "http://47.92.28.185/wap/helpcenter/aboutUs";
         }
 

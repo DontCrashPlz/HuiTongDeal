@@ -51,7 +51,7 @@ public class ChongZhiDetailActivity extends BaseActivity {
             }
         });
         mTitleTv = (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText("充值详情");
+        mTitleTv.setText("购买详情");
         mIconTv = (TextView) findViewById(R.id.toolbar_right_text);
         mIconTv.setVisibility(View.GONE);
 

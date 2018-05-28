@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="充值金额"
+            android:text="购买金额"
             android:textColor="@android:color/white"
             android:textSize="@dimen/textSize_16"
             android:paddingLeft="10dp"/>
@@ -30,7 +30,7 @@
             android:background="@color/background_black_light"
             android:textColor="@android:color/white"
             android:textSize="@dimen/textSize_12"
-            android:hint="请输入充值金额"
+            android:hint="请输入购买金额"
             android:textColorHint="#90FFFFFF"
             android:lines="1"
             android:ellipsize="end"

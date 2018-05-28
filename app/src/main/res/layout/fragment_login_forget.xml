@@ -67,7 +67,8 @@
         android:hint="设置6至16位密码"
         android:textColorHint="@color/hint_text_gray"
         android:drawablePadding="15dp"
-        android:background="@drawable/edittext_background_white_corners_hollow" />
+        android:background="@drawable/edittext_background_white_corners_hollow"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/login_btn_confirm"

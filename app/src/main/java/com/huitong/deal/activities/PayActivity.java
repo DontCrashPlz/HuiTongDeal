@@ -17,8 +17,10 @@ import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.PayEntity;
 import com.huitong.deal.beans.PayStatusEntity;
 import com.huitong.deal.beans.PayTypeEntity;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.DownloadImageManager;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
@@ -169,7 +171,17 @@ public class PayActivity extends BaseActivity {
                                     mStatusTv.setTextColor(Color.GREEN);
                                     mButton2.setClickable(false);
                                     mButton2.setBackgroundColor(Color.GRAY);
-                                    MyApplication.getInstance().refreshUser();
+                                    addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+                                        @Override
+                                        public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure(String msg) {
+                                            showShortToast(msg);
+                                        }
+                                    }));
                                 }else {
                                     showShortToast("订单尚未支付");
                                 }

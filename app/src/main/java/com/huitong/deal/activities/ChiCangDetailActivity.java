@@ -12,8 +12,10 @@ import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.HttpResult;
+import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
+import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
@@ -136,7 +138,17 @@ public class ChiCangDetailActivity extends BaseActivity {
                                         showShortToast(booleanHttpResult.getDescription());
                                     }else if ("success".equals(booleanHttpResult.getStatus())){
                                         showShortToast("平仓成功");
-                                        MyApplication.getInstance().refreshUser();
+                                        addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+                                            @Override
+                                            public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(String msg) {
+                                                showShortToast(msg);
+                                            }
+                                        }));
                                         finish();
                                     }
                                 }
