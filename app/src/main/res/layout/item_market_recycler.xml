@@ -16,31 +16,29 @@
         android:id="@+id/market_list_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="42"
+        android:layout_weight="1"
         android:text="产品名称"
         android:textColor="@android:color/white"
         android:textSize="@dimen/textSize_16" />
 
     <TextView
         android:id="@+id/market_list_price"
-        android:layout_width="0dp"
+        android:layout_width="90dp"
         android:layout_height="wrap_content"
-        android:layout_weight="29"
         android:text="0.00"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/textSize_16"/>
+        android:textSize="@dimen/textSize_14"/>
 
     <TextView
         android:id="@+id/market_list_float"
-        android:layout_width="0dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_weight="29"
         android:text="-0.00%"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/textSize_16"
+        android:textSize="@dimen/textSize_14"
         android:background="@drawable/market_float_background_green"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"
-        android:gravity="center"/>
+        android:gravity="center" />
 
 </LinearLayout>

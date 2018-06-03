@@ -63,10 +63,20 @@ public class ChiCangHistoryEntity implements Serializable {
     private String order_state;
     //close_type
     private int close_type;
+    //close_type_name
+    private String close_type_name;
     //止损价格
     private float lose_price;
 
     private int status;
+
+    public String getClose_type_name() {
+        return close_type_name;
+    }
+
+    public void setClose_type_name(String close_type_name) {
+        this.close_type_name = close_type_name;
+    }
 
     public int getLeverage() {
         return leverage;
@@ -339,6 +349,7 @@ public class ChiCangHistoryEntity implements Serializable {
                 ", lose_rate=" + lose_rate +
                 ", order_state='" + order_state + '\'' +
                 ", close_type=" + close_type +
+                ", close_type_name='" + close_type_name + '\'' +
                 ", lose_price=" + lose_price +
                 ", status=" + status +
                 '}';

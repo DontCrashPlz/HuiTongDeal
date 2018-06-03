@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
+    android:layout_height="90dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/background_black_light">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="30dp"
+        android:paddingLeft="15dp"
         android:paddingRight="15dp">
-        <TextView
-            android:id="@+id/toolbar_market_username"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/market_title_username"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"/>
-        <TextView
-            android:id="@+id/toolbar_market_balance"
+            android:orientation="horizontal">
+            <com.zheng.zchlibrary.widgets.AlignTextView
+                android:id="@+id/toolbar_market_username_title"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                app:text="会员帐号"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="："
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/toolbar_market_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="未知"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/market_title_balance"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:layout_alignParentBottom="true"
-            android:drawableRight="@mipmap/voucher_02"
-            android:drawablePadding="3dp"/>
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+            <com.zheng.zchlibrary.widgets.AlignTextView
+                android:id="@+id/toolbar_market_balance_title"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                app:text="购物券余额"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="："
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+            <TextView
+                android:id="@+id/toolbar_market_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:drawableRight="@mipmap/voucher_02"
+                android:drawablePadding="3dp"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/toolbar_market_buy"
             android:layout_width="wrap_content"

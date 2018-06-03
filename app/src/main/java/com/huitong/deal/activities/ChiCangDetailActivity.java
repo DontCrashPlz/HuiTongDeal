@@ -40,12 +40,14 @@ public class ChiCangDetailActivity extends BaseActivity {
     private ImageView mBackIv;
     private TextView mTitleTv;
 
+    private TextView mChiCangNameTv;
     private TextView mTextView1;
     private TextView mTextView2;
     private TextView mTextView3;
     private TextView mTextView4;
     private TextView mTextView5;
     private TextView mTextView6;
+    private TextView mDanJiaTv;
     private TextView mTextView7;
     private TextView mTextView8;
     private TextView mTextView9;
@@ -56,6 +58,10 @@ public class ChiCangDetailActivity extends BaseActivity {
     private String appToken;
     private String postionNo;
     private String closePrice;
+
+    private float mLastPrice;
+    private float mNowPrice;
+    private float mFloatPrice;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,7 +86,11 @@ public class ChiCangDetailActivity extends BaseActivity {
         });
 
         mTitleTv= (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText(mEntity.getStockname()+"详情");
+        //mTitleTv.setText(mEntity.getStockname()+"详情");
+        mTitleTv.setText("持仓详情");
+
+        mChiCangNameTv= findViewById(R.id.chicang_detail_name);
+        mChiCangNameTv.setText(mEntity.getStockname());
 
         mTextView1= (TextView) findViewById(R.id.chicang_detail_text1);
         mTextView1.setText(mEntity.getPosition_no());
@@ -102,13 +112,17 @@ public class ChiCangDetailActivity extends BaseActivity {
 
         mTextView4= (TextView) findViewById(R.id.chicang_detail_text4);
         mTextView4.setText(String.valueOf(mEntity.getCurpoint()));
-        closePrice= String.valueOf(mEntity.getCurpoint());
+        mLastPrice= mEntity.getCurpoint();
+        closePrice= String.valueOf(mLastPrice);
 
         mTextView5= (TextView) findViewById(R.id.chicang_detail_text5);
         mTextView5.setText(String.valueOf(mEntity.getBuy_count()));
 
         mTextView6= (TextView) findViewById(R.id.chicang_detail_text6);
         mTextView6.setText(String.valueOf(mEntity.getLeverage()));
+
+        mDanJiaTv= findViewById(R.id.chicang_detail_text_danjia);
+        mDanJiaTv.setText(String.valueOf(mEntity.getBuy_pirce()));
 
         mTextView7= (TextView) findViewById(R.id.chicang_detail_text7);
         mTextView7.setText(String.valueOf(mEntity.getOrder_money()));
@@ -228,14 +242,23 @@ public class ChiCangDetailActivity extends BaseActivity {
     }
 
     private void refreshUI(ChiCangEntity entity){
-        mTextView4.setText(String.valueOf(entity.getCurpoint()));
+        mNowPrice= entity.getCurpoint();
+        mTextView4.setText(String.valueOf(mNowPrice));
+        mFloatPrice= mNowPrice - mLastPrice;
+        if (mFloatPrice< 0){
+            mTextView4.setTextColor(MyApplication.colorGreen);
+        }else {
+            mTextView4.setTextColor(MyApplication.colorOrange);
+        }
+        mLastPrice= mNowPrice;
+
         closePrice= String.valueOf(entity.getCurpoint());
         mTextView9.setText(String.valueOf(entity.getGain()));
         if (entity.getGain()< 0){
-            mTextView4.setTextColor(MyApplication.colorGreen);
+            //mTextView4.setTextColor(MyApplication.colorGreen);
             mTextView9.setTextColor(MyApplication.colorGreen);
         }else {
-            mTextView4.setTextColor(MyApplication.colorOrange);
+            //mTextView4.setTextColor(MyApplication.colorOrange);
             mTextView9.setTextColor(MyApplication.colorOrange);
         }
     }

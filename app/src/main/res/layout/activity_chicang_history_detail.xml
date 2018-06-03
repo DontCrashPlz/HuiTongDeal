@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_black">
 
@@ -20,14 +22,53 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="订单号"
+                    app:text="产品名称"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
+                <TextView
+                    android:id="@+id/chicang_detail_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@color/background_black_light"
+                    android:text="未知"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:lines="1"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/background_black_light"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical">
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    app:text="订单编号"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text1"
                     android:layout_width="0dp"
@@ -47,14 +88,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="交易方式"
+                    app:text="购买方式"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text2"
                     android:layout_width="0dp"
@@ -74,14 +121,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="建仓价"
+                    app:text="建仓价"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text3"
                     android:layout_width="0dp"
@@ -101,14 +154,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="平仓价"
+                    app:text="平仓价"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text4"
                     android:layout_width="0dp"
@@ -128,14 +187,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="手数"
+                    app:text="投资手数"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text5"
                     android:layout_width="0dp"
@@ -155,14 +220,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="交易杠杆"
+                    app:text="交易方式"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text6"
                     android:layout_width="0dp"
@@ -182,14 +253,53 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="下单金额"
+                    app:text="一手单价"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
+                <TextView
+                    android:id="@+id/chicang_detail_text_danjia"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:background="@color/background_black_light"
+                    android:text="0.00"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:lines="1"
+                    android:ellipsize="end"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/background_black_light"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical">
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
+                    android:layout_height="wrap_content"
+                    app:text="投资总量"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text7"
                     android:layout_width="0dp"
@@ -209,14 +319,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="手续费"
+                    app:text="手续费"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text8"
                     android:layout_width="0dp"
@@ -236,14 +352,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="盈亏"
+                    app:text="盈亏"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text9"
                     android:layout_width="0dp"
@@ -263,14 +385,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="建仓日期"
+                    app:text="建仓日期"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text10"
                     android:layout_width="0dp"
@@ -290,14 +418,20 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="平仓日期"
+                    app:text="平仓日期"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text12"
                     android:layout_width="0dp"
@@ -317,21 +451,27 @@
                 android:background="@color/background_black_light"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <TextView
-                    android:layout_width="0dp"
+                <com.zheng.zchlibrary.widgets.AlignTextView
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="状态"
+                    app:text="平仓类型"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/textSize_15"
-                    android:paddingLeft="10dp"/>
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="："
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/textSize_15"
+                    android:layout_marginRight="20dp"/>
                 <TextView
                     android:id="@+id/chicang_detail_text11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:background="@color/background_black_light"
-                    android:text="风控平仓"
+                    android:text="未知"
                     android:textColor="@color/background_button_orange"
                     android:textSize="@dimen/textSize_15"
                     android:lines="1"

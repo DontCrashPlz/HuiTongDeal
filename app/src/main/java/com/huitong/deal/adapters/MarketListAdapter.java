@@ -15,6 +15,7 @@ import com.huitong.deal.activities.MarketDetailActivity2;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.CommodityDetailEntity;
 import com.huitong.deal.beans.CommodityListEntity;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.Tools;
 
 /**
@@ -39,16 +40,37 @@ public class MarketListAdapter extends BaseQuickAdapter<CommodityDetailEntity, M
                 mContext.startActivity(intent);
             }
         });
-        helper.mNameTv.setText(item.getStock_name());
-        helper.mPriceTv.setText(Tools.formatFloat(item.getNow_price()));
-        helper.mFloatTv.setText(Tools.formatFloat(item.getFloat_rate()) + "%");
-        if (item.getFloat_rate()< 0){
-            helper.mPriceTv.setTextColor(MyApplication.colorGreen);
-            helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_green);
-        }else {
-            helper.mPriceTv.setTextColor(MyApplication.colorOrange);
-            helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_orange);
+
+        float lastPrice= 0;
+        float nowPrice= item.getNow_price();
+        if (MyApplication.mLastPriceMap.containsKey(item.getId())){
+            lastPrice= MyApplication.mLastPriceMap.get(item.getId());
         }
+
+        helper.mNameTv.setText(item.getStock_name());
+        helper.mPriceTv.setText(Tools.formatFloat(nowPrice));
+        MyApplication.mLastPriceMap.put(item.getId(), nowPrice);
+
+        float floatPrice= nowPrice - lastPrice;
+
+        if (floatPrice< 0){
+            helper.mPriceTv.setTextColor(MyApplication.color_down_green);
+        }else {
+            helper.mPriceTv.setTextColor(MyApplication.color_up_red);
+        }
+
+        if (item.getStock_state()== 0 || item.getTrade_state()== 0){
+            helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_gary);
+            helper.mFloatTv.setText("休市中");
+        }else {
+            helper.mFloatTv.setText(Tools.formatFloat(item.getFloat_rate()) + "%");
+            if (item.getFloat_rate()< 0){
+                helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_green);
+            }else {
+                helper.mFloatTv.setBackgroundResource(R.drawable.market_float_background_orange);
+            }
+        }
+
     }
 
     class MarketListHolder extends BaseViewHolder{

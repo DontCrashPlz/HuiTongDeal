@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="名称"
+            android:text="名 称"
             android:textSize="@dimen/textSize_14"
             android:textColor="@android:color/white"
             android:gravity="left"/>
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="平仓价"
+            android:text="最新价"
             android:textSize="@dimen/textSize_14"
             android:textColor="@android:color/white"
             android:gravity="center"/>
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="盈亏"
+            android:text="浮动盈亏"
             android:textSize="@dimen/textSize_14"
             android:textColor="@android:color/white"
             android:gravity="right"/>

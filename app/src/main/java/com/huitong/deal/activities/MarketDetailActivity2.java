@@ -96,6 +96,10 @@ public class MarketDetailActivity2 extends BaseActivity {
 
     private ProgressDialog mInitDialog;
 
+    private float mLastPrice;
+    private float mNowPrice;
+    private float mFloatPrice;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -267,16 +271,45 @@ public class MarketDetailActivity2 extends BaseActivity {
 
     private void refreshUI(CommodityDetailEntity entity){
 
-        mPriceTv.setText(Tools.formatFloat(entity.getNow_price()));
-        mNumberTv.setText(entity.getCur_date() + " " + entity.getCur_time());
-        if (entity.getFloat_rate()< 0){
-            mFloatTv.setText("↓ " + Tools.formatFloat(entity.getFloat_rate()) + "%");
+        mNowPrice= entity.getNow_price();
+        mFloatPrice= mNowPrice - mLastPrice;
+
+        mPriceTv.setText(Tools.formatFloat(mNowPrice));
+        if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+            LogUtil.e("xiaDanDialog isShowing", "" + xiaDanDialog.isShowing());
+            dialogCurPrice.setText(Tools.formatFloat(mNowPrice));
+            nowPrice= String.valueOf(entity.getNow_price());
+        }
+        if (mFloatPrice< 0){
             mPriceTv.setTextColor(Color.rgb(0, 246, 1));
-            mFloatTv.setTextColor(Color.rgb(0, 246, 1));
+            if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+                dialogCurPrice.setTextColor(Color.rgb(0, 246, 1));
+            }
         }else {
-            mFloatTv.setText("↑ " + Tools.formatFloat(entity.getFloat_rate()) + "%");
             mPriceTv.setTextColor(Color.rgb(255, 63, 0));
+            if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+                dialogCurPrice.setTextColor(Color.rgb(255, 63, 0));
+            }
+        }
+
+        mNumberTv.setText(entity.getCur_date() + " " + entity.getCur_time());
+
+        if (entity.getFloat_rate()< 0){
+            mFloatTv.setText("↓" + Tools.formatFloat(entity.getFloat_rate()) + "%");
+            //mPriceTv.setTextColor(Color.rgb(0, 246, 1));
+            mFloatTv.setTextColor(Color.rgb(0, 246, 1));
+            if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+                dialogFloat.setText("↓");
+                dialogFloat.setTextColor(Color.rgb(0, 246, 1));
+            }
+        }else {
+            mFloatTv.setText("↑" + Tools.formatFloat(entity.getFloat_rate()) + "%");
+            //mPriceTv.setTextColor(Color.rgb(255, 63, 0));
             mFloatTv.setTextColor(Color.rgb(255, 63, 0));
+            if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
+                dialogFloat.setText("↑");
+                dialogFloat.setTextColor(Color.rgb(255, 63, 0));
+            }
         }
 
         mHighTv.setText(String.format(getString(R.string.market_detail_high), Tools.formatFloat(entity.getHighest())));
@@ -300,20 +333,19 @@ public class MarketDetailActivity2 extends BaseActivity {
             mHuiGouBtn.setClickable(true);
         }
 
-        if (xiaDanDialog!= null && xiaDanDialog.isShowing()){
-            LogUtil.e("xiaDanDialog isShowing", "" + xiaDanDialog.isShowing());
-            dialogCurPrice.setText(Tools.formatFloat(entity.getNow_price()));
-            nowPrice= String.valueOf(entity.getNow_price());
-        }
+
     }
 
     /**************************下单Dialog相关*******************************/
     private Dialog xiaDanDialog;//下单弹窗
 //    private ImageView dialogCancel;
-    private CommonTabLayout dialogTabLayout;//选择认购回购
+    //private CommonTabLayout dialogTabLayout;//选择认购回购
+    private RadioButton mRenGouRbtn;
+    private RadioButton mHuiGouRbtn;
     private TextView dialogStockName;//股票名称
-    private TextView dialogStockStatus;//股票状态
+    //private TextView dialogStockStatus;//股票状态
     private TextView dialogCurPrice;//股票现价
+    private TextView dialogFloat;//浮动状态
     private RadioButton dialogRbtn_100;//100杠杆
     private RadioButton dialogRbtn_50;//50杠杆
     private RadioButton dialogRbtn_1;//1杠杆
@@ -338,9 +370,7 @@ public class MarketDetailActivity2 extends BaseActivity {
     private int minCount;//最小购买数量
     private int maxCount;//最大购买数量
 
-    private TextWatcher mTextWatcher;
-
-    private ArrayList<CustomTabEntity> tabEntities;
+    //private ArrayList<CustomTabEntity> tabEntities;
 
     /**
      * 弹出下单弹窗
@@ -354,38 +384,59 @@ public class MarketDetailActivity2 extends BaseActivity {
         xiaDanDialog.setContentView(view);
         xiaDanDialog.show();
 
-        dialogTabLayout= view.findViewById(R.id.tixian_dialog_tab);
-        tabEntities= new ArrayList<>();
-        tabEntities.add(new DealTableEntity("认购", 0, 0));
-        tabEntities.add(new DealTableEntity("回购", 0, 0));
-        dialogTabLayout.setTabData(tabEntities);
-        dialogTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+        mRenGouRbtn= findViewById(R.id.tixian_dialog_tab_rengou);
+        mRenGouRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onTabSelect(int position) {
-                if (position== 0){
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
                     buyType= 2;
-                }else if (position== 1){
-                    buyType= 1;
+                    dialogButton.setBackgroundColor(Color.rgb(0, 159, 233));
                 }
             }
+        });
+        mHuiGouRbtn= findViewById(R.id.tixian_dialog_tab_huigou);
+        mHuiGouRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onTabReselect(int position) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    buyType= 1;
+                    dialogButton.setBackgroundColor(Color.rgb(240, 173, 78));
+                }
             }
         });
-        dialogTabLayout.setCurrentTab(currentTab);
-        if (currentTab== 0){
-            buyType= 2;
-        }else if (currentTab== 1){
-            buyType= 1;
-        }
+//        dialogTabLayout= view.findViewById(R.id.tixian_dialog_tab);
+//        tabEntities= new ArrayList<>();
+//        tabEntities.add(new DealTableEntity("认购", 0, 0));
+//        tabEntities.add(new DealTableEntity("回购", 0, 0));
+//        dialogTabLayout.setTabData(tabEntities);
+//        dialogTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+//            @Override
+//            public void onTabSelect(int position) {
+//                if (position== 0){
+//                    buyType= 2;
+//                }else if (position== 1){
+//                    buyType= 1;
+//                }
+//            }
+//            @Override
+//            public void onTabReselect(int position) {
+//            }
+//        });
+//        dialogTabLayout.setCurrentTab(currentTab);
+//        if (currentTab== 0){
+//            buyType= 2;
+//        }else if (currentTab== 1){
+//            buyType= 1;
+//        }
 
         dialogStockName= view.findViewById(R.id.tixian_dialog_name);
         dialogStockName.setText(stock_name);
 
-        dialogStockStatus= view.findViewById(R.id.tixian_dialog_status);
-        dialogStockStatus.setText(stock_code);
+//        dialogStockStatus= view.findViewById(R.id.tixian_dialog_status);
+//        dialogStockStatus.setText(stock_code);
 
         dialogCurPrice= view.findViewById(R.id.tixian_dialog_price);
+        dialogFloat= view.findViewById(R.id.tixian_dialog_float);
         dialogRbtn_100= view.findViewById(R.id.tixian_dialog_rbtn_100);
         dialogRbtn_50= view.findViewById(R.id.tixian_dialog_rbtn_50);
         dialogRbtn_1= view.findViewById(R.id.tixian_dialog_rbtn_1);
@@ -419,6 +470,11 @@ public class MarketDetailActivity2 extends BaseActivity {
                 showConfirmDialog();
             }
         });
+        if (currentTab== 0){
+            mRenGouRbtn.setChecked(true);
+        }else if (currentTab== 1){
+            mHuiGouRbtn.setChecked(true);
+        }
 
         dealLeverage();
 

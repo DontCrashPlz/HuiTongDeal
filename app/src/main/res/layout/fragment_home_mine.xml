@@ -44,7 +44,7 @@
                 android:textSize="@dimen/textSize_14"
                 android:layout_centerHorizontal="true"
                 android:layout_above="@+id/home_mine_devide"
-                android:drawableRight="@mipmap/voucher_02"
+                android:drawableRight="@mipmap/voucher_10"
                 android:drawablePadding="3dp"
                 android:gravity="center_vertical" />
             <View
@@ -63,7 +63,7 @@
                 android:layout_below="@+id/home_mine_devide"
                 android:layout_alignLeft="@+id/home_mine_balance"
                 android:gravity="center_vertical"
-                android:drawableRight="@mipmap/voucher_02"
+                android:drawableRight="@mipmap/voucher_09"
                 android:drawablePadding="3dp"/>
         </RelativeLayout>
 

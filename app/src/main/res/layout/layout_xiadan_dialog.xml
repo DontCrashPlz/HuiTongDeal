@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#F6F6F6">
 
     <ImageView
@@ -13,19 +12,40 @@
         android:layout_marginTop="-35dp"
         android:layout_alignParentRight="true"/>
 
-    <com.flyco.tablayout.CommonTabLayout
+    <RadioGroup
         android:id="@+id/tixian_dialog_tab"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:tl_textSelectColor="#FF3F00"
-        app:tl_textUnselectColor="#666666"
-        app:tl_underline_color="#E5E5E5"
-        app:tl_underline_height="1dp"
-        app:tl_indicator_color="#FF3F00"
-        app:tl_indicator_gravity="BOTTOM"
-        app:tl_indicator_height="1dp"
-        app:tl_indicator_width="60dp"
-        app:tl_textsize="@dimen/textSize_16"/>
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp">
+        <RadioButton
+            android:id="@+id/tixian_dialog_tab_rengou"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="认购"
+            android:textSize="@dimen/textSize_16"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/radiobtn_background_rengou"
+            android:layout_marginRight="3dp"
+            android:textColor="@color/radiobtn_textcolor_leverage"/>
+        <RadioButton
+            android:id="@+id/tixian_dialog_tab_huigou"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="回购"
+            android:textSize="@dimen/textSize_16"
+            android:gravity="center"
+            android:button="@null"
+            android:background="@drawable/radiobtn_background_huigou"
+            android:layout_marginLeft="3dp"
+            android:textColor="@color/radiobtn_textcolor_leverage"/>
+    </RadioGroup>
 
     <View
         android:layout_width="match_parent"
@@ -53,17 +73,14 @@
             android:paddingLeft="8dp"
             android:layout_centerVertical="true"/>
         <TextView
-            android:id="@+id/tixian_dialog_status"
-            android:layout_width="80dp"
-            android:layout_height="18dp"
-            android:text="开盘"
-            android:textSize="@dimen/textSize_12"
-            android:textColor="@android:color/white"
-            android:layout_below="@+id/tixian_dialog_name"
-            android:background="#FF9800"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:visibility="gone"/>
+            android:id="@+id/tixian_dialog_float"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="↑"
+            android:textSize="@dimen/textSize_15"
+            android:textColor="#03A303"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/tixian_dialog_price"
             android:layout_width="wrap_content"
@@ -71,9 +88,16 @@
             android:text="0.00"
             android:textSize="@dimen/textSize_15"
             android:textColor="#03A303"
-            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:drawablePadding="10dp"/>
+            android:layout_toLeftOf="@+id/tixian_dialog_float"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最新价: "
+            android:textSize="@dimen/textSize_15"
+            android:textColor="#03A303"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/tixian_dialog_price"/>
     </RelativeLayout>
 
     <View
@@ -165,20 +189,21 @@
             android:textSize="@dimen/textSize_15"/>
         <TextView
             android:id="@+id/tixian_dialog_maxcount"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/xiadan_dialog_maxcount"
             android:textColor="#666666"
             android:textSize="@dimen/textSize_12"
-            android:layout_marginLeft="5dp"/>
+            android:gravity="right"
+            android:paddingRight="10dp"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/tixian_dialog_panel_edittext"
+        android:id="@+id/tixian_dialog_panel_seekbar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_below="@+id/tixian_dialog_panel_shoushu">
@@ -192,9 +217,8 @@
             android:gravity="center"/>
         <android.support.v7.widget.AppCompatSeekBar
             android:id="@+id/tixian_dialog_seekbar"
-            android:layout_width="0dp"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:progressDrawable="@drawable/my_progress_horizontal"
             android:thumb="@drawable/seekbar_thumb_white_point"
             android:splitTrack="false"
@@ -208,37 +232,41 @@
             android:textColor="#333333"
             android:textSize="@dimen/textSize_15"
             android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tixian_dialog_panel_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/tixian_dialog_panel_seekbar"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp">
         <Button
             android:id="@+id/tixian_dialog_btn_subtract"
-            android:layout_width="26dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:text="-"
             android:textColor="#333333"
             android:textSize="@dimen/textSize_15"
-            android:background="#999999"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="10dp"/>
+            android:background="@drawable/button_background_buycount_subtract" />
         <com.huitong.deal.widgets.ClearableEditText
             android:id="@+id/tixian_dialog_et_buycount"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:textSize="@dimen/textSize_15"
             android:textColor="#333333"
-            android:background="@drawable/edittext_background_white_corners_hollow"
-            android:inputType="number"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
+            android:background="@drawable/edittext_background_buycount"
+            android:inputType="number"/>
         <Button
             android:id="@+id/tixian_dialog_btn_plus"
-            android:layout_width="26dp"
+            android:layout_width="40dp"
             android:layout_height="match_parent"
             android:text="+"
             android:textColor="#333333"
             android:textSize="@dimen/textSize_15"
-            android:background="#999999"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"/>
+            android:background="@drawable/button_background_buycount_plus" />
     </LinearLayout>
 
     <View
@@ -309,16 +337,25 @@
         android:background="@android:color/white">
 
         <TextView
+            android:id="@+id/tixian_dialog_zongliang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="投资总量: "
+            android:textColor="@color/background_button_orange"
+            android:textSize="@dimen/textSize_14"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
             android:id="@+id/tixian_dialog_buyprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0.00"
             android:textColor="@color/background_button_orange"
             android:textSize="@dimen/textSize_18"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
             android:drawableRight="@mipmap/voucher_07"
-            android:drawablePadding="5dp"/>
+            android:drawablePadding="5dp"
+            android:layout_toRightOf="@+id/tixian_dialog_zongliang"
+            android:layout_alignBaseline="@+id/tixian_dialog_zongliang"/>
         <TextView
             android:id="@+id/tixian_dialog_serverprice"
             android:layout_width="wrap_content"
@@ -335,7 +372,7 @@
             android:layout_width="150dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:background="#FF9800"
+            android:background="#009FE9"
             android:text="下单"
             android:textColor="@android:color/white"
             android:textSize="@dimen/textSize_24"/>

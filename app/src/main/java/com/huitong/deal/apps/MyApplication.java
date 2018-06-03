@@ -13,6 +13,9 @@ import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.ScreenUtils;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -28,6 +31,9 @@ public class MyApplication extends BaseApplication {
 
     public static final int colorGreen= Color.rgb(0, 246, 1);
     public static final int colorOrange= Color.rgb(255, 63, 0);
+
+    public static final int color_up_red= Color.rgb(218, 37, 28);
+    public static final int color_down_green= Color.rgb(4, 188, 4);
 
     private static MyApplication mSingleInstance;
 
@@ -154,5 +160,9 @@ public class MyApplication extends BaseApplication {
                     }
                 });
     }
+
+
+    public static Map<Integer, Float> mLastPriceMap= new HashMap<>();
+    public static Map<Integer, Float> mChiCangLastPriceMap= new HashMap<>();
 
 }

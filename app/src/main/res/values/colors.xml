@@ -19,4 +19,10 @@
 
     <color name="progressbar_background_gr">#00F601</color>
 
+    <color name="market_up_red">#DA251C</color>
+    <color name="market_down_green">#04BC04</color>
+    <color name="market_stop_gary">#CCCCCC</color>
+    <color name="xiadan_blue">#009FE9</color>
+    <color name="xiadan_yellow">#F0AD4E</color>
+
 </resources>

@@ -49,7 +49,7 @@ public class HomeDealFragment extends BaseFragment {
         mTabEntities.add(new DealTableEntity("历史", R.mipmap.transaction_history_select, R.mipmap.transaction_history));
 
         mTitleTv= mView.findViewById(R.id.toolbar_title);
-        mTitleTv.setText("交易");
+        mTitleTv.setText("交易中心");
         mTabLayout= mView.findViewById(R.id.home_tly_dealtab);
         mViewPager= mView.findViewById(R.id.home_vp_content);
         mViewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {

@@ -36,12 +36,14 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
     private ImageView mBackIv;
     private TextView mTitleTv;
 
+    private TextView mNameTv;
     private TextView mTextView1;
     private TextView mTextView2;
     private TextView mTextView3;
     private TextView mTextView4;
     private TextView mTextView5;
     private TextView mTextView6;
+    private TextView mDanJiaTv;
     private TextView mTextView7;
     private TextView mTextView8;
     private TextView mTextView9;
@@ -72,7 +74,11 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         });
 
         mTitleTv= (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText(mEntity.getStock_name()+"详情");
+        //mTitleTv.setText(mEntity.getStock_name()+"详情");
+        mTitleTv.setText("历史订单详情");
+
+        mNameTv= findViewById(R.id.chicang_detail_name);
+        mNameTv.setText(mEntity.getStock_name());
 
         mTextView1= (TextView) findViewById(R.id.chicang_detail_text1);
         mTextView1.setText(mEntity.getPosition_no());
@@ -100,6 +106,9 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         mTextView6= (TextView) findViewById(R.id.chicang_detail_text6);
         mTextView6.setText(String.valueOf(mEntity.getLeverage()));
 
+        mDanJiaTv= findViewById(R.id.chicang_detail_text_danjia);
+        mDanJiaTv.setText(String.valueOf(mEntity.getBuy_pirce()));
+
         mTextView7= (TextView) findViewById(R.id.chicang_detail_text7);
         mTextView7.setText(Tools.formatFloat(mEntity.getOrder_money()));
 
@@ -113,16 +122,16 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
         mTextView10.setText(mEntity.getBuy_time());
 
         mTextView11= (TextView) findViewById(R.id.chicang_detail_text11);
-        mTextView11.setText("已完成");
+        mTextView11.setText(mEntity.getClose_type_name() + "平仓");
 
         mTextView12= (TextView) findViewById(R.id.chicang_detail_text12);
         mTextView12.setText(mEntity.getEnd_time());
 
         if (mEntity.getGain()< 0){
-            mTextView4.setTextColor(MyApplication.colorGreen);
+            //mTextView4.setTextColor(MyApplication.colorGreen);
             mTextView9.setTextColor(MyApplication.colorGreen);
         }else {
-            mTextView4.setTextColor(MyApplication.colorOrange);
+            //mTextView4.setTextColor(MyApplication.colorOrange);
             mTextView9.setTextColor(MyApplication.colorOrange);
         }
     }

@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.huitong.deal.R;
 import com.huitong.deal.activities.ChiCangDetailActivity;
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.zheng.zchlibrary.utils.Tools;
 
@@ -36,6 +37,13 @@ public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangL
                 mContext.startActivity(intent);
             }
         });
+
+        float lastPrice= 0;
+        float nowPrice= item.getCurpoint();
+        if (MyApplication.mChiCangLastPriceMap.containsKey(item.getId())){
+            lastPrice= MyApplication.mChiCangLastPriceMap.get(item.getId());
+        }
+
         helper.mNameTv.setText(item.getStockname());
         if (item.getBuy_type()== 1){
             helper.mIconTv.setText("回购");
@@ -50,14 +58,23 @@ public class ChiCangListAdapter extends BaseQuickAdapter<ChiCangEntity, ChiCangL
         }
         helper.mIconRemarkTv.setText(item.getStock_no());
         helper.mText2.setText(Tools.formatFloat(item.getNow_price()));
-        helper.mText3.setText(Tools.formatFloat(item.getCurpoint()));
+
+        helper.mText3.setText(Tools.formatFloat(nowPrice));
+        MyApplication.mChiCangLastPriceMap.put(item.getId(), nowPrice);
+        float floatPrice= nowPrice - lastPrice;
+        if (floatPrice< 0){
+            helper.mText3.setTextColor(colorGreen);
+        }else {
+            helper.mText3.setTextColor(colorOrange);
+        }
+
         helper.mText4.setText(Tools.formatFloat(item.getGain()));
         float currentGain= item.getGain();
         if (currentGain< 0F){
-            helper.mText3.setTextColor(colorGreen);
+            //helper.mText3.setTextColor(colorGreen);
             helper.mText4.setTextColor(colorGreen);
         }else {
-            helper.mText3.setTextColor(colorOrange);
+            //helper.mText3.setTextColor(colorOrange);
             helper.mText4.setTextColor(colorOrange);
         }
     }

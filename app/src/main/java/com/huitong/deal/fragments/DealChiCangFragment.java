@@ -59,8 +59,8 @@ public class DealChiCangFragment extends BaseFragment {
 
         textView3= mView.findViewById(R.id.deal_text3);
         textView4= mView.findViewById(R.id.deal_text4);
-        textView3.setText("现价");
-        textView4.setText("浮动");
+        textView3.setText("最新价");
+        textView4.setText("浮动盈亏");
 
         mRecycler= mView.findViewById(R.id.deal_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));

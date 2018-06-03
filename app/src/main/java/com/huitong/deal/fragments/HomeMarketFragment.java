@@ -21,10 +21,13 @@ import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
+import com.zheng.zchlibrary.utils.AlignedTextUtils;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.Tools;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -67,7 +70,6 @@ public class HomeMarketFragment extends BaseFragment {
         mBalanceTv= mView.findViewById(R.id.toolbar_market_balance);
         mBuyTv= mView.findViewById(R.id.toolbar_market_buy);
 
-
         mRecycler= mView.findViewById(R.id.home_market_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
         mAdapter= new MarketListAdapter(R.layout.item_market_recycler);
@@ -78,12 +80,8 @@ public class HomeMarketFragment extends BaseFragment {
         addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
             @Override
             public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
-                mUserNameTv.setText(String.format(
-                        getString(R.string.market_title_username),
-                        userInfoDataEntity.getUsername()));
-                mBalanceTv.setText(String.format(
-                        getString(R.string.market_title_balance),
-                        Tools.formatFloat(userInfoDataEntity.getUserinfo().getAvailablebalance())));
+                mUserNameTv.setText(userInfoDataEntity.getUsername());
+                mBalanceTv.setText(Tools.formatFloat(userInfoDataEntity.getUserinfo().getAvailablebalance()));
             }
 
             @Override
@@ -168,5 +166,11 @@ public class HomeMarketFragment extends BaseFragment {
     @Override
     public void initProgressDialog() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MyApplication.mLastPriceMap.clear();
     }
 }
