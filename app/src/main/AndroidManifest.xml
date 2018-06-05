@@ -58,6 +58,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".activities.AboutUsActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".store.store_activities.StoreTestActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

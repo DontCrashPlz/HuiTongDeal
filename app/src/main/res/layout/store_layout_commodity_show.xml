@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@android:color/white"
+    android:paddingBottom="15dp">
+
+    <ImageView
+        android:id="@+id/commodity_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:adjustViewBounds="true"/>
+
+    <TextView
+        android:id="@+id/commodity_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/commodity_image"
+        android:layout_marginTop="12dp"
+        android:minLines="2"
+        android:text="产品名称"
+        android:textSize="@dimen/textSize_10"
+        android:textColor="#2B2525"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"/>
+
+    <TextView
+        android:id="@+id/commodity_price_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.00"
+        android:textColor="#DA251C"
+        android:textSize="@dimen/textSize_13"
+        android:drawableRight="@mipmap/shopping_voucher_02"
+        android:drawablePadding="3dp"
+        android:layout_below="@+id/commodity_name"
+        android:layout_alignLeft="@+id/commodity_name"/>
+
+    <TextView
+        android:id="@+id/commodity_price_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.00"
+        android:textColor="#FC8F02"
+        android:textSize="@dimen/textSize_13"
+        android:drawableRight="@mipmap/shopping_voucher_02"
+        android:drawablePadding="3dp"
+        android:layout_below="@+id/commodity_name"
+        android:layout_alignRight="@+id/commodity_name"/>
+
+</RelativeLayout>

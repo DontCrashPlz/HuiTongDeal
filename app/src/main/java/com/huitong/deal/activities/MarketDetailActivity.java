@@ -333,9 +333,9 @@ public class MarketDetailActivity extends BaseActivity {
     /**************************下单Dialog相关*******************************/
     private Dialog xiaDanDialog;
 //    private ImageView dialogCancel;
-    private CommonTabLayout dialogTabLayout;
+    //private CommonTabLayout dialogTabLayout;
     private TextView dialogStockName;
-    private TextView dialogStockStatus;
+    //private TextView dialogStockStatus;
     private TextView dialogCurPrice;
     private RadioButton dialogRbtn_100;
     private RadioButton dialogRbtn_50;
@@ -370,37 +370,37 @@ public class MarketDetailActivity extends BaseActivity {
 //            }
 //        });
 
-        dialogTabLayout= view.findViewById(R.id.tixian_dialog_tab);
+        //dialogTabLayout= view.findViewById(R.id.tixian_dialog_tab);
         tabEntities= new ArrayList<>();
         tabEntities.add(new DealTableEntity("认购", 0, 0));
         tabEntities.add(new DealTableEntity("回购", 0, 0));
-        dialogTabLayout.setTabData(tabEntities);
-        dialogTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-                if (position== 0){
-                    buyType= 2;
-                }else if (position== 1){
-                    buyType= 1;
-                }
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
-        dialogTabLayout.setCurrentTab(currentTab);
-        if (currentTab== 0){
-            buyType= 2;
-        }else if (currentTab== 1){
-            buyType= 1;
-        }
+//        dialogTabLayout.setTabData(tabEntities);
+//        dialogTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+//            @Override
+//            public void onTabSelect(int position) {
+//                if (position== 0){
+//                    buyType= 2;
+//                }else if (position== 1){
+//                    buyType= 1;
+//                }
+//            }
+//
+//            @Override
+//            public void onTabReselect(int position) {
+//
+//            }
+//        });
+//        dialogTabLayout.setCurrentTab(currentTab);
+//        if (currentTab== 0){
+//            buyType= 2;
+//        }else if (currentTab== 1){
+//            buyType= 1;
+//        }
 
         dialogStockName= view.findViewById(R.id.tixian_dialog_name);
         dialogStockName.setText(stock_name);
 
-        dialogStockStatus= view.findViewById(R.id.tixian_dialog_status);
+        //dialogStockStatus= view.findViewById(R.id.tixian_dialog_status);
 
         dialogCurPrice= view.findViewById(R.id.tixian_dialog_price);
 

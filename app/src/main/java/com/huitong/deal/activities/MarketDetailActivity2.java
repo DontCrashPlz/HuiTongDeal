@@ -384,7 +384,7 @@ public class MarketDetailActivity2 extends BaseActivity {
         xiaDanDialog.setContentView(view);
         xiaDanDialog.show();
 
-        mRenGouRbtn= findViewById(R.id.tixian_dialog_tab_rengou);
+        mRenGouRbtn= view.findViewById(R.id.tixian_dialog_tab_rengou);
         mRenGouRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -394,7 +394,7 @@ public class MarketDetailActivity2 extends BaseActivity {
                 }
             }
         });
-        mHuiGouRbtn= findViewById(R.id.tixian_dialog_tab_huigou);
+        mHuiGouRbtn= view.findViewById(R.id.tixian_dialog_tab_huigou);
         mHuiGouRbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

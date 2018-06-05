@@ -21,6 +21,7 @@ import com.huitong.deal.activities.RealNameActivity;
 import com.huitong.deal.activities.TiXianActivity;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.UserInfoDataEntity;
+import com.huitong.deal.store.store_activities.StoreTestActivity;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
@@ -58,6 +59,13 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         View mView= inflater.inflate(R.layout.fragment_home_mine, container, false);
 
         initUI(mView);
+
+        mView.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getRealContext(), StoreTestActivity.class));
+            }
+        });
 
         return mView;
     }

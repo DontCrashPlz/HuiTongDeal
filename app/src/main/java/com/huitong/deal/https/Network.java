@@ -88,7 +88,8 @@ public class Network {
     private static ApiService apiService;
     private static OkHttpClient mOkHttpClient;
     private static Retrofit mRetrofit;
-    private static final String BASEURL= "http://47.92.28.185/";
+    //private static final String BASEURL= "http://47.92.28.185/";
+    private static final String BASEURL= "http://47.92.94.101/";
 
 //    private Map<String, String> getParamsMap(){
 //        HashMap<String, String> params= new HashMap<>();

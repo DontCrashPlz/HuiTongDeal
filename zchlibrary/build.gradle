@@ -29,10 +29,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:recyclerview-v7:26+'
-    compile 'com.android.support:design:26+'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:recyclerview-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:cardview-v7:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
     compile files('libs/mail.jar')
     compile files('libs/tbs_sdk_thirdapp_v3.6.0.1183_43604_sharewithdownload_withoutGame_obfs_20180211_105126.jar')
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
@@ -47,10 +50,10 @@ dependencies {
     //compile 'de.hdodenhof:circleimageview:2.2.0'
 
     //https://github.com/H07000223/FlycoTabLayout一个TabLayout开源库
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    //compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
     //https://github.com/youth5201314/banner一个banner开源库
-    //compile 'com.youth.banner:banner:1.4.10'
+    compile 'com.youth.banner:banner:1.4.10'
 
     //hongyang标签库
     //compile 'com.hyman:flowlayout-lib:1.1.2'
