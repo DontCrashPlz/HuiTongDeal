@@ -59,8 +59,11 @@
         <activity android:name=".activities.AboutUsActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".store.store_activities.StoreTestActivity"
+        <activity android:name=".store.store_activities.StoreHomeActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreDetailActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

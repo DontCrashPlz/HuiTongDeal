@@ -31,7 +31,7 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_home);
+        setContentView(R.layout.store_activity_home);
 
         initUI();
 

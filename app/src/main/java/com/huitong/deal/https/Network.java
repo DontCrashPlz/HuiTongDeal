@@ -25,6 +25,8 @@ import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
+import com.huitong.deal.beans_store.HomePageEntity;
+import com.huitong.deal.beans_store.ProductDetailEntity;
 import com.zheng.zchlibrary.utils.NetworkUtil;
 
 import java.util.ArrayList;
@@ -95,6 +97,9 @@ public class Network {
 //        HashMap<String, String> params= new HashMap<>();
 //        return params;
 //    }
+    public static ApiService getApiService(){
+        return apiService;
+    }
 
     /**
      * 用户名登录
@@ -951,6 +956,24 @@ public class Network {
         params.put("orderType", "precharge");
         params.put("terminalType", "app");
         return apiService.queryPay(params);
+    }
+
+    /*****************************************商城相关*******************************************/
+
+    /**
+     * 产品首页
+     * @return
+     */
+    public Observable<HttpResult<HomePageEntity>> getStoreHomeData(){
+        return Network.getApiService().getStoreHomeData();
+    }
+
+    /**
+     * 产品详情
+     * @return
+     */
+    public Observable<HttpResult<ProductDetailEntity>> getProductDetail(String goodId){
+        return Network.getApiService().getProductDetail(goodId);
     }
 
 }

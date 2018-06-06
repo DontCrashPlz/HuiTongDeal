@@ -1,8 +1,5 @@
 package com.huitong.deal.https;
 
-import android.util.AndroidException;
-
-
 import com.huitong.deal.beans.HttpResult;
 
 import io.reactivex.Observable;
@@ -59,16 +56,15 @@ public class ResponseTransformer {
 
         @Override
         public ObservableSource<T> apply(HttpResult<T> tHttpResult) throws Exception {
-//            int code= tHttpResult.getCode();
-//            String message= tHttpResult.getMsg();
-//            if (code== 0){
-//                if (tHttpResult.getData()== null){
-//                    return (ObservableSource<T>) Observable.just("null");
-//                }
-//                return Observable.just(tHttpResult.getData());
-//            }
-//            return Observable.error(new ApiException(code, message));
-            return null;
+            String status= tHttpResult.getStatus();
+            String description= tHttpResult.getDescription();
+            if ("success".equals(status)){
+                if (tHttpResult.getData()== null){
+                    return (ObservableSource<T>) Observable.just("null");
+                }
+                return Observable.just(tHttpResult.getData());
+            }
+            return Observable.error(new ApiException(500, description));
         }
     }
 

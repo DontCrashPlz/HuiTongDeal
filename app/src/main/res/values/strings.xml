@@ -18,7 +18,9 @@
     <string name="market_title_username">帐号： %1$s</string>
     <string name="market_title_balance">购物券余额： ￥ %1$s</string>
 
-    <string name="home_mine_balance">购物券： %1$s</string>
-    <string name="home_mine_tihuo">提货券： %1$s</string>
+    <string name="home_mine_balance">购物券: %1$s</string>
+    <string name="home_mine_tihuo">提货券: %1$s</string>
+    <string name="product_detail_unit">单位: %1$s</string>
+    <string name="product_detail_selled">已售%1$s</string>
 
 </resources>

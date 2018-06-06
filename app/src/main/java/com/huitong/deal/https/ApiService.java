@@ -22,6 +22,8 @@ import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
+import com.huitong.deal.beans_store.HomePageEntity;
+import com.huitong.deal.beans_store.ProductDetailEntity;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -131,4 +133,16 @@ public interface ApiService {
     Observable<HttpResult<PayEntity>> requestPay(@QueryMap Map<String, String> params);
     @GET("/api/pay/queryPay")
     Observable<HttpResult<PayStatusEntity>> queryPay(@QueryMap Map<String, String> params);
+
+    /*******************商城*****************/
+    @GET("/api/home/home")
+    Observable<HttpResult<HomePageEntity>> getStoreHomeData();
+
+    @GET("/api/product/list")
+    Observable<HttpResult<HomePageEntity>> getStoreList();
+
+    @GET("/api/product/view")
+    Observable<HttpResult<ProductDetailEntity>> getProductDetail(@Query("id") String goodId);
+
+
 }

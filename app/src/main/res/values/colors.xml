@@ -25,4 +25,12 @@
     <color name="xiadan_blue">#009FE9</color>
     <color name="xiadan_yellow">#F0AD4E</color>
 
+    <color name="store_red">#DA251C</color>
+    <color name="store_yellow">#FC8F02</color>
+    <color name="store_green">#29B22A</color>
+    <color name="store_black">#333333</color>
+    <color name="store_dark_gary">#666666</color>
+    <color name="store_light_gary">#999999</color>
+
+
 </resources>

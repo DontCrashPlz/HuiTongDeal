@@ -30,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //透明状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         LogUtil.e(ACTIVITY_TAG, ACTIVITY_TAG + " was Created.");
         ActivityManager.getInstance().addActivity(this);

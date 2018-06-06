@@ -1,6 +1,5 @@
 package com.zheng.zchlibrary.apps;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.util.Log;
 
 import com.zheng.zchlibrary.interfaces.*;
 import com.zheng.zchlibrary.utils.LogUtil;
-import com.zheng.zchlibrary.utils.NetworkUtil;
 import com.zheng.zchlibrary.utils.ToastUtils;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
