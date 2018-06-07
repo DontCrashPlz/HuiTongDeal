@@ -22,6 +22,7 @@ import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
+import com.huitong.deal.beans_store.AddressEntity;
 import com.huitong.deal.beans_store.HomePageEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
 
@@ -150,15 +151,13 @@ public interface ApiService {
     @GET("/api/address/update")//修改地址
     Observable<HttpResult<String>> updateAddress(@QueryMap Map<String, String> params);
     @GET("/api/address")//查询地址
-    Observable<HttpResult<String>> getAddressList(@Query("appToken") String appToken);
+    Observable<HttpResult<ArrayList<AddressEntity>>> getAddressList(@Query("appToken") String appToken);
     @GET("/api/address/delete")//删除地址
     Observable<HttpResult<String>> deleteAddress(@Query("id") String id, @Query("appToken") String appToken);
     @GET("/api/area/getAreaName")//获取区域名称
     Observable<HttpResult<String>> getAreaName(@Query("areaId") String areaId);
     @GET("/api/area/areaJson")//获取区域列表
     Observable<HttpResult<String>> getAreaList(@Query("parentId") String areaId);
-    @GET("/api/area")//获取区域
-    Observable<HttpResult<String>> getArea(@QueryMap Map<String, String> params);
     @GET("/api/address/setDefault")//设置默认地址
     Observable<HttpResult<String>> setDefaultAddress(@Query("id") String id, @Query("appToken") String appToken);
 

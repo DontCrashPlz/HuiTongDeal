@@ -1,5 +1,6 @@
 package com.huitong.deal.store.store_fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.flyco.tablayout.widget.MsgView;
 import com.huitong.deal.R;
 import com.huitong.deal.beans.DealTableEntity;
+import com.huitong.deal.store.store_activities.StoreMineAddressActivity;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.DensityUtil;
 import com.zheng.zchlibrary.utils.LogUtil;
@@ -174,6 +176,7 @@ public class StoreHomeMineFragment extends BaseFragment implements View.OnClickL
                 break;
             }
             case R.id.store_mine_btn4:{//收货地址管理
+                startActivity(new Intent(getRealContext(), StoreMineAddressActivity.class));
                 break;
             }
             case R.id.store_mine_btn5:{//修改登录密码

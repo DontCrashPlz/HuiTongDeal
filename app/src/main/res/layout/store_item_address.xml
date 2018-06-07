@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/white"
+    android:background="@drawable/button_background_white_selector"
     app:cardCornerRadius="5dp"
     android:layout_margin="4dp"
     app:contentPadding="10dp"
-    app:cardElevation="0dp">
+    app:cardElevation="0dp"
+    android:clickable="true"
+    android:id="@+id/address_panel">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -51,18 +53,18 @@
             android:layout_below="@+id/address_name"
             android:layout_marginTop="6dp"/>
 
-        <CheckBox
+        <TextView
             android:id="@+id/address_default"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="设为默认"
             android:textSize="@dimen/textSize_11"
             android:textColor="@color/store_checkbox_default_addrss"
-            android:button="@null"
             android:layout_below="@+id/address_devide"
-            android:layout_marginTop="6dp"
-            android:drawableLeft="@drawable/store_checkbox_address_default"
-            android:drawablePadding="3dp"/>
+            android:paddingTop="6dp"
+            android:drawableLeft="@mipmap/address_check"
+            android:drawablePadding="3dp"
+            android:clickable="true"/>
 
         <TextView
             android:id="@+id/address_youbian"
@@ -93,7 +95,9 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/address_default"
             android:drawableLeft="@mipmap/address_trash_normal"
-            android:drawablePadding="3dp"/>
+            android:drawablePadding="3dp"
+            android:paddingTop="6dp"
+            android:clickable="true"/>
 
         <TextView
             android:id="@+id/address_modify"
@@ -106,7 +110,9 @@
             android:layout_toLeftOf="@+id/address_delete"
             android:layout_marginRight="15dp"
             android:drawableLeft="@mipmap/address_modify_normal"
-            android:drawablePadding="3dp"/>
+            android:drawablePadding="3dp"
+            android:paddingTop="6dp"
+            android:clickable="true"/>
 
     </RelativeLayout>
 

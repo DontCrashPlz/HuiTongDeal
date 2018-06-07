@@ -25,6 +25,7 @@ import com.huitong.deal.beans.TiXianHistoryQueryParam;
 import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
+import com.huitong.deal.beans_store.AddressEntity;
 import com.huitong.deal.beans_store.HomePageEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
 import com.zheng.zchlibrary.utils.NetworkUtil;
@@ -974,6 +975,14 @@ public class Network {
      */
     public Observable<HttpResult<ProductDetailEntity>> getProductDetail(String goodId){
         return Network.getApiService().getProductDetail(goodId);
+    }
+
+    /**
+     * 地址列表
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<AddressEntity>>> getAddressList(String appToken){
+        return Network.getApiService().getAddressList(appToken);
     }
 
 }

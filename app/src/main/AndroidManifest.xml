@@ -65,6 +65,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".store.store_activities.StoreMineWalletActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreMineAddressActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
