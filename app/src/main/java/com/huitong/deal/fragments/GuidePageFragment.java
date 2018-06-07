@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.huitong.deal.R;
 import com.huitong.deal.activities.LoginActivity;
+import com.huitong.deal.store.store_activities.StoreHomeActivity;
 import com.zheng.zchlibrary.apps.BaseFragment;
 
 /**
@@ -40,16 +41,17 @@ public class GuidePageFragment extends BaseFragment {
         ImageView mRl= v.findViewById(R.id.rl_guidepage_back);
         TextView mBtn= v.findViewById(R.id.btn_guidepage_start);
         if(index==1){
-            mRl.setImageResource(R.drawable.guide_01);
+            mRl.setImageResource(R.mipmap.guide_01);
         }else if(index==2){
-            mRl.setImageResource(R.drawable.guide_02);
+            mRl.setImageResource(R.mipmap.guide_02);
         }else{
-            mRl.setImageResource(R.drawable.guide_03);
+            mRl.setImageResource(R.mipmap.guide_03);
             mBtn.setVisibility(View.VISIBLE);
             mBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View arg0) {
-                    startActivity(getActivity().getIntent().setClass(getActivity(), LoginActivity.class));
+//                    startActivity(getActivity().getIntent().setClass(getActivity(), LoginActivity.class));
+                    startActivity(getActivity().getIntent().setClass(getActivity(), StoreHomeActivity.class));
                     getActivity().finish();
                 }
             });

@@ -16,7 +16,7 @@ public class ProductDetailEntity {
     private int goods_salenum;//已售数量
     private int id;
     private String imgurl;//主图url
-    private ArrayList<String> imgurllist;//轮播图列表
+    private ArrayList<HomePageBannerEntity> imgurllist;//轮播图列表
     private String manufacturer;//制造商
     private ArrayList<ProductParamEntity> paramlist;//商品参数列表
     private String sale_unit;//商品单位
@@ -94,11 +94,11 @@ public class ProductDetailEntity {
         this.imgurl = imgurl;
     }
 
-    public ArrayList<String> getImgurllist() {
+    public ArrayList<HomePageBannerEntity> getImgurllist() {
         return imgurllist;
     }
 
-    public void setImgurllist(ArrayList<String> imgurllist) {
+    public void setImgurllist(ArrayList<HomePageBannerEntity> imgurllist) {
         this.imgurllist = imgurllist;
     }
 

@@ -1,5 +1,7 @@
 package com.huitong.deal.beans_store;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by Zheng on 2018/6/6.
  */
@@ -8,6 +10,7 @@ public class HomePageBannerEntity {
 //    "imgUrl":"http://192.168.1.244:8040/upload/temp/932d1fe13d084f7396b3d8a72a87c861.png",
 //    "good_id":"78",
 //    "url":"http://47.92.28.185/wap/integral/goods/detail?id=78"
+    @SerializedName(value = "imgUrl", alternate = {"imgurl"})
     private String imgUrl;
     private String good_id;
     private String url;

@@ -1,6 +1,5 @@
 package com.huitong.deal.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,7 +24,7 @@ public class GuideViewActivity extends BaseActivity {
         getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_guideview);
-        mVp=(ViewPager)findViewById(R.id.guideview_vp);
+        mVp= findViewById(R.id.guideview_vp);
 
         mVp.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

@@ -135,14 +135,32 @@ public interface ApiService {
     Observable<HttpResult<PayStatusEntity>> queryPay(@QueryMap Map<String, String> params);
 
     /*******************商城*****************/
-    @GET("/api/home/home")
+    @GET("/api/home/home")//商城首页
     Observable<HttpResult<HomePageEntity>> getStoreHomeData();
 
-    @GET("/api/product/list")
+    @GET("/api/product/list")//商品列表
     Observable<HttpResult<HomePageEntity>> getStoreList();
 
-    @GET("/api/product/view")
+    @GET("/api/product/view")//商品详情
     Observable<HttpResult<ProductDetailEntity>> getProductDetail(@Query("id") String goodId);
+
+    /***********************地址管理*******************/
+    @GET("/api/address/save")//添加地址
+    Observable<HttpResult<String>> saveAddress(@QueryMap Map<String, String> params);
+    @GET("/api/address/update")//修改地址
+    Observable<HttpResult<String>> updateAddress(@QueryMap Map<String, String> params);
+    @GET("/api/address")//查询地址
+    Observable<HttpResult<String>> getAddressList(@Query("appToken") String appToken);
+    @GET("/api/address/delete")//删除地址
+    Observable<HttpResult<String>> deleteAddress(@Query("id") String id, @Query("appToken") String appToken);
+    @GET("/api/area/getAreaName")//获取区域名称
+    Observable<HttpResult<String>> getAreaName(@Query("areaId") String areaId);
+    @GET("/api/area/areaJson")//获取区域列表
+    Observable<HttpResult<String>> getAreaList(@Query("parentId") String areaId);
+    @GET("/api/area")//获取区域
+    Observable<HttpResult<String>> getArea(@QueryMap Map<String, String> params);
+    @GET("/api/address/setDefault")//设置默认地址
+    Observable<HttpResult<String>> setDefaultAddress(@Query("id") String id, @Query("appToken") String appToken);
 
 
 }

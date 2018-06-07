@@ -2,18 +2,31 @@ package com.huitong.deal.store.store_activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.huitong.deal.R;
+import com.huitong.deal.beans.DealTableEntity;
+import com.huitong.deal.beans_store.HomePageBannerEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
+import com.huitong.deal.beans_store.ProductParamEntity;
 import com.huitong.deal.https.HttpUtils;
 import com.huitong.deal.https.Network;
 import com.huitong.deal.https.ResponseTransformer;
+import com.huitong.deal.store.store_adapter.ProductParamAdapter;
 import com.huitong.deal.widgets.GlideImageLoader;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -22,6 +35,8 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
+
+import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -47,11 +62,13 @@ public class StoreDetailActivity extends BaseActivity {
     private TextView mSelledTv;
     private CommonTabLayout mTabLayout;
     private WebView mWebView;
-    private ListView mListView;
+    private RecyclerView mRecyclerView;
     private Button mShoppingBtn;
     private Button mBuyNowBtn;
 
     private String mGoodId;
+
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,8 +93,12 @@ public class StoreDetailActivity extends BaseActivity {
                     @Override
                     public void accept(ProductDetailEntity productDetailEntity) throws Exception {
                         dismissDialog();
+                        ArrayList<String> bannerList= new ArrayList<>();
+                        for (HomePageBannerEntity entity : productDetailEntity.getImgurllist()){
+                            bannerList.add(entity.getImgUrl());
+                        }
                         mBanner.setImageLoader(new GlideImageLoader());
-                        mBanner.setImages(productDetailEntity.getImgurllist());
+                        mBanner.setImages(bannerList);
                         //设置banner样式
                         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
                         //设置指示器位置（当banner模式中有指示器时）
@@ -89,10 +110,12 @@ public class StoreDetailActivity extends BaseActivity {
                         mRemarkTv.setText(productDetailEntity.getGoods_name_english());
                         mGouWuQuanTv.setText(String.valueOf(productDetailEntity.getStore_price()));
                         mTiHuoQuanTv.setText(String.valueOf(productDetailEntity.getGoods_integral()));
-                        mUnitTv.setText(productDetailEntity.getSale_unit());
-                        mSelledTv.setText(String.valueOf(productDetailEntity.getGoods_salenum()));
+                        mUnitTv.setText(String.format(getString(R.string.product_detail_unit), productDetailEntity.getSale_unit()));
+                        mSelledTv.setText(String.format(getString(R.string.product_detail_selled), String.valueOf(productDetailEntity.getGoods_salenum())));
 
                         mWebView.loadDataWithBaseURL("http://47.92.94.101/", productDetailEntity.getGoods_details(), "text/html", "utf-8", null);
+
+                        mRecyclerView.setAdapter(new ProductParamAdapter(R.layout.store_item_product_param, productDetailEntity.getParamlist()));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -129,7 +152,7 @@ public class StoreDetailActivity extends BaseActivity {
         mTiHuoQuanTv= findViewById(R.id.commodity_detail_tihuoquan);
         mUnitTv= findViewById(R.id.commodity_detail_unit);
         mSelledTv= findViewById(R.id.commodity_detail_selled);
-//        mTabLayout= findViewById(R.id.commodity_detail_tab);
+        mTabLayout= findViewById(R.id.commodity_detail_tab);
         mWebView= findViewById(R.id.commodity_detail_webview);
         WebSettings webSetting = mWebView.getSettings();
         webSetting.setJavaScriptEnabled(true);
@@ -157,13 +180,38 @@ public class StoreDetailActivity extends BaseActivity {
                 }
             }
         });
-        mListView= findViewById(R.id.commodity_detail_listview);
+        mRecyclerView= findViewById(R.id.commodity_detail_recycler);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getRealContext()));
+
         mShoppingBtn= findViewById(R.id.commodity_detail_shopping);
         mBuyNowBtn= findViewById(R.id.commodity_detail_buynow);
+
+        mTabEntities.add(new DealTableEntity("图文详情", 0, 0));
+        mTabEntities.add(new DealTableEntity("商品参数", 0, 0));
+        mTabLayout.setTabData(mTabEntities);
+        mTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                if (position== 0){
+                    mWebView.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                }else {
+                    mWebView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+
     }
 
     @Override
     public void initProgressDialog() {
 
     }
+
 }

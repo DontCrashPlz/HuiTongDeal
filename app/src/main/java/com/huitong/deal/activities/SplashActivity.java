@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.UserInfoEntity;
+import com.huitong.deal.store.store_activities.StoreHomeActivity;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.beans.UpdateInfoEntity;
 import com.zheng.zchlibrary.utils.LogUtil;
@@ -137,11 +138,12 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent= new Intent();
         if (SharedPrefUtils.contains(this, APP_LAUNCHED_TAG)//判断是否第一次打开app
                 && (boolean)(SharedPrefUtils.get(this, APP_LAUNCHED_TAG, true))){
-            if (MyApplication.getInstance().isHadToken()){//判断是否保存有token
-                intent.setClass(this, HomeActivity.class);
-            }else {
-                intent.setClass(this, LoginActivity.class);
-            }
+//            if (MyApplication.getInstance().isHadToken()){//判断是否保存有token
+//                intent.setClass(this, HomeActivity.class);
+//            }else {
+//                intent.setClass(this, LoginActivity.class);
+//            }
+            intent.setClass(this, StoreHomeActivity.class);
         }else {
             intent.setClass(this, GuideViewActivity.class);
         }

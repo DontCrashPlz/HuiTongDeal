@@ -12,7 +12,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="300dp">
@@ -91,7 +92,7 @@
                     android:id="@+id/commodity_detail_selled"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="@string/product_detail_selled"
                     android:textSize="@dimen/textSize_11"
                     android:textColor="@color/store_light_gary"
                     android:layout_alignParentRight="true"
@@ -100,7 +101,7 @@
                     android:id="@+id/commodity_detail_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="@string/product_detail_unit"
                     android:textSize="@dimen/textSize_11"
                     android:textColor="@color/store_light_gary"
                     android:layout_toLeftOf="@+id/commodity_detail_selled"
@@ -108,27 +109,32 @@
                     android:paddingRight="8dp"/>
             </RelativeLayout>
 
-            <!--<com.flyco.tablayout.CommonTabLayout-->
-                <!--android:id="@+id/commodity_detail_tab"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:tl_textsize="@dimen/textSize_15"-->
-                <!--app:tl_textUnselectColor="#666666"-->
-                <!--app:tl_textSelectColor="#DA251C"-->
-                <!--app:tl_indicator_color="#DA251C"-->
-                <!--app:tl_indicator_height="1dp"-->
-                <!--app:tl_indicator_width="85dp"-->
-                <!--android:layout_marginTop="8dp"/>-->
+            <com.flyco.tablayout.CommonTabLayout
+                android:id="@+id/commodity_detail_tab"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:tl_textsize="@dimen/textSize_15"
+                app:tl_textUnselectColor="#666666"
+                app:tl_textSelectColor="#DA251C"
+                app:tl_indicator_color="#DA251C"
+                app:tl_indicator_height="1dp"
+                app:tl_indicator_width="85dp"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"/>
 
             <com.tencent.smtt.sdk.WebView
                 android:id="@+id/commodity_detail_webview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"/>
 
-            <ListView
-                android:id="@+id/commodity_detail_listview"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/commodity_detail_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:visibility="gone"/>
 
         </LinearLayout>

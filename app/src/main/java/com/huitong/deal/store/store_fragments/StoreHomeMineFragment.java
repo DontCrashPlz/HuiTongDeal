@@ -1,46 +1,32 @@
 package com.huitong.deal.store.store_fragments;
 
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.flyco.tablayout.widget.MsgView;
 import com.huitong.deal.R;
-import com.huitong.deal.activities.ChongZhiActivity;
-import com.huitong.deal.adapters.MarketListAdapter;
-import com.huitong.deal.apps.MyApplication;
-import com.huitong.deal.beans.CommodityDetailEntity;
-import com.huitong.deal.beans.HttpResult;
-import com.huitong.deal.beans.UserInfoDataEntity;
-import com.huitong.deal.https.Network;
+import com.huitong.deal.beans.DealTableEntity;
 import com.zheng.zchlibrary.apps.BaseFragment;
-import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
+import com.zheng.zchlibrary.utils.DensityUtil;
 import com.zheng.zchlibrary.utils.LogUtil;
-import com.zheng.zchlibrary.utils.Tools;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 
 /**
  * Created by Zheng on 2018/4/13.
  */
 
-public class StoreHomeMineFragment extends BaseFragment {
+public class StoreHomeMineFragment extends BaseFragment implements View.OnClickListener {
 
     public static StoreHomeMineFragment newInstance(String content){
         StoreHomeMineFragment instance = new StoreHomeMineFragment();
@@ -50,123 +36,161 @@ public class StoreHomeMineFragment extends BaseFragment {
         return instance;
     }
 
+    private ImageView mUserIconIv;
     private TextView mUserNameTv;
-    private TextView mBalanceTv;
-    private TextView mBuyTv;
-    private RecyclerView mRecycler;
-    private MarketListAdapter mAdapter;
+    private TextView mMobileTv;
+    private TextView mTimeTv;
+    private TextView mGouWuQuanTv;
+    private TextView mTiHuoQuanTv;
 
-    private ProgressBar progressBar;
+    private CommonTabLayout mTabLayout;
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+
+    private FrameLayout mButton1;
+    private FrameLayout mButton2;
+    private FrameLayout mButton3;
+    private FrameLayout mButton4;
+    private FrameLayout mButton5;
+    private FrameLayout mButton6;
+    private FrameLayout mButton7;
+    private FrameLayout mButton8;
+    private FrameLayout mButton9;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View mView= inflater.inflate(R.layout.fragment_home_market, container, false);
+        View mView= inflater.inflate(R.layout.store_fragment_home_mine, container, false);
 
-        mUserNameTv= mView.findViewById(R.id.toolbar_market_username);
-        mBalanceTv= mView.findViewById(R.id.toolbar_market_balance);
-        mBuyTv= mView.findViewById(R.id.toolbar_market_buy);
-
-
-        mRecycler= mView.findViewById(R.id.home_market_recycler);
-        mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
-        mAdapter= new MarketListAdapter(R.layout.item_market_recycler);
-        mRecycler.setAdapter(mAdapter);
-
-        progressBar= mView.findViewById(R.id.progressBar);
-
-        addNetWork(MyApplication.getInstance().refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
-            @Override
-            public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
-                mUserNameTv.setText(String.format(
-                        getString(R.string.market_title_username),
-                        userInfoDataEntity.getUsername()));
-                mBalanceTv.setText(String.format(
-                        getString(R.string.market_title_balance),
-                        Tools.formatFloat(userInfoDataEntity.getUserinfo().getAvailablebalance())));
-            }
-
-            @Override
-            public void onFailure(String msg) {
-                showShortToast(msg);
-            }
-        }));
-        mBuyTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getRealContext(), ChongZhiActivity.class));
-            }
-        });
-
-        final String token= MyApplication.getInstance().getToken();
-        if (token!= null && token.length()> 0){
-            addNetWork(
-                    Observable.interval(3, TimeUnit.SECONDS)
-                            .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<CommodityDetailEntity>>>>() {
-                                @Override
-                                public ObservableSource<HttpResult<ArrayList<CommodityDetailEntity>>> apply(Long aLong) throws Exception {
-                                    return Network.getInstance().getCommodityList(token);
-                                }
-                            })
-                            .filter(new Predicate<HttpResult<ArrayList<CommodityDetailEntity>>>() {
-                                @Override
-                                public boolean test(HttpResult<ArrayList<CommodityDetailEntity>> arrayListHttpResult) throws Exception {
-                                    if ("success".equals(arrayListHttpResult.getStatus())){
-                                        return true;
-                                    }
-                                    return false;
-                                }
-                            })
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<HttpResult<ArrayList<CommodityDetailEntity>>>() {
-                                @Override
-                                public void accept(HttpResult<ArrayList<CommodityDetailEntity>> arrayListHttpResult) throws Exception {
-                                    dismissProgressBar();
-                                    if (arrayListHttpResult.getData().size()> 0){
-                                        mAdapter.setNewData(arrayListHttpResult.getData());
-                                        mAdapter.notifyDataSetChanged();
-                                    }else {
-                                        mAdapter.setEmptyView(R.layout.layout_recycler_empty2);
-                                        clearNetWork();
-                                    }
-                                }
-                            }, new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-                                    dismissProgressBar();
-                                    LogUtil.d("throwable", throwable.toString());
-                                    showShortToast("网络请求失败");
-                                }
-                            }, new Action() {
-                                @Override
-                                public void run() throws Exception {
-                                    dismissProgressBar();
-                                }
-                            }, new Consumer<Disposable>() {
-                                @Override
-                                public void accept(Disposable disposable) throws Exception {
-                                    showProgressBar();
-                                }
-                            }));
-        }
+        initUI(mView);
 
         return mView;
     }
 
-    private void showProgressBar(){
-        if (progressBar!= null && !progressBar.isShown()){
-            progressBar.setVisibility(View.VISIBLE);
-        }
-    }
+    private void initUI(View view) {
+        mUserIconIv= view.findViewById(R.id.store_mine_usericon);
+        mUserNameTv= view.findViewById(R.id.store_mine_username);
+        mMobileTv= view.findViewById(R.id.store_mine_mobile);
+        mTimeTv= view.findViewById(R.id.store_mine_time);
+        mGouWuQuanTv= view.findViewById(R.id.store_mine_gouwu);
+        mTiHuoQuanTv= view.findViewById(R.id.store_mine_tihuo);
 
-    private void dismissProgressBar(){
-        if (progressBar!= null && progressBar.isShown()){
-            progressBar.setVisibility(View.GONE);
+        mTabLayout= view.findViewById(R.id.store_mine_tab);
+        mTabEntities.add(new DealTableEntity("待付款", R.mipmap.pending_payment, R.mipmap.pending_payment));
+        mTabEntities.add(new DealTableEntity("待发货", R.mipmap.user_consumption, R.mipmap.user_consumption));
+        mTabEntities.add(new DealTableEntity("待收货", R.mipmap.receiving, R.mipmap.receiving));
+        mTabEntities.add(new DealTableEntity("已收货", R.mipmap.received_select, R.mipmap.received_select));
+        mTabLayout.setTabData(mTabEntities);
+        //设置未读消息背景
+        mTabLayout.setMsgMargin(0, -10, 5);
+        mTabLayout.setMsgMargin(1, -10, 5);
+        mTabLayout.setMsgMargin(2, -10, 5);
+        mTabLayout.setMsgMargin(3, -10, 5);
+        MsgView msgView0 = mTabLayout.getMsgView(0);
+        if (msgView0 != null) {
+            msgView0.setTextColor(Color.rgb(245,39,59));
+            msgView0.setStrokeWidth(1);
+            msgView0.setStrokeColor(Color.rgb(245,39,59));
+            msgView0.setBackgroundColor(Color.WHITE);
         }
+        MsgView msgView1 = mTabLayout.getMsgView(1);
+        if (msgView1 != null) {
+            msgView1.setTextColor(Color.rgb(245,39,59));
+            msgView1.setStrokeWidth(1);
+            msgView1.setStrokeColor(Color.rgb(245,39,59));
+            msgView1.setBackgroundColor(Color.WHITE);
+        }
+        MsgView msgView2 = mTabLayout.getMsgView(2);
+        if (msgView2 != null) {
+            msgView2.setTextColor(Color.rgb(245,39,59));
+            msgView2.setStrokeWidth(1);
+            msgView2.setStrokeColor(Color.rgb(245,39,59));
+            msgView2.setBackgroundColor(Color.WHITE);
+        }
+        MsgView msgView3 = mTabLayout.getMsgView(3);
+        if (msgView3 != null) {
+            msgView3.setTextColor(Color.rgb(245,39,59));
+            msgView3.setStrokeWidth(1);
+            msgView3.setStrokeColor(Color.rgb(245,39,59));
+            msgView3.setBackgroundColor(Color.WHITE);
+        }
+        mTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                LogUtil.e("onTabSelect", "" + position);
+                if (position== 0){
+                    //todo 跳转到待付款订单
+                }else if (position== 1){
+                    //todo 跳转到待发货订单
+                }else if (position== 2){
+                    //todo 跳转到待收货订单
+                }else if (position== 3){
+                    //todo 跳转到已收货订单
+                }
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+                LogUtil.e("onTabReselect", "" + position);
+            }
+        });
+
+        mButton1= view.findViewById(R.id.store_mine_btn1);
+        mButton1.setOnClickListener(this);
+        mButton2= view.findViewById(R.id.store_mine_btn2);
+        mButton2.setOnClickListener(this);
+        mButton3= view.findViewById(R.id.store_mine_btn3);
+        mButton3.setOnClickListener(this);
+        mButton4= view.findViewById(R.id.store_mine_btn4);
+        mButton4.setOnClickListener(this);
+        mButton5= view.findViewById(R.id.store_mine_btn5);
+        mButton5.setOnClickListener(this);
+        mButton6= view.findViewById(R.id.store_mine_btn6);
+        mButton6.setOnClickListener(this);
+        mButton7= view.findViewById(R.id.store_mine_btn7);
+        mButton7.setOnClickListener(this);
+        mButton8= view.findViewById(R.id.store_mine_btn8);
+        mButton8.setOnClickListener(this);
+        mButton9= view.findViewById(R.id.store_mine_btn9);
+        mButton9.setOnClickListener(this);
     }
 
     @Override
     public void initProgressDialog() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        int vId= v.getId();
+        switch (vId){
+            case R.id.store_mine_btn1:{//我的钱包
+                mTabLayout.showMsg(0, 1);
+                break;
+            }
+            case R.id.store_mine_btn2:{//实名认证
+                break;
+            }
+            case R.id.store_mine_btn3:{//修改资料
+                break;
+            }
+            case R.id.store_mine_btn4:{//收货地址管理
+                break;
+            }
+            case R.id.store_mine_btn5:{//修改登录密码
+                break;
+            }
+            case R.id.store_mine_btn6:{//修改交易密码
+                break;
+            }
+            case R.id.store_mine_btn7:{//特惠专区
+                break;
+            }
+            case R.id.store_mine_btn8:{//帮助反馈
+                break;
+            }
+            case R.id.store_mine_btn9:{//退出登录
+                break;
+            }
+        }
     }
 }

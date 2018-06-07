@@ -56,12 +56,12 @@ public class HomeActivity extends BaseActivity implements CompoundButton.OnCheck
 
         mManager= getSupportFragmentManager();
 
-        mFragmentFly= (FrameLayout) findViewById(R.id.home_fly_fragment);
-        mMarketRbtn= (RadioButton) findViewById(R.id.home_rbtn_market);
+        mFragmentFly= findViewById(R.id.home_fly_fragment);
+        mMarketRbtn= findViewById(R.id.home_rbtn_market);
         mMarketRbtn.setOnCheckedChangeListener(this);
-        mDealRbtn= (RadioButton) findViewById(R.id.home_rbtn_deal);
+        mDealRbtn= findViewById(R.id.home_rbtn_deal);
         mDealRbtn.setOnCheckedChangeListener(this);
-        mMineRbtn= (RadioButton) findViewById(R.id.home_rbtn_mine);
+        mMineRbtn= findViewById(R.id.home_rbtn_mine);
         mMineRbtn.setOnCheckedChangeListener(this);
     }
 
