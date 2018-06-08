@@ -60,6 +60,7 @@ public class ResponseTransformer {
             String description= tHttpResult.getDescription();
             if ("success".equals(status)){
                 if (tHttpResult.getData()== null){
+                    //return Observable.error(new ApiException(200, description));
                     return (ObservableSource<T>) Observable.just("null");
                 }
                 return Observable.just(tHttpResult.getData());

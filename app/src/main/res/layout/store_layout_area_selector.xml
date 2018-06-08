@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/area_selector_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#3b3b3b"
+        android:text="选择省份"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/textSize_16"
+        android:gravity="center" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/area_selector_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#aeaeae"/>
+
+</LinearLayout>

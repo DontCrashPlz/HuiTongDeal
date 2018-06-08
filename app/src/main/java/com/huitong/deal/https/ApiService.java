@@ -23,6 +23,7 @@ import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.beans_store.AddressEntity;
+import com.huitong.deal.beans_store.AreaEntity;
 import com.huitong.deal.beans_store.HomePageEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
 
@@ -157,7 +158,7 @@ public interface ApiService {
     @GET("/api/area/getAreaName")//获取区域名称
     Observable<HttpResult<String>> getAreaName(@Query("areaId") String areaId);
     @GET("/api/area/areaJson")//获取区域列表
-    Observable<HttpResult<String>> getAreaList(@Query("parentId") String areaId);
+    Observable<HttpResult<ArrayList<AreaEntity>>> getAreaList(@Query("parentId") String areaId);
     @GET("/api/address/setDefault")//设置默认地址
     Observable<HttpResult<String>> setDefaultAddress(@Query("id") String id, @Query("appToken") String appToken);
 

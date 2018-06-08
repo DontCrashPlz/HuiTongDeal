@@ -1,10 +1,12 @@
 package com.huitong.deal.beans_store;
 
+import java.io.Serializable;
+
 /**
  * Created by Zheng on 2018/6/7.
  */
 
-public class AddressEntity {
+public class AddressEntity implements Serializable {
 //            "address":"朝阳大道",
 //            "addtime":"2018-06-07 22:01:15",
 //            "area_all_name":"河南省,郑州市,金水区",
@@ -25,6 +27,8 @@ public class AddressEntity {
     private String recvname;
     private String mobile;
     private boolean isdefault;
+    private String area_all_name;
+    private int area_id;
 
     public int getId() {
         return id;
@@ -82,6 +86,22 @@ public class AddressEntity {
         this.isdefault = isdefault;
     }
 
+    public String getArea_all_name() {
+        return area_all_name;
+    }
+
+    public void setArea_all_name(String area_all_name) {
+        this.area_all_name = area_all_name;
+    }
+
+    public int getArea_id() {
+        return area_id;
+    }
+
+    public void setArea_id(int area_id) {
+        this.area_id = area_id;
+    }
+
     @Override
     public String toString() {
         return "AddressEntity{" +
@@ -92,6 +112,8 @@ public class AddressEntity {
                 ", recvname='" + recvname + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", isdefault=" + isdefault +
+                ", area_all_name='" + area_all_name + '\'' +
+                ", area_id=" + area_id +
                 '}';
     }
 }

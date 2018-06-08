@@ -67,6 +67,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".store.store_activities.StoreMineAddressActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreModifyAddressActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

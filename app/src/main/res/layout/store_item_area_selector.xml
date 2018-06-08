@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="1dp">
+    <TextView
+        android:id="@+id/area_selector_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="省份"
+        android:textSize="@dimen/textSize_14"
+        android:textColor="@color/store_black"
+        android:gravity="center"
+        android:background="#e4e4e4"/>
+</LinearLayout>

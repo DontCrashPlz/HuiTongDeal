@@ -26,6 +26,7 @@ import com.huitong.deal.beans.TimeLineEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.beans_store.AddressEntity;
+import com.huitong.deal.beans_store.AreaEntity;
 import com.huitong.deal.beans_store.HomePageEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
 import com.zheng.zchlibrary.utils.NetworkUtil;
@@ -983,6 +984,61 @@ public class Network {
      */
     public Observable<HttpResult<ArrayList<AddressEntity>>> getAddressList(String appToken){
         return Network.getApiService().getAddressList(appToken);
+    }
+
+    /**
+     * 设置默认地址
+     * @return
+     */
+    public Observable<HttpResult<String>> setDefaultAddress(String addressId, String appToken){
+        return Network.getApiService().setDefaultAddress(addressId, appToken);
+    }
+
+    /**
+     * 删除地址
+     * @return
+     */
+    public Observable<HttpResult<String>> deleteAddress(String addressId, String appToken){
+        return Network.getApiService().deleteAddress(addressId, appToken);
+    }
+
+    /**
+     * 添加地址
+     * @return
+     */
+    public Observable<HttpResult<String>> saveAddress(String appToken, AddressEntity entity){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("shopUserAddress.area_id", String.valueOf(entity.getArea_id()));
+        params.put("shopUserAddress.recvName", entity.getRecvname());
+        params.put("shopUserAddress.mobile", entity.getMobile());
+        params.put("shopUserAddress.zip", entity.getZip());
+        params.put("appToken", appToken);
+        params.put("shopUserAddress.address", entity.getAddress());
+        return Network.getApiService().saveAddress(params);
+    }
+
+    /**
+     * 修改地址
+     * @return
+     */
+    public Observable<HttpResult<String>> updateAddress(String appToken, AddressEntity entity){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("shopUserAddress.area_id", String.valueOf(entity.getArea_id()));
+        params.put("shopUserAddress.recvName", entity.getRecvname());
+        params.put("shopUserAddress.mobile", entity.getMobile());
+        params.put("shopUserAddress.zip", entity.getZip());
+        params.put("appToken", appToken);
+        params.put("shopUserAddress.address", entity.getAddress());
+        params.put("shopUserAddress.id", String.valueOf(entity.getId()));
+        return Network.getApiService().updateAddress(params);
+    }
+
+    /**
+     * 获取区市列表，如果areaId=“”，请求省级列表
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<AreaEntity>>> getAreaList(String areaId){
+        return Network.getApiService().getAreaList(areaId);
     }
 
 }
