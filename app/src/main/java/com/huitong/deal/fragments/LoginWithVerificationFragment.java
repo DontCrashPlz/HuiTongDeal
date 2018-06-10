@@ -20,6 +20,7 @@ import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.https.NetParams;
 import com.huitong.deal.https.Network;
+import com.huitong.deal.store.store_fragments.StoreHomeMineFragment;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
@@ -135,7 +136,9 @@ public class LoginWithVerificationFragment extends BaseFragment implements View.
                                         showShortToast("登录错误：token无效");
                                     }else {
                                         MyApplication.getInstance().setToken(token);
-                                        getRealContext().startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        //getRealContext().startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        MyApplication.getInstance().refreshUser(null);
+                                        getActivity().setResult(StoreHomeMineFragment.LOGIN_SUCCESS_RESULT_CODE);
                                         getActivity().finish();
                                     }
                                 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white">
+
+    <include layout="@layout/store_layout_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/white"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="购买金额"
+            android:textColor="@color/store_black"
+            android:textSize="@dimen/textSize_16"
+            android:paddingLeft="10dp"/>
+        <EditText
+            android:id="@+id/chongzhi_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@android:color/white"
+            android:textColor="@color/store_black"
+            android:textSize="@dimen/textSize_12"
+            android:hint="请输入购买金额"
+            android:textColorHint="@color/store_light_gary"
+            android:lines="1"
+            android:ellipsize="end"
+            android:inputType="number"/>
+    </LinearLayout>
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="温馨提示：最低购买100"
+            android:textSize="@dimen/textSize_9"
+            android:textColor="@color/store_light_gary"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:drawableRight="@mipmap/shopping_voucher_gray"
+            android:drawablePadding="3dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RMB：购物券＝１：１"
+            android:textSize="@dimen/textSize_9"
+            android:textColor="@color/store_light_gary"
+            android:layout_gravity="right|center_vertical"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/white"
+        android:paddingRight="15dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="备         注"
+            android:textColor="@color/store_black"
+            android:textSize="@dimen/textSize_16"
+            android:paddingLeft="10dp"/>
+        <EditText
+            android:id="@+id/chongzhi_remark"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:background="@android:color/white"
+            android:textColor="@color/store_black"
+            android:textSize="@dimen/textSize_12"
+            android:hint="请输入备注"
+            android:textColorHint="@color/store_light_gary"
+            android:lines="1"
+            android:ellipsize="end"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="选择支付方式"
+        android:textColor="@color/store_black"
+        android:textSize="@dimen/textSize_15"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"/>
+
+</LinearLayout>

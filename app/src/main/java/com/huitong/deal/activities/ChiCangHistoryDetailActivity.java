@@ -11,6 +11,7 @@ import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
+import com.huitong.deal.beans.ChiCangHistoryEntity2;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
@@ -51,14 +52,14 @@ public class ChiCangHistoryDetailActivity extends BaseActivity {
     private TextView mTextView11;
     private TextView mTextView12;
 
-    private ChiCangHistoryEntity mEntity;
+    private ChiCangHistoryEntity2 mEntity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chicang_history_detail);
 
-        mEntity= (ChiCangHistoryEntity) getIntent().getSerializableExtra("chicang_detail_entity");
+        mEntity= (ChiCangHistoryEntity2) getIntent().getSerializableExtra("chicang_detail_entity");
         if (mEntity== null){
             showShortToast("获取详情失败");
             finish();

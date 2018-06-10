@@ -183,7 +183,7 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
             return;
         }
         if (appToken!= null && appToken.length()> 0){
-            addNetWork(Network.getInstance().chongZhi(appToken, amount)//调用充值接口
+            addNetWork(Network.getInstance().chongZhi(appToken, amount, "")//调用充值接口
                     .subscribeOn(Schedulers.io())//在io线程进行网络请求
                     .observeOn(Schedulers.io())//在io线程进行网络请求转换
                     .flatMap(new Function<HttpResult<ChongZhiEntity>, ObservableSource<HttpResult<PayEntity>>>() {//根据充值接口返回的数据

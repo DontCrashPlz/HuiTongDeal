@@ -14,6 +14,7 @@ import com.huitong.deal.R;
 import com.huitong.deal.adapters.ChiCangListAdapter;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.ChiCangEntity;
+import com.huitong.deal.beans.ChiCangEntity2;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
@@ -45,22 +46,14 @@ public class DealChiCangFragment extends BaseFragment {
         return instance;
     }
 
-    private TextView textView3;
-    private TextView textView4;
     private RecyclerView mRecycler;
     private ChiCangListAdapter mAdapter;
-
     private ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mView= inflater.inflate(R.layout.fragment_deal, container, false);
-
-        textView3= mView.findViewById(R.id.deal_text3);
-        textView4= mView.findViewById(R.id.deal_text4);
-        textView3.setText("最新价");
-        textView4.setText("浮动盈亏");
 
         mRecycler= mView.findViewById(R.id.deal_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
@@ -74,15 +67,15 @@ public class DealChiCangFragment extends BaseFragment {
         if (token!= null && token.length()> 0){
             addNetWork(
                     Observable.interval(3, TimeUnit.SECONDS)
-                            .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<ChiCangEntity>>>>() {
+                            .flatMap(new Function<Long, ObservableSource<HttpResult<ArrayList<ChiCangEntity2>>>>() {
                                 @Override
-                                public ObservableSource<HttpResult<ArrayList<ChiCangEntity>>> apply(Long aLong) throws Exception {
+                                public ObservableSource<HttpResult<ArrayList<ChiCangEntity2>>> apply(Long aLong) throws Exception {
                                     return Network.getInstance().getChiCangList(token);
                                 }
                             })
-                            .filter(new Predicate<HttpResult<ArrayList<ChiCangEntity>>>() {
+                            .filter(new Predicate<HttpResult<ArrayList<ChiCangEntity2>>>() {
                                 @Override
-                                public boolean test(HttpResult<ArrayList<ChiCangEntity>> arrayListHttpResult) throws Exception {
+                                public boolean test(HttpResult<ArrayList<ChiCangEntity2>> arrayListHttpResult) throws Exception {
                                     if ("success".equals(arrayListHttpResult.getStatus())){
                                         return true;
                                     }
@@ -90,14 +83,15 @@ public class DealChiCangFragment extends BaseFragment {
                                 }
                             })
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<HttpResult<ArrayList<ChiCangEntity>>>() {
+                            .subscribe(new Consumer<HttpResult<ArrayList<ChiCangEntity2>>>() {
                                 @Override
-                                public void accept(HttpResult<ArrayList<ChiCangEntity>> arrayListHttpResult) throws Exception {
+                                public void accept(HttpResult<ArrayList<ChiCangEntity2>> arrayListHttpResult) throws Exception {
                                     dismissProgressBar();
                                     if (arrayListHttpResult.getData().size()> 0){
                                         mAdapter.setNewData(arrayListHttpResult.getData());
                                         mAdapter.notifyDataSetChanged();
                                     }else {
+                                        mAdapter.setNewData(new ArrayList<ChiCangEntity2>());
                                         mAdapter.setEmptyView(R.layout.layout_recycler_empty);
                                         clearNetWork();
                                     }
@@ -112,7 +106,6 @@ public class DealChiCangFragment extends BaseFragment {
                             }, new Action() {
                                 @Override
                                 public void run() throws Exception {
-                                    dismissProgressBar();
                                 }
                             }, new Consumer<Disposable>() {
                                 @Override
@@ -141,4 +134,11 @@ public class DealChiCangFragment extends BaseFragment {
     public void initProgressDialog() {
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MyApplication.mChiCangLastPriceMap.clear();
+    }
+
 }

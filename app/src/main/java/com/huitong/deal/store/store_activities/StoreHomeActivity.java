@@ -40,7 +40,7 @@ import java.io.File;
 public class StoreHomeActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     private RadioButton mHomeRbtn;
-    private RadioButton mCommodityRbtn;
+    public RadioButton mCommodityRbtn;
     private RadioButton mShoppingRbtn;
     private RadioButton mMineRbtn;
 
@@ -49,6 +49,8 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
     private int mLauncherTag;
     private UpdateInfoEntity entity;
     private String mCurrentVersion;
+
+    public int gc_id= 0;//启动商品列表页面时的商品分类id，默认0为全部商品
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,12 +117,18 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
             case R.id.home_rbtn_commodity:
                 if (isChecked){
                     mManager.beginTransaction()
-                            .replace(R.id.home_fly_fragment, StoreHomeCommodityFragment.newInstance(""))
+                            .replace(R.id.home_fly_fragment, StoreHomeCommodityFragment.newInstance(gc_id))
                             .commit();
+                    gc_id= 0;
                 }
                 break;
             case R.id.home_rbtn_shopping:
                 if (isChecked){
+                    if (!MyApplication.getInstance().loadLocalToken()){
+                        startActivity(new Intent(getRealContext(), LoginActivity.class));
+                        mShoppingRbtn.setChecked(false);
+                        return;
+                    }
                     mManager.beginTransaction()
                             .replace(R.id.home_fly_fragment, StoreHomeShoppingFragment.newInstance(""))
                             .commit();
@@ -128,6 +136,11 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
                 break;
             case R.id.home_rbtn_mine:
                 if (isChecked){
+                    if (!MyApplication.getInstance().loadLocalToken()){
+                        startActivity(new Intent(getRealContext(), LoginActivity.class));
+                        mMineRbtn.setChecked(false);
+                        return;
+                    }
                     mManager.beginTransaction()
                             .replace(R.id.home_fly_fragment, StoreHomeMineFragment.newInstance(""))
                             .commit();

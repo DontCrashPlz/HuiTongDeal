@@ -69,7 +69,42 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".store.store_activities.StoreModifyAddressActivity"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".store.store_activities.StoreChongZhiActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreTiXianActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreTiXianHistoryActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreTiXianDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreBillActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreBillDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreRealNameActivity"
+        android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreUpdateUserInfoActivity"
+        android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreLoginPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreSecretPortalActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.FeedBackActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreConfirmOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StorePayActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StorePayOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StorePayPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreConfirmBuyCartOrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreOrderListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".store.store_activities.StoreOrderDetailActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

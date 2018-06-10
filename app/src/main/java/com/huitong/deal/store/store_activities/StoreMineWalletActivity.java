@@ -1,5 +1,6 @@
 package com.huitong.deal.store.store_activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.apps.MyApplication;
 import com.zheng.zchlibrary.apps.BaseActivity;
 
 /**
@@ -33,6 +35,13 @@ public class StoreMineWalletActivity extends BaseActivity implements View.OnClic
         setContentView(R.layout.store_activity_mine_wallet);
 
         initUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mGouWuQuanTv.setText(String.valueOf(MyApplication.appUser.getUserinfo().getAvailablebalance()));
+        mTiHuoQuanTv.setText(String.valueOf(MyApplication.appUser.getUserinfo().getIntegral()));
     }
 
     private void initUI() {
@@ -69,14 +78,17 @@ public class StoreMineWalletActivity extends BaseActivity implements View.OnClic
             }
             case  R.id.wallet_btn_buy:{
                 //todo 转到充值页面
+                startActivity(new Intent(getRealContext(), StoreChongZhiActivity.class));
                 break;
             }
             case  R.id.wallet_btn_tixian:{
                 //todo 转到提现页面
+                startActivity(new Intent(getRealContext(), StoreTiXianActivity.class));
                 break;
             }
             case  R.id.wallet_btn_bill:{
                 //todo 转到账单页面
+                startActivity(new Intent(getRealContext(), StoreBillActivity.class));
                 break;
             }
         }

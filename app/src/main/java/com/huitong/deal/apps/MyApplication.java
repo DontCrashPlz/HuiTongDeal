@@ -1,6 +1,7 @@
 package com.huitong.deal.apps;
 
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.huitong.deal.beans.HttpResult;
@@ -47,13 +48,12 @@ public class MyApplication extends BaseApplication {
         mSingleInstance= this;
 
         loadUser();
-
     }
 
     //根据本地保存的token加载用户
     public void loadUser(){
         if (loadLocalToken()){
-//            loadUser(appToken);
+            refreshUser(null);
         }
     }
 
@@ -103,10 +103,10 @@ public class MyApplication extends BaseApplication {
         }
     }
     //app启动时加载本地保存的token,返回值表示是否加载成功
-    private boolean loadLocalToken(){
+    public boolean loadLocalToken(){
         if (SharedPrefUtils.contains(getApplicationContext(), TOKEN_TAG)){
             String token= (String) SharedPrefUtils.get(getApplicationContext(), TOKEN_TAG, "");
-            if (token!= null && token.length()>0){
+            if (token!= null && token.length() >0){
                 LogUtil.d("loadLocalToken", "成功" + token);
                 appToken= token;
                 return true;
@@ -128,26 +128,32 @@ public class MyApplication extends BaseApplication {
         if (appUser== null){
             return false;
         }
-        if (appUser.getId()> 0){
+        if (appUser.getUserinfo().getId()> 0){
             return true;
         }
         return false;
     }
-    public Disposable refreshUser(final IAsyncLoadListener<UserInfoDataEntity> listener){
+
+    /**
+     * 用户刷新用户信息的接口
+     * @param listener
+     * @return
+     */
+    public Disposable refreshUser(@Nullable final IAsyncLoadListener<UserInfoDataEntity> listener){
         LogUtil.e("MyApplication", "refreshUser");
         return Network.getInstance().getUserInfo(appToken)
                 .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<HttpResult<UserInfoDataEntity>>() {
                     @Override
                     public void accept(HttpResult<UserInfoDataEntity> userInfoDataEntityHttpResult) throws Exception {
                         if ("error".equals(userInfoDataEntityHttpResult.getStatus())){
-                            listener.onFailure(userInfoDataEntityHttpResult.getDescription());
-                            //Toast.makeText(getApplicationContext(), userInfoDataEntityHttpResult.getDescription(), Toast.LENGTH_SHORT).show();
+                            if (listener!= null) listener.onFailure(userInfoDataEntityHttpResult.getDescription());
                         }else if ("success".equals(userInfoDataEntityHttpResult.getStatus())){
                             if (userInfoDataEntityHttpResult.getData()!= null){
                                 appUser= userInfoDataEntityHttpResult.getData();
-                                listener.onSuccess(userInfoDataEntityHttpResult.getData());
+                                if (listener!= null) listener.onSuccess(userInfoDataEntityHttpResult.getData());
                             }
                         }
                     }
@@ -155,14 +161,15 @@ public class MyApplication extends BaseApplication {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         LogUtil.d("throwable", throwable.toString());
-                        listener.onFailure(throwable.toString());
-//                            Toast.makeText(getApplicationContext(), "网络请求失败", Toast.LENGTH_SHORT).show();
+                        if (listener!= null) listener.onFailure(throwable.toString());
                     }
                 });
     }
 
 
+    //用于记录股票产品列表页的上一次价格数据
     public static Map<Integer, Float> mLastPriceMap= new HashMap<>();
+    //用于记录股票持仓列表页的上一次价格数据
     public static Map<Integer, Float> mChiCangLastPriceMap= new HashMap<>();
 
 }

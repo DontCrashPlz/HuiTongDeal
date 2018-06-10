@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_white">
+
+    <include layout="@layout/store_layout_toolbar" />
+    
+    <EditText
+        android:id="@+id/feedback_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@drawable/edittext_background_buycount"
+        android:layout_margin="10dp"
+        android:textSize="@dimen/textSize_12"
+        android:textColor="@color/store_black"
+        android:hint="请填写您的问题，我们会及时回复..."
+        android:textColorHint="@color/store_light_gary"
+        android:gravity="top"
+        android:padding="10dp"/>
+    
+    <Button
+        android:id="@+id/feedback_commit"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:background="@drawable/store_button_background_red_corners_selector"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="提交"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/textSize_15"/>
+    
+</LinearLayout>

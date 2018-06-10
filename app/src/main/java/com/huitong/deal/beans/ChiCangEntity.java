@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Zheng on 2018/5/6.
  */
-
+@Deprecated
 public class ChiCangEntity implements Serializable {
     //杠杆
     private int leverage;

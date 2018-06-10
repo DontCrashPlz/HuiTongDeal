@@ -28,6 +28,15 @@ public class UserInfoDataEntity {
     private UserInfoEntity userinfo;
     private int status;
     private String username;
+    private UserOrderInfoEntity orderstatusstats;
+
+    public UserOrderInfoEntity getOrderstatusstats() {
+        return orderstatusstats;
+    }
+
+    public void setOrderstatusstats(UserOrderInfoEntity orderstatusstats) {
+        this.orderstatusstats = orderstatusstats;
+    }
 
     public String getTruename() {
         return truename;
@@ -239,6 +248,7 @@ public class UserInfoDataEntity {
                 ", userinfo=" + userinfo +
                 ", status=" + status +
                 ", username='" + username + '\'' +
+                ", orderstatusstats=" + orderstatusstats +
                 '}';
     }
 }

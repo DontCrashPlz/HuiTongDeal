@@ -1,5 +1,6 @@
 package com.zheng.zchlibrary.widgets;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,6 +21,7 @@ import java.util.List;
  * Created by Zheng on 2018/1/8.
  */
 
+@SuppressLint("ValidFragment")
 public class BaseRecyclerFragment<T> extends LazyLoadFragment implements
         SwipeRefreshLayout.OnRefreshListener,
         BaseQuickAdapter.RequestLoadMoreListener{
@@ -37,6 +39,7 @@ public class BaseRecyclerFragment<T> extends LazyLoadFragment implements
     private BaseQuickAdapter mAdapter;
     private RecyclerView.ItemDecoration mItemDecoration;
 
+    @SuppressLint("ValidFragment")
     public BaseRecyclerFragment(BaseQuickAdapter adapter, RecyclerView.ItemDecoration itemDecoration){
         mAdapter= adapter;
         mItemDecoration= itemDecoration;

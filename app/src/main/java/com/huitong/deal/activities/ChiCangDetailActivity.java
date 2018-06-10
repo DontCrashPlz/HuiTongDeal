@@ -11,12 +11,14 @@ import android.widget.TextView;
 import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.ChiCangEntity;
+import com.huitong.deal.beans.ChiCangEntity2;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.utils.Tools;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.concurrent.TimeUnit;
@@ -54,7 +56,7 @@ public class ChiCangDetailActivity extends BaseActivity {
     private TextView mTextView10;
     private Button mPingCangBtn;
 
-    private ChiCangEntity mEntity;
+    private ChiCangEntity2 mEntity;
     private String appToken;
     private String postionNo;
     private String closePrice;
@@ -68,7 +70,7 @@ public class ChiCangDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chicang_detail);
 
-        mEntity= (ChiCangEntity) getIntent().getSerializableExtra("chicang_detail_entity");
+        mEntity= (ChiCangEntity2) getIntent().getSerializableExtra("chicang_detail_entity");
         if (mEntity== null){
             showShortToast("获取详情失败");
             finish();
@@ -108,12 +110,12 @@ public class ChiCangDetailActivity extends BaseActivity {
         }
 
         mTextView3= (TextView) findViewById(R.id.chicang_detail_text3);
-        mTextView3.setText(String.valueOf(mEntity.getNow_price()));
+        mTextView3.setText(Tools.formatFloat(mEntity.getNow_price()));
 
         mTextView4= (TextView) findViewById(R.id.chicang_detail_text4);
-        mTextView4.setText(String.valueOf(mEntity.getCurpoint()));
+        mTextView4.setText(Tools.formatFloat(mEntity.getCurpoint()));
         mLastPrice= mEntity.getCurpoint();
-        closePrice= String.valueOf(mLastPrice);
+        closePrice= Tools.formatFloat(mLastPrice);
 
         mTextView5= (TextView) findViewById(R.id.chicang_detail_text5);
         mTextView5.setText(String.valueOf(mEntity.getBuy_count()));
@@ -122,16 +124,16 @@ public class ChiCangDetailActivity extends BaseActivity {
         mTextView6.setText(String.valueOf(mEntity.getLeverage()));
 
         mDanJiaTv= findViewById(R.id.chicang_detail_text_danjia);
-        mDanJiaTv.setText(String.valueOf(mEntity.getBuy_pirce()));
+        mDanJiaTv.setText(Tools.formatFloat(mEntity.getBuy_pirce()));
 
         mTextView7= (TextView) findViewById(R.id.chicang_detail_text7);
-        mTextView7.setText(String.valueOf(mEntity.getOrder_money()));
+        mTextView7.setText(Tools.formatFloat(mEntity.getOrder_money()));
 
         mTextView8= (TextView) findViewById(R.id.chicang_detail_text8);
-        mTextView8.setText(String.valueOf(mEntity.getService_fee()));
+        mTextView8.setText(Tools.formatFloat(mEntity.getService_fee()));
 
         mTextView9= (TextView) findViewById(R.id.chicang_detail_text9);
-        mTextView9.setText(String.valueOf(mEntity.getGain()));
+        mTextView9.setText(Tools.formatFloat(mEntity.getGain()));
 
         mTextView10= (TextView) findViewById(R.id.chicang_detail_text10);
         mTextView10.setText(mEntity.getBuy_time());
@@ -196,15 +198,15 @@ public class ChiCangDetailActivity extends BaseActivity {
         if (appToken!= null && appToken.length()> 0){
             addNetWork(
                     Observable.interval(1, TimeUnit.SECONDS)
-                            .flatMap(new Function<Long, ObservableSource<HttpResult<ChiCangEntity>>>() {
+                            .flatMap(new Function<Long, ObservableSource<HttpResult<ChiCangEntity2>>>() {
                                 @Override
-                                public ObservableSource<HttpResult<ChiCangEntity>> apply(Long aLong) throws Exception {
+                                public ObservableSource<HttpResult<ChiCangEntity2>> apply(Long aLong) throws Exception {
                                     return Network.getInstance().getChiCangDetail(appToken, postionNo);
                                 }
                             })
-                            .filter(new Predicate<HttpResult<ChiCangEntity>>() {
+                            .filter(new Predicate<HttpResult<ChiCangEntity2>>() {
                                 @Override
-                                public boolean test(HttpResult<ChiCangEntity> chiCangEntityHttpResult) throws Exception {
+                                public boolean test(HttpResult<ChiCangEntity2> chiCangEntityHttpResult) throws Exception {
                                     if ("success".equals(chiCangEntityHttpResult.getStatus())){
                                         return true;
                                     }
@@ -212,9 +214,9 @@ public class ChiCangDetailActivity extends BaseActivity {
                                 }
                             })
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Consumer<HttpResult<ChiCangEntity>>() {
+                            .subscribe(new Consumer<HttpResult<ChiCangEntity2>>() {
                                 @Override
-                                public void accept(HttpResult<ChiCangEntity> chiCangEntityHttpResult) throws Exception {
+                                public void accept(HttpResult<ChiCangEntity2> chiCangEntityHttpResult) throws Exception {
                                     if (chiCangEntityHttpResult.getData()!= null){
                                         refreshUI(chiCangEntityHttpResult.getData());
                                     }
@@ -241,9 +243,9 @@ public class ChiCangDetailActivity extends BaseActivity {
         });
     }
 
-    private void refreshUI(ChiCangEntity entity){
+    private void refreshUI(ChiCangEntity2 entity){
         mNowPrice= entity.getCurpoint();
-        mTextView4.setText(String.valueOf(mNowPrice));
+        mTextView4.setText(Tools.formatFloat(mNowPrice));
         mFloatPrice= mNowPrice - mLastPrice;
         if (mFloatPrice< 0){
             mTextView4.setTextColor(MyApplication.colorGreen);
@@ -252,8 +254,8 @@ public class ChiCangDetailActivity extends BaseActivity {
         }
         mLastPrice= mNowPrice;
 
-        closePrice= String.valueOf(entity.getCurpoint());
-        mTextView9.setText(String.valueOf(entity.getGain()));
+        closePrice= Tools.formatFloat(entity.getCurpoint());
+        mTextView9.setText(Tools.formatFloat(entity.getGain()));
         if (entity.getGain()< 0){
             //mTextView4.setTextColor(MyApplication.colorGreen);
             mTextView9.setTextColor(MyApplication.colorGreen);

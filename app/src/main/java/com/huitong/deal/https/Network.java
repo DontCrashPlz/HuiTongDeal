@@ -1,11 +1,14 @@
 package com.huitong.deal.https;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.BillEntity;
 import com.huitong.deal.beans.ChiCangEntity;
+import com.huitong.deal.beans.ChiCangEntity2;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
+import com.huitong.deal.beans.ChiCangHistoryEntity2;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.ChongZhiEntity;
 import com.huitong.deal.beans.ChongZhiHistoryEntity;
@@ -28,7 +31,15 @@ import com.huitong.deal.beans.VerificationCodeEntity;
 import com.huitong.deal.beans_store.AddressEntity;
 import com.huitong.deal.beans_store.AreaEntity;
 import com.huitong.deal.beans_store.HomePageEntity;
+import com.huitong.deal.beans_store.OrderListEntity;
+import com.huitong.deal.beans_store.ProductClassEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
+import com.huitong.deal.beans_store.ProductListEntity;
+import com.huitong.deal.beans_store.RecentInviteEntity;
+import com.huitong.deal.beans_store.ShopCartEntity;
+import com.huitong.deal.beans_store.StoreBillEntity;
+import com.huitong.deal.beans_store.StoreOrderEntity;
+import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.NetworkUtil;
 
 import java.util.ArrayList;
@@ -44,6 +55,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by Zheng on 2018/4/23.
@@ -93,7 +106,9 @@ public class Network {
     private static OkHttpClient mOkHttpClient;
     private static Retrofit mRetrofit;
     //private static final String BASEURL= "http://47.92.28.185/";
-    private static final String BASEURL= "http://47.92.94.101/";
+    //private static final String BASEURL= "http://47.92.94.101/";
+    //private static final String BASEURL= "http://192.168.1.244:8040/";
+    private static final String BASEURL= "http://www.zzxxjx.cn/";
 
 //    private Map<String, String> getParamsMap(){
 //        HashMap<String, String> params= new HashMap<>();
@@ -455,11 +470,11 @@ public class Network {
      * @param appToken
      * @return
      */
-    public Observable<HttpResult<ArrayList<ChiCangEntity>>> getChiCangList(String appToken){
+    public Observable<HttpResult<ArrayList<ChiCangEntity2>>> getChiCangList(String appToken){
         if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
-            return Observable.create(new ObservableOnSubscribe<HttpResult<ArrayList<ChiCangEntity>>>() {
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ArrayList<ChiCangEntity2>>>() {
                 @Override
-                public void subscribe(ObservableEmitter<HttpResult<ArrayList<ChiCangEntity>>> e) throws Exception {
+                public void subscribe(ObservableEmitter<HttpResult<ArrayList<ChiCangEntity2>>> e) throws Exception {
                     HttpResult httpResult= new HttpResult();
                     httpResult.setStatus("error");
                     httpResult.setDescription("网络不可用");
@@ -476,13 +491,13 @@ public class Network {
      * @param pageNumber
      * @return
      */
-    public Observable<HttpResult<ListDataEntity<ChiCangHistoryEntity,ChiCangHistoryQueryParam>>> getChiCangHistoryList(
+    public Observable<HttpResult<ListDataEntity<ChiCangHistoryEntity2,ChiCangHistoryQueryParam>>> getChiCangHistoryList(
             String appToken,
             String pageNumber){
         if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
-            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<ChiCangHistoryEntity,ChiCangHistoryQueryParam>>>() {
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<ChiCangHistoryEntity2,ChiCangHistoryQueryParam>>>() {
                 @Override
-                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<ChiCangHistoryEntity,ChiCangHistoryQueryParam>>> e) throws Exception {
+                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<ChiCangHistoryEntity2,ChiCangHistoryQueryParam>>> e) throws Exception {
                     HttpResult httpResult= new HttpResult();
                     httpResult.setStatus("error");
                     httpResult.setDescription("网络不可用");
@@ -503,11 +518,11 @@ public class Network {
      * @param positionNo
      * @return
      */
-    public Observable<HttpResult<ChiCangEntity>> getChiCangDetail(String appToken, String positionNo){
+    public Observable<HttpResult<ChiCangEntity2>> getChiCangDetail(String appToken, String positionNo){
         if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
-            return Observable.create(new ObservableOnSubscribe<HttpResult<ChiCangEntity>>() {
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ChiCangEntity2>>() {
                 @Override
-                public void subscribe(ObservableEmitter<HttpResult<ChiCangEntity>> e) throws Exception {
+                public void subscribe(ObservableEmitter<HttpResult<ChiCangEntity2>> e) throws Exception {
                     HttpResult httpResult= new HttpResult();
                     httpResult.setStatus("error");
                     httpResult.setDescription("网络不可用");
@@ -524,11 +539,11 @@ public class Network {
      * @param orderNo
      * @return
      */
-    public Observable<HttpResult<ChiCangHistoryEntity>> getChiCangHistoryDetail(String appToken, String orderNo){
+    public Observable<HttpResult<ChiCangHistoryEntity2>> getChiCangHistoryDetail(String appToken, String orderNo){
         if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
-            return Observable.create(new ObservableOnSubscribe<HttpResult<ChiCangHistoryEntity>>() {
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ChiCangHistoryEntity2>>() {
                 @Override
-                public void subscribe(ObservableEmitter<HttpResult<ChiCangHistoryEntity>> e) throws Exception {
+                public void subscribe(ObservableEmitter<HttpResult<ChiCangHistoryEntity2>> e) throws Exception {
                     HttpResult httpResult= new HttpResult();
                     httpResult.setStatus("error");
                     httpResult.setDescription("网络不可用");
@@ -799,7 +814,7 @@ public class Network {
      * @param amount
      * @return
      */
-    public Observable<HttpResult<ChongZhiEntity>> chongZhi(String appToken, String amount){
+    public Observable<HttpResult<ChongZhiEntity>> chongZhi(String appToken, String amount, String remark){
         if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
             return Observable.create(new ObservableOnSubscribe<HttpResult<ChongZhiEntity>>() {
                 @Override
@@ -811,7 +826,7 @@ public class Network {
                 }
             });
         }
-        return apiService.chongZhi(appToken, amount);
+        return apiService.chongZhi(appToken, amount, remark);
     }
 
     /**
@@ -863,6 +878,32 @@ public class Network {
         params.put("pageSize", "20");
         params.put("pageNumber", String.valueOf(pageNumber));
         return apiService.getBill(params);
+    }
+
+    /**
+     * 获取商城系统账单列表
+     * @param appToken
+     * @param pageNumber
+     * @return
+     */
+    public Observable<HttpResult<ListDataEntity<StoreBillEntity, ChiCangHistoryQueryParam>>> getStoreBill(String appToken, int pageNumber){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<ListDataEntity<StoreBillEntity, ChiCangHistoryQueryParam>>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<ListDataEntity<StoreBillEntity, ChiCangHistoryQueryParam>>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("_query.billType", "-1");
+        params.put("pageSize", "20");
+        params.put("pageNumber", String.valueOf(pageNumber));
+        return apiService.getStoreBill(params);
     }
 
     /**
@@ -935,6 +976,34 @@ public class Network {
     }
 
     /**
+     * 商城请求支付
+     * @param appToken
+     * @param orderNo
+     * @param payType
+     * @return
+     */
+    public Observable<HttpResult<PayEntity>> storeRequestPay(String appToken, String orderNo, String payType){
+        if (!NetworkUtil.isNetworkAvailable(MyApplication.getInstance())){
+            return Observable.create(new ObservableOnSubscribe<HttpResult<PayEntity>>() {
+                @Override
+                public void subscribe(ObservableEmitter<HttpResult<PayEntity>> e) throws Exception {
+                    HttpResult httpResult= new HttpResult();
+                    httpResult.setStatus("error");
+                    httpResult.setDescription("网络不可用");
+                    e.onNext(httpResult);
+                }
+            });
+        }
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("orderNo", orderNo);
+        params.put("orderType", "integralOrder");
+        params.put("payType", payType);
+        params.put("terminalType", "app");
+        return apiService.requestPay(params);
+    }
+
+    /**
      * 支付状态
      * @param appToken
      * @param orderNo
@@ -971,11 +1040,53 @@ public class Network {
     }
 
     /**
-     * 产品详情
+     * 商品列表
+     * @param gc_id 商品分类id，用于筛选商品分类，等于0不传这个参数，将默认查询所有商品
+     * @param orderType 商品排序条件，等于0为综合和销量条件查询（默认），等于1为了价格条件查询
+     * @param orderMode 商品排序方式，等于0为降序（默认），等于1为升序
+     * @param pageNumber 商品列表请求页码
+     * @return
+     */
+    public Observable<HttpResult<ProductListEntity>> getProductList(
+            int gc_id,
+            int orderType,
+            int orderMode,
+            int pageNumber){
+        HashMap<String, String> params= new HashMap<>();
+        if (gc_id> 0){
+            params.put("_query.gc_id", String.valueOf(gc_id));//商品分类：首页的8种分类
+            params.put("_query.level", "2");//固定为2
+        }
+        if (orderType== 0){
+            params.put("orderColunm", "goods_salenum");//价格用store_price，销量和综合用goods_salenum
+        }else if (orderType== 1){
+            params.put("orderColunm", "store_price");//价格用store_price，销量和综合用goods_salenum
+        }
+        if (orderMode== 0){
+            params.put("orderMode", "desc");//排序方式，desc降序，asc升序
+        }else if (orderMode== 1){
+            params.put("orderMode", "asc");//排序方式，desc降序，asc升序
+        }
+        params.put("pageSize", "10");//每页数据数
+        params.put("splitpage", "1");//是否分页，固定值
+        params.put("pageNumber", String.valueOf(pageNumber));//页码
+        return Network.getApiService().getProductList(params);
+    }
+
+    /**
+     * 商品详情
      * @return
      */
     public Observable<HttpResult<ProductDetailEntity>> getProductDetail(String goodId){
         return Network.getApiService().getProductDetail(goodId);
+    }
+
+    /**
+     * 商品分类
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<ProductClassEntity>>> getProductClass(){
+        return Network.getApiService().getProductClass();
     }
 
     /**
@@ -1000,6 +1111,14 @@ public class Network {
      */
     public Observable<HttpResult<String>> deleteAddress(String addressId, String appToken){
         return Network.getApiService().deleteAddress(addressId, appToken);
+    }
+
+    /**
+     * 根据id获取地址详情
+     * @return
+     */
+    public Observable<HttpResult<AddressEntity>> findAddressById(String addressId, String appToken){
+        return Network.getApiService().findAddressById(addressId, appToken);
     }
 
     /**
@@ -1039,6 +1158,223 @@ public class Network {
      */
     public Observable<HttpResult<ArrayList<AreaEntity>>> getAreaList(String areaId){
         return Network.getApiService().getAreaList(areaId);
+    }
+
+    /**
+     * 实名认证
+     * @return
+     */
+    public Observable<HttpResult<String>> doCertification(
+            String area_id,
+            String idCard,
+            String appToken,
+            String address,
+            String trueName){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("area_id", area_id);
+        params.put("idCardNo", idCard);
+        params.put("appToken", appToken);
+        params.put("detailAddress", address);
+        params.put("trueName", trueName);
+        return Network.getApiService().doCertification(params);
+    }
+
+    /**
+     * 修改用户资料
+     * @return
+     */
+    public Observable<HttpResult<String>> updateUserInfo(
+            String birthday,
+            String appToken,
+            String sex,
+            String nickName){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("birthday", birthday);
+        params.put("appToken", appToken);
+        params.put("sex", sex);
+        params.put("nickName", nickName);
+        return Network.getApiService().updateUserInfo(params);
+    }
+
+    /**
+     * 获取一周内输入的邀请码
+     * @return
+     */
+    public Observable<HttpResult<RecentInviteEntity>> getRecentInvite(String appToken){
+        return Network.getApiService().getRecentInvite(appToken);
+    }
+
+    /**
+     * 验证邀请码
+     * @return
+     */
+    public Observable<HttpResult<String>> checkInviteCode(String appToken, String inviteCode){
+        return Network.getApiService().checkInviteCode(appToken, inviteCode);
+    }
+
+    /**
+     * 修改一条购物车
+     * @param appToken
+     * @param id
+     * @param count
+     * @return
+     */
+    public Observable<HttpResult<String>> updateShopCart(String appToken,String id,String count){
+        return Network.getApiService().updateShopCart("app", appToken, id, count);
+    }
+
+    /**
+     * 删除一条购物车
+     * @param appToken
+     * @param cartItemId
+     * @return
+     */
+    public Observable<HttpResult<String>> deleteShopCart(String appToken, String cartItemId){
+        return Network.getApiService().deleteShopCart(appToken, cartItemId);
+    }
+
+    /**
+     * 添加一条购物车
+     * @param appToken
+     * @param goods_id
+     * @param price
+     * @param count
+     * @return
+     */
+    public Observable<HttpResult<String>> addShopCart(
+            String appToken,
+            String goods_id,
+            String price,
+            String count){
+        return Network.getApiService().addShopCart(appToken, goods_id, price, count);
+    }
+
+    /**
+     * 获取购物车列表
+     * @param appToken
+     * @return
+     */
+    public Observable<HttpResult<ShopCartEntity>> getShopCartList(String appToken){
+        return Network.getApiService().getShopCartList(appToken);
+    }
+
+    /**
+     * 提交立即购买订单
+     * @return
+     */
+    public Observable<HttpResult<StoreOrderEntity>> commitNowBuyOrder(
+            String addressId,
+            String goodId,
+            String count,
+            String appToken){
+        return Network.getApiService().commitNowBuyOrder(
+                "",
+                addressId,
+                goodId,
+                count,
+                appToken,
+                "app");
+    }
+
+    /**
+     * 获取商城支付列表
+     * @return
+     */
+    public Observable<HttpResult<ArrayList<PayTypeEntity>>> getStorePayList(){
+        return Network.getApiService().getStorePayList("integral");
+    }
+
+    /**
+     * 用余额和积分支付
+     * @param appToken
+     * @param orderNo 订单编号
+     * @param payPass 支付密码
+     * @param payType 0表示购物券支付，1表示提货券支付
+     * @param price 支付金额
+     * @return
+     */
+    public Observable<HttpResult<String>> payForOrder(
+            String appToken,
+            String orderNo,
+            String payPass,
+            int payType,
+            int price){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("orderType", "integralOrder");
+        params.put("orderNo", orderNo);
+        params.put("payPwd", payPass);
+        params.put("terminalType", "app");
+        if (payType== 0){
+            params.put("payType", "balance");
+            params.put("total", String.valueOf(price));
+        }else if (payType== 1){
+            params.put("payType", "integral");
+            params.put("integralPrice", String.valueOf(price));
+            params.put("total", String.valueOf(price));
+        }
+        return Network.getApiService().payForOrder(params);
+    }
+
+    /**
+     * 修改支付密码
+     * @return
+     */
+    public Observable<HttpResult<String>> resetPayPass(String appToken,
+                                                       String oldPayPass,
+                                                       String payPass,
+                                                       String rePayPass){
+        return Network.getApiService().resetPayPass(appToken, oldPayPass, payPass, rePayPass);
+    }
+
+    /**
+     * 提交购物车订单
+     * @return
+     */
+    public Observable<HttpResult<StoreOrderEntity>> commitBuyCartOrder(String appToken,
+                                                       String cartItemIds,
+                                                       String addr_id){
+        return Network.getApiService().commitBuyCartOrder(appToken, cartItemIds, addr_id);
+    }
+
+    /**
+     * 获取订单列表
+     * @param appToken
+     * @param pageNumber 页码
+     * @param orderType 订单类型 0全部订单；10待付款；20待发货；30已发货；50订单完成
+     * @return
+     */
+    public Observable<HttpResult<OrderListEntity>> getOrderList(
+            String appToken,
+            int pageNumber,
+            int orderType){
+        HashMap<String, String> params= new HashMap<>();
+        params.put("appToken", appToken);
+        params.put("pageSize", "5");
+        params.put("pageNumber", String.valueOf(pageNumber));
+        params.put("orderMode", "desc");
+        if (orderType!= 0){
+            params.put("_query.order_status", String.valueOf(orderType));
+        }
+        params.put("splitpage", "1");
+        params.put("orderColunm", "addTime");
+        return Network.getApiService().getOrderList(params);
+    }
+
+    /**
+     * 取消订单
+     * @return
+     */
+    public Observable<HttpResult<String>> deleteOrder(String appToken, String orderId){
+        return Network.getApiService().deleteOrder(appToken, orderId);
+    }
+
+    /**
+     * 订单确认收货
+     * @return
+     */
+    public Observable<HttpResult<String>> confirmOrder(String appToken, String orderId){
+        return Network.getApiService().confirmOrder(appToken, orderId);
     }
 
 }

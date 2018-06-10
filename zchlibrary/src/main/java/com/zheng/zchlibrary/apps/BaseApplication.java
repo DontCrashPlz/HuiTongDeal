@@ -29,8 +29,8 @@ public class BaseApplication extends Application {
         mSingleInstance= this;
 
         //init MyUncatchExceptionHandler
-        MyUncatchExceptionHandler mUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
-        mUncatchExceptionHandler.init(this, getExternalFilesDir("").getPath());
+        //MyUncatchExceptionHandler mUncatchExceptionHandler= MyUncatchExceptionHandler.getInstance();
+        //mUncatchExceptionHandler.init(this, getExternalFilesDir("").getPath());
 
         // 初始化ACache，可以考虑在此初始化时将缓存地址更改为磁盘SD卡(网络请求的缓存默认放在data/data目录下了)
         //此处初始化Acache创建放置图片缓存的文件夹

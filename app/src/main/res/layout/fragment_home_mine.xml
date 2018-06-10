@@ -190,6 +190,30 @@
             android:layout_marginRight="10dp"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/home_mine_rly_return"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/button_background_white_selector"
+        android:gravity="center_vertical"
+        android:clickable="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="返回商城"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/textSize_14"
+            android:drawableLeft="@mipmap/special_zone"
+            android:drawablePadding="6dp"
+            android:layout_marginLeft="10dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/enter"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+    <RelativeLayout
         android:id="@+id/home_mine_rly_logout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -207,10 +231,5 @@
             android:drawablePadding="6dp"
             android:layout_marginLeft="10dp"/>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>

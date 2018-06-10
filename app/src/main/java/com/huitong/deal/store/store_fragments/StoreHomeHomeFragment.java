@@ -1,5 +1,6 @@
 package com.huitong.deal.store.store_fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import com.huitong.deal.beans_store.HomePageFloorEntity;
 import com.huitong.deal.https.HttpUtils;
 import com.huitong.deal.https.Network;
 import com.huitong.deal.https.ResponseTransformer;
+import com.huitong.deal.store.store_activities.StoreDetailActivity;
+import com.huitong.deal.store.store_activities.StoreHomeActivity;
 import com.huitong.deal.store.store_adapter.HomePageFloorAdapter;
 import com.huitong.deal.widgets.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -96,16 +99,19 @@ public class StoreHomeHomeFragment extends BaseFragment implements View.OnClickL
                     public void accept(HomePageEntity homePageEntity) throws Exception {
                         dismissDialog();
                         ArrayList<String> mBannerImageList= new ArrayList<>();
-                        ArrayList<String> mBannerUrlList= new ArrayList<>();
+                        final ArrayList<String> mBannerGoodIdList= new ArrayList<>();
                         for (HomePageBannerEntity entity : homePageEntity.getBannerlist()){
                             mBannerImageList.add(entity.getImgUrl());
-                            mBannerUrlList.add(entity.getUrl());
+                            mBannerGoodIdList.add(entity.getGood_id());
                         }
                         mBanner.setImageLoader(new GlideImageLoader());
                         mBanner.setImages(mBannerImageList);
                         mBanner.setOnBannerListener(new OnBannerListener() {
                             @Override
                             public void OnBannerClick(int position) {
+                                Intent mIntent= new Intent(getRealContext(), StoreDetailActivity.class);
+                                mIntent.putExtra(StoreDetailActivity.GOOD_ID, mBannerGoodIdList.get(position));
+                                startActivity(mIntent);
                             }
                         });
                         //设置banner样式
@@ -152,6 +158,48 @@ public class StoreHomeHomeFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
+        int vId= v.getId();
+        switch (vId){
+            case R.id.homepage_btn1:{
+                ((StoreHomeActivity)getActivity()).gc_id= 56;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn2:{
+                ((StoreHomeActivity)getActivity()).gc_id= 59;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn3:{
+                ((StoreHomeActivity)getActivity()).gc_id= 57;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn4:{
+                ((StoreHomeActivity)getActivity()).gc_id= 58;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn5:{
+                ((StoreHomeActivity)getActivity()).gc_id= 62;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn6:{
+                ((StoreHomeActivity)getActivity()).gc_id= 63;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn7:{
+                ((StoreHomeActivity)getActivity()).gc_id= 64;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+            case R.id.homepage_btn8:{
+                ((StoreHomeActivity)getActivity()).gc_id= 65;
+                ((StoreHomeActivity)getActivity()).mCommodityRbtn.setChecked(true);
+                break;
+            }
+        }
     }
 }

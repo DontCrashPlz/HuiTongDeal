@@ -70,6 +70,9 @@ public class HomeMarketFragment extends BaseFragment {
         mBalanceTv= mView.findViewById(R.id.toolbar_market_balance);
         mBuyTv= mView.findViewById(R.id.toolbar_market_buy);
 
+        mUserNameTv.setText(MyApplication.appUser.getUsername());
+        mBalanceTv.setText(Tools.formatFloat(MyApplication.appUser.getUserinfo().getAvailablebalance()));
+
         mRecycler= mView.findViewById(R.id.home_market_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
         mAdapter= new MarketListAdapter(R.layout.item_market_recycler);

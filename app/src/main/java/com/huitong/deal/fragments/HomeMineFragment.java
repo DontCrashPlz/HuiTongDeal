@@ -22,6 +22,7 @@ import com.huitong.deal.activities.TiXianActivity;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.UserInfoDataEntity;
 import com.huitong.deal.store.store_activities.StoreHomeActivity;
+import com.zheng.zchlibrary.apps.ActivityManager;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.interfaces.IAsyncLoadListener;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
@@ -51,6 +52,7 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
     private RelativeLayout mLoginPassRly;
     private RelativeLayout mPayPassRly;
     private RelativeLayout mAboutUsRly;
+    private RelativeLayout mReturnRly;
     private RelativeLayout mLogoutRly;
 
     @Nullable
@@ -59,13 +61,6 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         View mView= inflater.inflate(R.layout.fragment_home_mine, container, false);
 
         initUI(mView);
-
-        mView.findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getRealContext(), StoreHomeActivity.class));
-            }
-        });
 
         return mView;
     }
@@ -77,6 +72,12 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
 
         mBalanceTv= view.findViewById(R.id.home_mine_balance);
         mSecurityTv= view.findViewById(R.id.home_mine_security);
+        mBalanceTv.setText(String.format(
+                getString(R.string.home_mine_balance),
+                Tools.formatFloat(MyApplication.appUser.getUserinfo().getAvailablebalance())));
+        mSecurityTv.setText(String.format(
+                getString(R.string.home_mine_tihuo),
+                Tools.formatFloat(MyApplication.appUser.getUserinfo().getIntegral())));
 
         mTiXianBtn= view.findViewById(R.id.home_mine_btn_tixian);
         mTiXianBtn.setOnClickListener(this);
@@ -90,6 +91,8 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
         mPayPassRly.setOnClickListener(this);
         mAboutUsRly= view.findViewById(R.id.home_mine_rly_aboutus);
         mAboutUsRly.setOnClickListener(this);
+        mReturnRly= view.findViewById(R.id.home_mine_rly_return);
+        mReturnRly.setOnClickListener(this);
         mLogoutRly= view.findViewById(R.id.home_mine_rly_logout);
         mLogoutRly.setOnClickListener(this);
     }
@@ -142,13 +145,16 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
                 aboutIntent.putExtra(AboutUsActivity.LAUNCH_TAG, AboutUsActivity.LAUNCH_TAG_ABOUTUS);
                 startActivity(aboutIntent);
                 break;
+            case R.id.home_mine_rly_return:
+                Intent storeIntent= new Intent(getRealContext(), StoreHomeActivity.class);
+                storeIntent.putExtra("launcher_tag", 1);
+                ActivityManager.getInstance().removeAll();
+                startActivity(storeIntent);
+                getActivity().finish();
+                break;
             case R.id.home_mine_rly_logout:
                 SharedPrefUtils.remove(getRealContext(), MyApplication.TOKEN_TAG);
-                Intent intent= new Intent(getRealContext(), LoginActivity.class);
-                intent.putExtra("launcher_tag", 1);
-                startActivity(intent);
-                showShortToast("注销成功");
-                getActivity().finish();
+                MyApplication.getInstance().AppExit();
                 break;
             default:
                 break;

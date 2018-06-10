@@ -31,8 +31,6 @@ public class ListDataEntity<T,K> {
     private String uri;
     //orderMode
     private String orderMode;
-    //extData
-    private String extData;
     //orderColunm
     private String orderColunm;
     //hasPreviousPage
@@ -137,14 +135,6 @@ public class ListDataEntity<T,K> {
         this.orderMode = orderMode;
     }
 
-    public String getExtData() {
-        return extData;
-    }
-
-    public void setExtData(String extData) {
-        this.extData = extData;
-    }
-
     public String getOrderColunm() {
         return orderColunm;
     }
@@ -192,7 +182,6 @@ public class ListDataEntity<T,K> {
                 ", list=" + list +
                 ", uri='" + uri + '\'' +
                 ", orderMode='" + orderMode + '\'' +
-                ", extData='" + extData + '\'' +
                 ", orderColunm='" + orderColunm + '\'' +
                 ", hasPreviousPage=" + hasPreviousPage +
                 ", queryParam=" + queryParam +

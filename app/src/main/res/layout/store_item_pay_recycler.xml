@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/item_pay_panel"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/button_background_white_selector"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:clickable="true"
+        android:layout_marginTop="1dp">
+
+        <TextView
+            android:id="@+id/item_pay_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值"
+            android:textSize="@dimen/textSize_15"
+            android:textColor="@color/store_black"/>
+
+        <TextView
+            android:id="@+id/item_pay_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2000-01-01 00:00:00"
+            android:textColor="@color/store_light_gary"
+            android:textSize="@dimen/textSize_9"
+            android:layout_alignParentBottom="true"/>
+
+        <TextView
+            android:id="@+id/item_pay_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1000"
+            android:textSize="@dimen/textSize_15"
+            android:textColor="@color/store_black"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@mipmap/voucher_8"
+            android:drawablePadding="3dp"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -22,6 +22,7 @@ import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.LoginEntity;
 import com.huitong.deal.https.Network;
+import com.huitong.deal.store.store_fragments.StoreHomeMineFragment;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.utils.SharedPrefUtils;
@@ -166,7 +167,9 @@ public class LoginWithPasswordFragment extends BaseFragment implements View.OnCl
                                             }
                                         }
                                         MyApplication.getInstance().setToken(token);
-                                        getRealContext().startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        //getRealContext().startActivity(new Intent(getActivity(), HomeActivity.class));
+                                        MyApplication.getInstance().refreshUser(null);
+                                        getActivity().setResult(StoreHomeMineFragment.LOGIN_SUCCESS_RESULT_CODE);
                                         getActivity().finish();
                                     }
                                 }

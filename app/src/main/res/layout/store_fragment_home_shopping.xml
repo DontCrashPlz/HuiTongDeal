@@ -1,21 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_white"
+    android:orientation="vertical">
 
-    <android.support.constraint.ConstraintLayout
+    <include layout="@layout/store_layout_toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/home_shopping_recycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <com.youth.banner.Banner
-            android:id="@+id/homepage_banner"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="15:8"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/white">
+        <CheckBox
+            android:id="@+id/home_shopping_select_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全选"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="@color/store_dark_gary"
+            android:drawableLeft="@drawable/store_checkbox_address_default"
+            android:button="@null"
+            android:drawablePadding="6dp"
+            android:layout_centerVertical="true"
+            android:padding="6dp"/>
+        <Button
+            android:id="@+id/home_shopping_commit"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/store_red"
+            android:text="@string/store_shopping_commit"
+            android:textSize="@dimen/textSize_14"
+            android:textColor="@android:color/white"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不含运费"
+            android:textSize="@dimen/textSize_9"
+            android:textColor="@color/store_light_gary"
+            android:layout_toLeftOf="@+id/home_shopping_commit"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="12dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/home_shopping_commit"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="合计："
+                android:textColor="@color/store_dark_gary"
+                android:textSize="@dimen/textSize_12"/>
+            <TextView
+                android:id="@+id/home_shopping_gouwuquan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/textSize_12"
+                android:textColor="@color/store_red"
+                android:drawableRight="@mipmap/home_shopping_voucher"
+                android:drawablePadding="3dp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:id="@+id/home_shopping_tihuoquan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="@dimen/textSize_12"
+                android:textColor="@color/store_yellow"
+                android:drawableRight="@mipmap/home_bill"
+                android:drawablePadding="3dp"/>
+        </LinearLayout>
+    </RelativeLayout>
 
-    </android.support.constraint.ConstraintLayout>
-
-</ScrollView>
+</LinearLayout>

@@ -1,6 +1,5 @@
 package com.huitong.deal.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,15 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.huitong.deal.R;
 import com.huitong.deal.adapters.ChiCangHistoryListAdapter;
-import com.huitong.deal.adapters.ChiCangListAdapter;
 import com.huitong.deal.apps.MyApplication;
-import com.huitong.deal.beans.ChiCangEntity;
 import com.huitong.deal.beans.ChiCangHistoryEntity;
+import com.huitong.deal.beans.ChiCangHistoryEntity2;
 import com.huitong.deal.beans.ChiCangHistoryQueryParam;
 import com.huitong.deal.beans.HttpResult;
 import com.huitong.deal.beans.ListDataEntity;
@@ -25,17 +22,10 @@ import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.utils.LogUtil;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -52,8 +42,6 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
         return instance;
     }
 
-    private TextView textView3;
-    private TextView textView4;
     private RecyclerView mRecycler;
     private ChiCangHistoryListAdapter mAdapter;
 
@@ -66,11 +54,6 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mView= inflater.inflate(R.layout.fragment_deal, container, false);
-
-        textView3= mView.findViewById(R.id.deal_text3);
-        textView4= mView.findViewById(R.id.deal_text4);
-        textView3.setText("平仓价");
-        textView4.setText("盈亏");
 
         mRecycler= mView.findViewById(R.id.deal_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
@@ -92,9 +75,9 @@ public class DealHistoryFragment extends BaseFragment implements BaseQuickAdapte
             addNetWork(Network.getInstance().getChiCangHistoryList(appToken, String.valueOf(currentPage))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<HttpResult<ListDataEntity<ChiCangHistoryEntity, ChiCangHistoryQueryParam>>>() {
+                    .subscribe(new Consumer<HttpResult<ListDataEntity<ChiCangHistoryEntity2, ChiCangHistoryQueryParam>>>() {
                         @Override
-                        public void accept(HttpResult<ListDataEntity<ChiCangHistoryEntity, ChiCangHistoryQueryParam>> listDataEntityHttpResult) throws Exception {
+                        public void accept(HttpResult<ListDataEntity<ChiCangHistoryEntity2, ChiCangHistoryQueryParam>> listDataEntityHttpResult) throws Exception {
                             dismissProgressBar();
                             if ("error".equals(listDataEntityHttpResult.getStatus())){
                                 mAdapter.loadMoreFail();

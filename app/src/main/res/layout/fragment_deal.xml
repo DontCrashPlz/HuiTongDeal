@@ -1,66 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_black"
+    android:paddingTop="5dp">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/deal_recycler"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/background_black_light"
-        android:gravity="center_vertical"
-        android:layout_marginTop="6dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="名 称"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="left"/>
-        <TextView
-            android:id="@+id/deal_text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="建仓价"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/deal_text3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="最新价"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/deal_text4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="浮动盈亏"
-            android:textSize="@dimen/textSize_14"
-            android:textColor="@android:color/white"
-            android:gravity="right"/>
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/deal_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-</LinearLayout>
+        android:layout_height="match_parent" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+</FrameLayout>

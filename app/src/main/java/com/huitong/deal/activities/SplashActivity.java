@@ -75,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
                         return Observable.create(new ObservableOnSubscribe<UpdateInfoEntity>() {
                             @Override
                             public void subscribe(ObservableEmitter<UpdateInfoEntity> e) throws Exception {
-                                URL url= new URL("http://47.92.28.185/app/update.xml");
+                                URL url= new URL("http://www.zzxxjx.cn/api/app/androindUpdate");
                                 HttpURLConnection connection= (HttpURLConnection) url.openConnection();
                                 connection.setConnectTimeout(3000);
                                 InputStream is= connection.getInputStream();

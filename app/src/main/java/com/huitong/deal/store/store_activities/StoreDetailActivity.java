@@ -1,25 +1,40 @@
 package com.huitong.deal.store.store_activities;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.huitong.deal.R;
+import com.huitong.deal.activities.LoginActivity;
+import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.DealTableEntity;
+import com.huitong.deal.beans.LeverageEntity;
 import com.huitong.deal.beans_store.HomePageBannerEntity;
 import com.huitong.deal.beans_store.ProductDetailEntity;
 import com.huitong.deal.beans_store.ProductParamEntity;
@@ -27,6 +42,7 @@ import com.huitong.deal.https.HttpUtils;
 import com.huitong.deal.https.Network;
 import com.huitong.deal.https.ResponseTransformer;
 import com.huitong.deal.store.store_adapter.ProductParamAdapter;
+import com.huitong.deal.widgets.ClearableEditText;
 import com.huitong.deal.widgets.GlideImageLoader;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -35,6 +51,7 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
+import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.ArrayList;
 
@@ -48,7 +65,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Zheng on 2018/6/6.
  */
 
-public class StoreDetailActivity extends BaseActivity {
+public class StoreDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String GOOD_ID= "good_id";
 
@@ -69,6 +86,8 @@ public class StoreDetailActivity extends BaseActivity {
     private String mGoodId;
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+
+    private ProductDetailEntity mProductEntity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +111,7 @@ public class StoreDetailActivity extends BaseActivity {
                 .subscribe(new Consumer<ProductDetailEntity>() {
                     @Override
                     public void accept(ProductDetailEntity productDetailEntity) throws Exception {
-                        dismissDialog();
+                        mProductEntity= productDetailEntity;
                         ArrayList<String> bannerList= new ArrayList<>();
                         for (HomePageBannerEntity entity : productDetailEntity.getImgurllist()){
                             bannerList.add(entity.getImgUrl());
@@ -134,7 +153,6 @@ public class StoreDetailActivity extends BaseActivity {
                         showDialog();
                     }
                 }));
-
     }
 
     private void initUI() {
@@ -184,7 +202,9 @@ public class StoreDetailActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getRealContext()));
 
         mShoppingBtn= findViewById(R.id.commodity_detail_shopping);
+        mShoppingBtn.setOnClickListener(this);
         mBuyNowBtn= findViewById(R.id.commodity_detail_buynow);
+        mBuyNowBtn.setOnClickListener(this);
 
         mTabEntities.add(new DealTableEntity("图文详情", 0, 0));
         mTabEntities.add(new DealTableEntity("商品参数", 0, 0));
@@ -211,7 +231,166 @@ public class StoreDetailActivity extends BaseActivity {
 
     @Override
     public void initProgressDialog() {
+        dialog= new ProgressDialog(getRealContext());
+        dialog.setLabel("正在请求网络..");
+    }
 
+    @Override
+    public void onClick(View v) {
+        int vId= v.getId();
+        switch (vId){
+            case R.id.commodity_detail_shopping:{
+                if (!MyApplication.getInstance().loadLocalToken()){
+                    startActivity(new Intent(getRealContext(), LoginActivity.class));
+                    return;
+                }
+                showXiaDanDialog(getRealContext(), 1);
+                break;
+            }
+            case R.id.commodity_detail_buynow:{
+                if (!MyApplication.getInstance().loadLocalToken()){
+                    startActivity(new Intent(getRealContext(), LoginActivity.class));
+                    return;
+                }
+                showXiaDanDialog(getRealContext(), 2);
+                break;
+            }
+        }
+    }
+
+    /**************************下单Dialog相关*******************************/
+    private Dialog xiaDanDialog;//下单弹窗
+    private ImageView dialogImage;
+    private ImageView dialogClose;
+    private TextView dialogGouWuQuan;
+    private TextView dialogTiHuoQuan;
+    private TextView dialogInvintory;
+    private Button dialogSubBtn;
+    private TextView dialogCountTv;
+    private Button dialogPlusBtn;
+    private Button dialogConfirmBtn;
+    //购买数量
+    private int mBuyCount= 1;
+
+    /**
+     * 弹出下单弹窗
+     * @param context
+     * @param currentTab 1表示加入购物车，2表示立即购买
+     */
+    private void showXiaDanDialog(Context context, final int currentTab){
+        View view = LayoutInflater.from(context).inflate(R.layout.store_layout_dialog_xiadan, null);
+        // 设置style 控制默认dialog带来的边距问题
+        xiaDanDialog= new Dialog(context, R.style.custom_dialog_no_titlebar);
+        xiaDanDialog.setContentView(view);
+        xiaDanDialog.show();
+
+        dialogImage= view.findViewById(R.id.store_xiadan_dialog_image);
+        dialogClose= view.findViewById(R.id.store_xiadan_dialog_close);
+        dialogGouWuQuan= view.findViewById(R.id.store_xiadan_dialog_gouwuquan);
+        dialogTiHuoQuan= view.findViewById(R.id.store_xiadan_dialog_tihuoquan);
+        dialogInvintory= view.findViewById(R.id.store_xiadan_dialog_inventory);
+        dialogSubBtn= view.findViewById(R.id.store_xiadan_dialog_sub);
+        dialogCountTv= view.findViewById(R.id.store_xiadan_dialog_count);
+        dialogPlusBtn= view.findViewById(R.id.store_xiadan_dialog_plus);
+        dialogConfirmBtn= view.findViewById(R.id.store_xiadan_dialog_commit);
+
+        Glide.with(getRealContext()).load(mProductEntity.getImgurl()).into(dialogImage);
+        dialogClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                xiaDanDialog.dismiss();
+            }
+        });
+        dialogGouWuQuan.setText(String.valueOf(mProductEntity.getStore_price()));
+        dialogTiHuoQuan.setText(String.valueOf(mProductEntity.getGoods_integral()));
+        dialogInvintory.setText(
+                String.format(
+                        getString(R.string.product_detail_inventory),
+                        String.valueOf(mProductEntity.getGoods_inventory())));
+        dialogCountTv.setText(String.valueOf(mBuyCount));
+        final int maxCount= mProductEntity.getGoods_inventory();
+        dialogSubBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBuyCount> 1){
+                    mBuyCount-= 1;
+                    dialogCountTv.setText(String.valueOf(mBuyCount));
+                }
+            }
+        });
+        dialogPlusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBuyCount< maxCount){
+                    mBuyCount+= 1;
+                    dialogCountTv.setText(String.valueOf(mBuyCount));
+                }
+            }
+        });
+        dialogConfirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentTab== 1){
+                    addShopCart(String.valueOf(mBuyCount));
+                }else if (currentTab== 2){
+                    Intent intent= new Intent(getRealContext(), StoreConfirmOrderActivity.class);
+                    intent.putExtra("good_id", mGoodId);
+                    intent.putExtra("buycount", mBuyCount);
+                    startActivity(intent);
+                }
+            }
+        });
+        //关闭弹窗时重置购买数量
+        xiaDanDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                mBuyCount= 1;
+            }
+        });
+
+        // 设置相关位置，一定要在 show()之后
+        Window window = xiaDanDialog.getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.gravity = Gravity.BOTTOM;
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(params);
+    }
+
+    private void addShopCart(String count){
+        addNetWork(Network.getInstance().addShopCart(MyApplication.appToken,
+                mGoodId,
+                String.valueOf(mProductEntity.getStore_price()),
+                count)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(ResponseTransformer.<String>handleResult())
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+                        dismissDialog();
+                        showShortToast("已添加至购物车");
+                        xiaDanDialog.dismiss();
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        dismissDialog();
+                        showShortToast(HttpUtils.parseThrowableMsg(throwable));
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                }, new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+                        showDialog();
+                    }
+                }));
     }
 
 }

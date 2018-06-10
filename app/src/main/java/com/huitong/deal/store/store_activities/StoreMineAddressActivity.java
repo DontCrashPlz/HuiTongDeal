@@ -1,15 +1,12 @@
 package com.huitong.deal.store.store_activities;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,13 +14,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.huitong.deal.R;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans_store.AddressEntity;
-import com.huitong.deal.https.ApiException;
 import com.huitong.deal.https.HttpUtils;
 import com.huitong.deal.https.Network;
 import com.huitong.deal.https.ResponseTransformer;
 import com.huitong.deal.store.store_adapter.AddressListAdapter;
 import com.zheng.zchlibrary.apps.BaseActivity;
-import com.zheng.zchlibrary.utils.LogUtil;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
 
 import java.util.ArrayList;
@@ -54,10 +49,14 @@ public class StoreMineAddressActivity extends BaseActivity {
 
     private ArrayList<AddressEntity> mAddressList;
 
+    private int mLaunchFromOrder;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.store_activity_mine_address);
+
+        mLaunchFromOrder= getIntent().getIntExtra("launch_from_order", 0);
 
         mBackIv= findViewById(R.id.toolbar_back);
         mBackIv.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +76,12 @@ public class StoreMineAddressActivity extends BaseActivity {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                showShortToast("positon:" + position);
+                if (mLaunchFromOrder== 1){
+                    Intent intent= new Intent();
+                    intent.putExtra("selected_address", mAddressList.get(position));
+                    setResult(StoreConfirmOrderActivity.ORDER_ADDRESS_RESULT_CODE, intent);
+                    finish();
+                }
             }
         });
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {

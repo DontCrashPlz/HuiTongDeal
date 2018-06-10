@@ -130,7 +130,13 @@ public class StoreModifyAddressActivity extends BaseActivity implements View.OnC
             }
             mNameEt.setText(mEntity.getRecvname());
             mMobileEt.setText(mEntity.getMobile());
-            showShortToast(mEntity.getArea_all_name().split(",").toString());
+            String[] area_names= mEntity.getArea_all_name().split(",");
+            mProvinceTv.setText(area_names[0]);
+            mCityTv.setText(area_names[1]);
+            mAreaTv.setText(area_names[2]);
+            mAreaId= String.valueOf(mEntity.getArea_id());
+            mZipEt.setText(mEntity.getZip());
+            mDetailEt.setText(mEntity.getAddress());
         }
 
         mCommitBtn.setOnClickListener(new View.OnClickListener() {
@@ -232,6 +238,11 @@ public class StoreModifyAddressActivity extends BaseActivity implements View.OnC
      * 进行添加地址请求
      */
     private void doUpdateAddressRequest(){
+        mPanel1.setBackgroundResource(R.drawable.store_edittext_background_white_corners);
+        mPanel2.setBackgroundResource(R.drawable.store_edittext_background_white_corners);
+        mPanel3.setBackgroundResource(R.drawable.store_edittext_background_white_corners);
+        mPanel4.setBackgroundResource(R.drawable.store_edittext_background_white_corners);
+        mPanel5.setBackgroundResource(R.drawable.store_edittext_background_white_corners);
         if (mEntity.getId()== 0 ){
             showShortToast("页面错误,请重试");
             finish();

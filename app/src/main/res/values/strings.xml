@@ -22,5 +22,19 @@
     <string name="home_mine_tihuo">提货券: %1$s</string>
     <string name="product_detail_unit">单位: %1$s</string>
     <string name="product_detail_selled">已售%1$s</string>
+    <string name="product_detail_inventory">库存 %1$s 件</string>
+
+    <string name="store_tixian_max">可用购物券余额%1$s</string>
+
+    <string name="store_confirm_order_name">收货人：%1$s</string>
+    <string name="store_confirm_order_address">收货地址：%1$s</string>
+
+    <string name="store_buying_unit">/%1$s</string>
+    <string name="store_buying_buy_count">共%1$s件商品</string>
+
+    <string name="store_shopping_commit">结算(%1$s)</string>
+
+    <string name="order_detail_number">订单编号： %1$s</string>
+    <string name="order_detail_createtime">创建时间： %1$s</string>
 
 </resources>
