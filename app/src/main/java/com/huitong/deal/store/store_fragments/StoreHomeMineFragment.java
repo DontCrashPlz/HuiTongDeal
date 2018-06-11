@@ -21,6 +21,7 @@ import com.huitong.deal.activities.LoginActivity;
 import com.huitong.deal.apps.MyApplication;
 import com.huitong.deal.beans.DealTableEntity;
 import com.huitong.deal.beans.UserInfoDataEntity;
+import com.huitong.deal.store.store_activities.FeedBackActivity;
 import com.huitong.deal.store.store_activities.StoreLoginPasswordActivity;
 import com.huitong.deal.store.store_activities.StoreMineAddressActivity;
 import com.huitong.deal.store.store_activities.StoreMineWalletActivity;
@@ -326,6 +327,7 @@ public class StoreHomeMineFragment extends BaseFragment implements View.OnClickL
                 break;
             }
             case R.id.store_mine_btn8:{//帮助反馈
+                startActivity(new Intent(getRealContext(), FeedBackActivity.class));
                 break;
             }
             case R.id.store_mine_btn9:{//退出登录

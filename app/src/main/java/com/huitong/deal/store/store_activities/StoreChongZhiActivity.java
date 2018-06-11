@@ -79,7 +79,7 @@ public class StoreChongZhiActivity extends BaseActivity {
             }
         });
         mTitleTv = findViewById(R.id.toolbar_title);
-        mTitleTv.setText("买购物券");
+        mTitleTv.setText("购买购物券");
         mFunctionTv = findViewById(R.id.toolbar_function);
         mFunctionTv.setVisibility(View.INVISIBLE);
 

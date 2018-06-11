@@ -10,8 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
+import com.huitong.deal.https.Network;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by Zheng on 2018/6/9.
@@ -48,7 +55,11 @@ public class FeedBackActivity extends BaseActivity {
         mCommitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String suggestStr= mSuggestEt.getText().toString().trim();
+                if (suggestStr!= null && suggestStr.length()> 0){
+                    showDialog();
+                    commitFeedBack();
+                }
             }
         });
     }
@@ -64,4 +75,18 @@ public class FeedBackActivity extends BaseActivity {
             }
         });
     }
+
+    private void commitFeedBack(){
+        addNetWork(Observable.timer(1, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        dismissDialog();
+                        showShortToast("提交成功，感谢您的反馈");
+                        finish();
+                    }
+                }));
+    }
+
 }

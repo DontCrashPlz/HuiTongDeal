@@ -68,9 +68,11 @@ import io.reactivex.schedulers.Schedulers;
 public class StoreDetailActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String GOOD_ID= "good_id";
+    public static final int BACK_TO_SHOPCART= 1001;
 
     private Banner mBanner;
     private ImageView mBackIv;
+    private ImageView mShopCartIv;
     private TextView mNameTv;
     private TextView mRemarkTv;
     private TextView mGouWuQuanTv;
@@ -162,6 +164,13 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mShopCartIv= findViewById(R.id.commodity_detail_shopcart);
+        mShopCartIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                setResult();
             }
         });
         mNameTv= findViewById(R.id.commodity_detail_name);

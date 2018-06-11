@@ -22,6 +22,7 @@ import com.huitong.deal.beans_store.ProductListEntity;
 import com.huitong.deal.https.HttpUtils;
 import com.huitong.deal.https.Network;
 import com.huitong.deal.https.ResponseTransformer;
+import com.huitong.deal.store.store_activities.StoreHomeActivity;
 import com.huitong.deal.store.store_adapter.CommodityListAdapter;
 import com.zheng.zchlibrary.apps.BaseFragment;
 import com.zheng.zchlibrary.widgets.progressDialog.ProgressDialog;
@@ -260,6 +261,44 @@ public class StoreHomeCommodityFragment extends BaseFragment implements View.OnC
                         dismissDialog();
                         if (mCurrentPage== 1){//如果现在加载的是第一页，考虑切换查询条件,设置新的数据集合
                             mAdapter.setNewData(new ArrayList<HomePageCommodityEntity>());
+                            switch (mGc_id){
+                                case 0:{
+                                    mTitleTv.setText("全部商品");
+                                    break;
+                                }
+                                case 56:{
+                                    mTitleTv.setText("法国馆");
+                                    break;
+                                }
+                                case 59:{
+                                    mTitleTv.setText("智利馆");
+                                    break;
+                                }
+                                case 57:{
+                                    mTitleTv.setText("葡萄牙馆");
+                                    break;
+                                }
+                                case 58:{
+                                    mTitleTv.setText("意大利馆");
+                                    break;
+                                }
+                                case 62:{
+                                    mTitleTv.setText("班章");
+                                    break;
+                                }
+                                case 63:{
+                                    mTitleTv.setText("布朗山");
+                                    break;
+                                }
+                                case 64:{
+                                    mTitleTv.setText("那卡");
+                                    break;
+                                }
+                                case 65:{
+                                    mTitleTv.setText("冰岛");
+                                    break;
+                                }
+                            }
                         }
                         if (productListEntity.getList().size()> 0){//如果加载数据有效，添加到列表
                             mAdapter.addData(productListEntity.getList());
