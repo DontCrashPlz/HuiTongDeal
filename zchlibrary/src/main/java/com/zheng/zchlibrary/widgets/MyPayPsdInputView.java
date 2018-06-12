@@ -100,6 +100,8 @@ public class MyPayPsdInputView extends EditText {
     private RectF strokeRect= new RectF();
     private float gridWidth;
 
+    private IPassInputCompleteListener mListener;
+
     public MyPayPsdInputView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
@@ -223,12 +225,25 @@ public class MyPayPsdInputView extends EditText {
         }
     }
 
+    /**
+     * 输入监听，获取要绘制的点的位置
+     * @param text
+     * @param start
+     * @param lengthBefore
+     * @param lengthAfter
+     */
     @Override
     protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         this.position = start + lengthAfter;
         textLength = text.toString().length();
         Log.e("onTextChanged", String.valueOf(textLength));
+        if (textLength== 6){
+            if (mListener!= null) mListener.onComplete();
+        }else {
+            if (mListener!= null) mListener.onUnCompleted();
+        }
+
 
         invalidate();
 
@@ -258,6 +273,15 @@ public class MyPayPsdInputView extends EditText {
      */
     public void cleanPsd() {
         setText("");
+    }
+
+    public void setOnPassInputCompleteListener(IPassInputCompleteListener listener){
+        mListener= listener;
+    }
+
+    public interface IPassInputCompleteListener {
+        void onComplete();
+        void onUnCompleted();
     }
 
 }

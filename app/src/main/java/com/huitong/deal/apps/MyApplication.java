@@ -53,7 +53,22 @@ public class MyApplication extends BaseApplication {
     //根据本地保存的token加载用户
     public void loadUser(){
         if (loadLocalToken()){
-            refreshUser(null);
+            refreshUser(new IAsyncLoadListener<UserInfoDataEntity>() {
+                @Override
+                public void onSuccess(UserInfoDataEntity userInfoDataEntity) {
+
+                }
+
+                @Override
+                public void onFailure(String msg) {
+                    if ("无效的appToken，禁止访问".equals(msg)){
+                        LogUtil.d("application loadUser","无效appToken，清除appToken和appUser");
+                        SharedPrefUtils.remove(getApplicationContext(), MyApplication.TOKEN_TAG);
+                        appToken= "";
+                        appUser= null;
+                    }
+                }
+            });
         }
     }
 

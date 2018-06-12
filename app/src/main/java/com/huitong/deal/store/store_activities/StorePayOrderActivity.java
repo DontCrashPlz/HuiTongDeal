@@ -2,6 +2,7 @@ package com.huitong.deal.store.store_activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -138,36 +140,61 @@ public class StorePayOrderActivity extends BaseActivity {
      * @param payTypeTag 0表示购物券支付，1表示提货券支付
      */
     private void showPayPasswordDialog(final int payTypeTag){
-        View view = LayoutInflater.from(getRealContext()).inflate(R.layout.layout_paypass_dialog, null);
+        View view = LayoutInflater.from(getRealContext()).inflate(R.layout.layout_paypass_dialog2, null);
         // 设置style 控制默认dialog带来的边距问题
         final Dialog dialog = new Dialog(getRealContext(), R.style.custom_dialog_no_titlebar);
         dialog.setContentView(view);
         dialog.show();
 
-        final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);
-        final TextView tipTv= view.findViewById(R.id.paypass_dialog_tv_tip);
+        TextView moneyTv= view.findViewById(R.id.paypass_dialog_tv_tip);//提现金额显示
+        final MyPayPsdInputView payPsdInputView= view.findViewById(R.id.paypass_dialog_et_password);//密码输入框
+        TextView forgetTv= view.findViewById(R.id.paypass_dialog_btn_forget);//忘记密码
+        Button cancelBtn= view.findViewById(R.id.paypass_dialog_btn_cancel);//取消按钮
+        final TextView confirmBtn= view.findViewById(R.id.paypass_dialog_btn_confirm);//确认按钮
 
-        // 监听
-        view.findViewById(R.id.paypass_dialog_btn_cancel).setOnClickListener(new View.OnClickListener() {
+        if (payTypeTag== 0){
+            moneyTv.setText(String.valueOf(gouWuQuanMoney));
+        }else if (payTypeTag== 1){
+            moneyTv.setText(String.valueOf(tiHuoQuanMoney));
+        }
+
+        payPsdInputView.setOnPassInputCompleteListener(new MyPayPsdInputView.IPassInputCompleteListener() {
+            @Override
+            public void onComplete() {
+                confirmBtn.setBackgroundResource(R.drawable.button_background_orange_corners_selector);
+                confirmBtn.setClickable(true);
+            }
+
+            @Override
+            public void onUnCompleted() {
+                confirmBtn.setBackgroundResource(R.drawable.button_background_gary_corners);
+                confirmBtn.setClickable(false);
+            }
+        });
+
+        forgetTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getRealContext(), StorePayPasswordActivity.class));
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        view.findViewById(R.id.paypass_dialog_btn_confirm).setOnClickListener(new View.OnClickListener() {
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String payPass= payPsdInputView.getPasswordString();
-                if (payPass== null || payPass.length()!= 6){
-                    tipTv.setVisibility(View.VISIBLE);
-                    return;
-                }
+                if (payPass== null || payPass.length()== 0) return;
                 if (payTypeTag== 0){
                     requestPayOrder(payPass, payTypeTag, gouWuQuanMoney);
                 }else if (payTypeTag== 1){
                     requestPayOrder(payPass, payTypeTag, tiHuoQuanMoney);
                 }
-
                 dialog.dismiss();
             }
         });

@@ -86,6 +86,7 @@ public class StoreHomeHomeFragment extends BaseFragment implements View.OnClickL
         mRecycler= mView.findViewById(R.id.homepage_recycler);
         mRecycler.setFocusable(false);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
+        mRecycler.setNestedScrollingEnabled(false);
         mAdapter= new HomePageFloorAdapter(R.layout.store_layout_floor);
         mRecycler.setAdapter(mAdapter);
 

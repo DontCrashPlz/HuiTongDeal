@@ -32,5 +32,7 @@
     <color name="store_dark_gary">#666666</color>
     <color name="store_light_gary">#999999</color>
 
+    <color name="background_button_unclick">#e5e5e5</color>
+
 
 </resources>
