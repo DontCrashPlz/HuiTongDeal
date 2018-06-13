@@ -20,6 +20,7 @@ import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
 /**
  * Created by Allen on 2017/5/7.
+ * Update by Zheng on 2018年6月13日 09:18:04
  * 自定义支付密码输入框
  */
 
@@ -109,9 +110,10 @@ public class MyPayPsdInputView extends EditText {
         getAtt(attrs);
         initPaint();
 
-        this.setBackgroundColor(Color.TRANSPARENT);
-        this.setCursorVisible(false);
-        this.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxCount)});
+        setBackground(null);
+        setBackgroundColor(Color.TRANSPARENT);
+        setCursorVisible(false);
+        setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxCount)});
 
     }
 
@@ -168,9 +170,10 @@ public class MyPayPsdInputView extends EditText {
         Log.e("MyPayPsdInputView onMeasure :" , "getWidth = " + getWidth() + " ; getHeight = " + getHeight());
         Log.e("MyPayPsdInputView onMeasure :" , "getPaddingLeft = " + getPaddingLeft() + " ; getPaddingRight = " + getPaddingRight());
 
-        strokeRect.set(10, 10, width - 10, height - 10);
-
-        gridWidth= (width - 20 - (strokeWidth * 2) - ((maxCount - 1)*divideLineWidth))/maxCount;
+//        strokeRect.set(10, 10, width - 10, height - 10);
+//        gridWidth= (width - 20 - (strokeWidth * 2) - ((maxCount - 1)*divideLineWidth))/maxCount;
+        strokeRect.set(0, 0, width, height);
+        gridWidth= (width - (strokeWidth * 2) - ((maxCount - 1)*divideLineWidth))/maxCount;
 
         startX= strokeWidth + gridWidth/2;
         startY= height/2;
@@ -201,11 +204,11 @@ public class MyPayPsdInputView extends EditText {
 
 
         for (int i = 0; i < maxCount - 1; i++) {
-            float divideX= 10 + strokeWidth + (i*divideLineWidth) + ((i + 1)*gridWidth);
+            float divideX= strokeWidth + (i*divideLineWidth) + ((i + 1)*gridWidth);
             canvas.drawLine(divideX,
-                    10,
+                    0,
                     divideX,
-                    height - 10,
+                    height,
                     divideLinePaint);
         }
 
@@ -243,7 +246,6 @@ public class MyPayPsdInputView extends EditText {
         }else {
             if (mListener!= null) mListener.onUnCompleted();
         }
-
 
         invalidate();
 

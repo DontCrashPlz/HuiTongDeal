@@ -83,6 +83,8 @@ public class StoreHomeMineFragment extends BaseFragment implements View.OnClickL
 
         initUI(mView);
 
+        if (MyApplication.appUser== null) return mView;
+
         Glide.with(getRealContext()).load(MyApplication.appUser.getUserinfo().getHeadimgurl()).into(mUserIconIv);
         mUserNameTv.setText(MyApplication.appUser.getNickname());
         mMobileTv.setText(MyApplication.appUser.getMobile());

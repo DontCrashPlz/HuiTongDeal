@@ -13,7 +13,7 @@ public class ShopCartListEntity {
 //            "total_integral":886,
 //            "total_money":886,
 //            "user_id":110
-    private ArrayList<ShopCartItemEntity> itemlist;
+    private ArrayList<ShopCartItemEntity> itemlist= new ArrayList<>();
 
     public ArrayList<ShopCartItemEntity> getItemlist() {
         return itemlist;

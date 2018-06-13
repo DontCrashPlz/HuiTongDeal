@@ -134,7 +134,8 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                         mUnitTv.setText(String.format(getString(R.string.product_detail_unit), productDetailEntity.getSale_unit()));
                         mSelledTv.setText(String.format(getString(R.string.product_detail_selled), String.valueOf(productDetailEntity.getGoods_salenum())));
 
-                        mWebView.loadDataWithBaseURL("http://47.92.94.101/", productDetailEntity.getGoods_details(), "text/html", "utf-8", null);
+                        //mWebView.loadDataWithBaseURL("http://47.92.94.101/", productDetailEntity.getGoods_details(), "text/html", "utf-8", null);
+                        mWebView.loadDataWithBaseURL("http://www.zzxxjx.cn/", productDetailEntity.getGoods_details(), "text/html", "utf-8", null);
 
                         mRecyclerView.setAdapter(new ProductParamAdapter(R.layout.store_item_product_param, productDetailEntity.getParamlist()));
                     }

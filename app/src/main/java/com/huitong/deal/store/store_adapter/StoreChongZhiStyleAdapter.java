@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.huitong.deal.R;
@@ -29,14 +31,22 @@ public class StoreChongZhiStyleAdapter extends RecyclerView.Adapter<StoreChongZh
 
     @Override
     public StoreChongZhiStyleAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.store_item_chongzhi_style, parent, false));
+        //return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.store_item_chongzhi_style, parent, false));
+        return new MyViewHolder(LayoutInflater.from(mContext).inflate(R.layout.store_item_pay_order, parent, false));
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final PayTypeEntity entity= mList.get(position);
         holder.textView.setText(entity.getName());
-        holder.textView.setOnClickListener(new View.OnClickListener() {
+        if ("unitscan".equals(entity.getPaytype())){
+            holder.imageView.setImageResource(R.mipmap.recharge_unionpay);
+        }else if ("alipay".equals(entity.getPaytype())){
+            holder.imageView.setImageResource(R.mipmap.recharge_alipay);
+        }else if ("wxpay".equals(entity.getPaytype())){
+            holder.imageView.setImageResource(R.mipmap.recharge_wechat);
+        }
+        holder.frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (entity.getInstall()== 0){
@@ -55,11 +65,16 @@ public class StoreChongZhiStyleAdapter extends RecyclerView.Adapter<StoreChongZh
 
     class MyViewHolder extends RecyclerView.ViewHolder{
 
+        private FrameLayout frameLayout;
+        private ImageView imageView;
         private TextView textView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView= itemView.findViewById(R.id.textView);
+            //textView= itemView.findViewById(R.id.textView);
+            frameLayout= itemView.findViewById(R.id.store_pay_type_panel);
+            imageView= itemView.findViewById(R.id.store_pay_type_image);
+            textView= itemView.findViewById(R.id.store_pay_type_text);
         }
     }
 }

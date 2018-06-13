@@ -91,7 +91,7 @@ public class StoreHomeShoppingFragment extends BaseFragment implements View.OnCl
 
         mRecycler= view.findViewById(R.id.home_shopping_recycler);
         mRecycler.setLayoutManager(new LinearLayoutManager(getRealContext()));
-        mEditAdapter= new ShopCartEditAdapter(R.layout.store_layout_commodity_buying_edit);
+       // mEditAdapter= new ShopCartEditAdapter(R.layout.store_layout_commodity_buying_edit);
 
         mSelectAllCb= view.findViewById(R.id.home_shopping_select_all);
         mSelectAllCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -149,6 +149,7 @@ public class StoreHomeShoppingFragment extends BaseFragment implements View.OnCl
                     public void accept(ShopCartEntity shopCartEntity) throws Exception {
                         dismissDialog();
                         mShowAdapter= new ShopCartShowAdapter(R.layout.store_layout_commodity_buying_white);
+                        mShowAdapter.bindToRecyclerView(mRecycler);
                         mShowAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                             @Override
                             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

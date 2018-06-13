@@ -8,5 +8,4 @@
     android:textColor="@color/store_light_gary"
     android:drawableTop="@mipmap/cart_none"
     android:drawablePadding="10dp"
-    android:paddingTop="30dp"
-    android:paddingBottom="30dp"/>
+    android:paddingTop="130dp"/>

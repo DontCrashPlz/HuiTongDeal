@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white">
+
+    <include layout="@layout/store_layout_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp">
+        <ImageView
+            android:id="@+id/paypass_success_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/pay_success"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/paypass_success_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付成功"
+            android:textSize="@dimen/textSize_18"
+            android:textColor="@color/store_black"
+            android:layout_toRightOf="@+id/paypass_success_icon"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我们会尽快安排发货，请您耐心等待哦~"
+            android:textSize="@dimen/textSize_12"
+            android:textColor="@color/store_light_gary"
+            android:layout_toRightOf="@+id/paypass_success_icon"
+            android:layout_below="@+id/paypass_success_text"
+            android:layout_marginTop="3dp"/>
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="72"/>
+        <Button
+            android:id="@+id/store_pay_successd_detail"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:text="订单详情"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textSize_15"
+            android:background="@drawable/store_button_background_yellow_corners_selector"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="55"/>
+        <Button
+            android:id="@+id/store_pay_successd_homepage"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:text="首页逛逛"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/textSize_15"
+            android:background="@drawable/store_button_background_red_corners_selector"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="48"/>
+    </LinearLayout>
+
+</LinearLayout>

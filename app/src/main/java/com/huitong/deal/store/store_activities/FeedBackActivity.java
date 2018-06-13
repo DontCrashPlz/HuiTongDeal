@@ -59,6 +59,8 @@ public class FeedBackActivity extends BaseActivity {
                 if (suggestStr!= null && suggestStr.length()> 0){
                     showDialog();
                     commitFeedBack();
+                }else {
+                    showShortToast("请填写您要反馈的问题");
                 }
             }
         });

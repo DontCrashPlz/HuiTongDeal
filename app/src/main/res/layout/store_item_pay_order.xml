@@ -4,7 +4,8 @@
     android:layout_height="60dp"
     android:background="@drawable/button_background_white_selector"
     android:layout_marginTop="1dp"
-    android:clickable="true">
+    android:clickable="true"
+    android:id="@+id/store_pay_type_panel">
     <ImageView
         android:id="@+id/store_pay_type_image"
         android:layout_width="wrap_content"

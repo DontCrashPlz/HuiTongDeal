@@ -89,12 +89,10 @@ public class StoreMineAddressActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()){
                     case R.id.address_default:{
-                        //showShortToast("默认" + "--positionId" + mAddressList.get(position).getId());
                         setDefaultAddress(String.valueOf(mAddressList.get(position).getId()));
                         break;
                     }
                     case R.id.address_modify:{
-                        //showShortToast("修改" + "--positionId" + mAddressList.get(position).getId());
                         Intent intent= new Intent(getRealContext(), StoreModifyAddressActivity.class);
                         intent.putExtra(
                                 StoreModifyAddressActivity.MODIFY_ADDRESS_LAUNCH_TAG,
@@ -104,7 +102,6 @@ public class StoreMineAddressActivity extends BaseActivity {
                         break;
                     }
                     case R.id.address_delete:{
-                        //showShortToast("删除" + "--positionId" + mAddressList.get(position).getId());
                         deleteAddress(String.valueOf(mAddressList.get(position).getId()));
                         break;
                     }
@@ -158,15 +155,6 @@ public class StoreMineAddressActivity extends BaseActivity {
                     public void accept(Throwable throwable) throws Exception {
                         dismissDialog();
                         showShortToast(HttpUtils.parseThrowableMsg(throwable));
-//                        if (throwable instanceof ApiException){
-//                            ApiException exception= (ApiException) throwable;
-//                            if (exception.getCode()== 200){
-//                                LogUtil.e("run here", "200");
-//                                mAdapter.setEmptyView(R.layout.store_layout_address_empty);
-//                            }else {
-//                                showShortToast(HttpUtils.parseThrowableMsg(throwable));
-//                            }
-//                        }
                     }
                 }, new Action() {
                     @Override
