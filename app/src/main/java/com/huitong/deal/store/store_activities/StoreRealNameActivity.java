@@ -308,7 +308,6 @@ public class StoreRealNameActivity extends BaseActivity implements View.OnClickL
         mAreaPopWindow.setTouchable(true);
         mAreaPopWindow.setOutsideTouchable(true);//允许在外侧点击取消
 
-
         mAreaPopWindow.showAtLocation(this.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
 

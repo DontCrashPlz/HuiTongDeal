@@ -60,8 +60,7 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".store.store_activities.StoreHomeActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".store.store_activities.StoreDetailActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".store.store_activities.StoreMineWalletActivity"

@@ -77,9 +77,7 @@ public class StoreSecretPortalActivity extends BaseActivity {
                             @Override
                             public void accept(String s) throws Exception {
                                 dismissDialog();
-                                ActivityManager.getInstance().removeAll();
                                 startActivity(new Intent(getRealContext(), HomeActivity.class));
-                                finish();
                             }
                         }, new Consumer<Throwable>() {
                             @Override

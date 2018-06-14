@@ -2,6 +2,8 @@ package com.zheng.zchlibrary.apps;
 
 import android.app.Activity;
 
+import com.zheng.zchlibrary.utils.LogUtil;
+
 import java.util.Stack;
 
 /**
@@ -49,6 +51,30 @@ public class ActivityManager {
                 mActivityStack.get(i).finish();
         }
         mActivityStack.clear();
+    }
+
+    /**
+     * 移除栈顶之下的所有Activity
+     */
+    public void removeAllExceptTop(){
+        LogUtil.e("remove当前Activity栈size", ""+ mActivityStack.size());
+        for (int i=0; i<mActivityStack.size(); i++){
+            if (i== 0) continue;
+            Activity recentActivity= mActivityStack.get(i);
+            LogUtil.e("remove当前Activity栈位置 " + i , String.valueOf(recentActivity== null));
+            if (recentActivity!= null){
+                LogUtil.e("remove当前Activity栈位置 " + i , recentActivity.getClass().getSimpleName());
+                mActivityStack.remove(mActivityStack);
+                recentActivity.finish();
+            }
+        }
+    }
+
+    public void logActivityStackInfo(){
+        for (int i=0; i<mActivityStack.size(); i++){
+            if (mActivityStack.get(i)!= null)
+                LogUtil.e("log当前Activity栈位置 " + i , mActivityStack.get(i).getClass().getSimpleName());
+        }
     }
 
 }

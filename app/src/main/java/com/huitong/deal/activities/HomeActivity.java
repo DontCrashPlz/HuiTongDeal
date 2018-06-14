@@ -18,6 +18,7 @@ import com.huitong.deal.fragments.HomeDealFragment;
 import com.huitong.deal.fragments.HomeMarketFragment;
 import com.huitong.deal.fragments.HomeMineFragment;
 import com.huitong.deal.https.Network;
+import com.zheng.zchlibrary.apps.ActivityManager;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.utils.LogUtil;
 
@@ -41,6 +42,7 @@ public class HomeActivity extends BaseActivity implements CompoundButton.OnCheck
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ActivityManager.getInstance().removeAllExceptTop();
 
         initUI();
 

@@ -34,6 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
 
         LogUtil.e(ACTIVITY_TAG, ACTIVITY_TAG + " was Created.");
         ActivityManager.getInstance().addActivity(this);
+        ActivityManager.getInstance().logActivityStackInfo();
 
         if (compositeDisposable == null) {
             compositeDisposable = new CompositeDisposable();
@@ -45,6 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     @Override
     protected void onDestroy() {
         ActivityManager.getInstance().removeActivity(this);
+        ActivityManager.getInstance().logActivityStackInfo();
         LogUtil.e(ACTIVITY_TAG, ACTIVITY_TAG + " was Destroyed.");
         if (compositeDisposable != null) {
             compositeDisposable.clear();

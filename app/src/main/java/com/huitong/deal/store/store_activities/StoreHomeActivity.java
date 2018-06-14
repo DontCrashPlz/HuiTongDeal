@@ -25,6 +25,7 @@ import com.huitong.deal.store.store_fragments.StoreHomeCommodityFragment;
 import com.huitong.deal.store.store_fragments.StoreHomeHomeFragment;
 import com.huitong.deal.store.store_fragments.StoreHomeMineFragment;
 import com.huitong.deal.store.store_fragments.StoreHomeShoppingFragment;
+import com.zheng.zchlibrary.apps.ActivityManager;
 import com.zheng.zchlibrary.apps.BaseActivity;
 import com.zheng.zchlibrary.beans.UpdateInfoEntity;
 import com.zheng.zchlibrary.utils.DownloadManager;
@@ -39,6 +40,8 @@ import java.io.File;
 
 public class StoreHomeActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
+    public static final String STORE_HOME_LAUNCH_TAG= "store_home_launch_tag";
+
     private RadioButton mHomeRbtn;
     public RadioButton mCommodityRbtn;
     private RadioButton mShoppingRbtn;
@@ -46,7 +49,8 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
 
     private FragmentManager mManager;
 
-    private int mLauncherTag;
+    private int mLauncherTag;//启动标识，用于判断从哪里启动的StoreActivity
+    private int mLaunchViewTag;//页面启动标识，用于判断启动StoreActivity后停留在那个fragment
     private UpdateInfoEntity entity;
     private String mCurrentVersion;
 
@@ -59,9 +63,19 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
 
         initUI();
 
-        mHomeRbtn.setChecked(true);
+        //store_home_launch_tag标识启动StoreActivity后停留在哪个Fragment
+        //0表示首页，1表示全部商品，2表示购物车，3表示个人中心
+        mLaunchViewTag= getIntent().getIntExtra(STORE_HOME_LAUNCH_TAG, 0);
+        if (mLaunchViewTag== 0){
+            switchFragment(0);
+        }else if (mLaunchViewTag== 2){
+            switchFragment(2);
+        }
 
-        //launcher_tag标识是从哪里启动的StoreActivity，0表示正常启动，1表示从特惠专区退回
+        ActivityManager.getInstance().removeAllExceptTop();
+
+        //launcher_tag标识是从哪里启动的StoreActivity
+        //0表示正常启动，1表示从特惠专区退回，2表示从商品详情页跳转，正常启动时intent中会携带版本更新信息
         mLauncherTag= getIntent().getIntExtra("launcher_tag", 0);
 
         if (mLauncherTag!= 0) return;
@@ -242,5 +256,16 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
         startActivity(intent);
     }
 
+    public void switchFragment(int viewTag){
+        if (viewTag== 0){
+            mHomeRbtn.setChecked(true);
+        }else if (viewTag== 1){
+            mCommodityRbtn.setChecked(true);
+        }else if (viewTag== 2){
+            mShoppingRbtn.setChecked(true);
+        }else if (viewTag== 3){
+            mMineRbtn.setChecked(true);
+        }
+    }
 
 }

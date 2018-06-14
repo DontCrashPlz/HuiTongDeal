@@ -148,9 +148,7 @@ public class HomeMineFragment extends BaseFragment implements View.OnClickListen
             case R.id.home_mine_rly_return:
                 Intent storeIntent= new Intent(getRealContext(), StoreHomeActivity.class);
                 storeIntent.putExtra("launcher_tag", 1);
-                ActivityManager.getInstance().removeAll();
                 startActivity(storeIntent);
-                getActivity().finish();
                 break;
             case R.id.home_mine_rly_logout:
                 SharedPrefUtils.remove(getRealContext(), MyApplication.TOKEN_TAG);

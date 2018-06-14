@@ -63,7 +63,7 @@ public class StoreHomeHomeFragment extends BaseFragment implements View.OnClickL
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View mView= inflater.inflate(R.layout.store_fragment_home_homepage, container, false);
 
         mBanner= mView.findViewById(R.id.homepage_banner);
@@ -203,4 +203,5 @@ public class StoreHomeHomeFragment extends BaseFragment implements View.OnClickL
             }
         }
     }
+
 }
