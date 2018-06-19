@@ -172,6 +172,10 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         mShopCartIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!MyApplication.getInstance().loadLocalToken()){
+                    startActivity(new Intent(getRealContext(), LoginActivity.class));
+                    return;
+                }
                 Intent intent= new Intent(getRealContext(), StoreHomeActivity.class);
                 intent.putExtra(StoreHomeActivity.STORE_HOME_LAUNCH_TAG, 2);
                 intent.putExtra("launcher_tag", 2);

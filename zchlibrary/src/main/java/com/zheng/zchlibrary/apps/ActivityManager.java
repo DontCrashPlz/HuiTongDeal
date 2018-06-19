@@ -58,8 +58,9 @@ public class ActivityManager {
      */
     public void removeAllExceptTop(){
         LogUtil.e("remove当前Activity栈size", ""+ mActivityStack.size());
-        for (int i=0; i<mActivityStack.size(); i++){
-            if (i== 0) continue;
+        int stackSize= mActivityStack.size();
+        for (int i=0; i< stackSize; i++){
+            if (i== (stackSize - 1)) continue;
             Activity recentActivity= mActivityStack.get(i);
             LogUtil.e("remove当前Activity栈位置 " + i , String.valueOf(recentActivity== null));
             if (recentActivity!= null){

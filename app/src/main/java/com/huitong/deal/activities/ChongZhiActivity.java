@@ -91,7 +91,7 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void initUI() {
-        mBackIv = (ImageView) findViewById(R.id.toolbar_back);
+        mBackIv = findViewById(R.id.toolbar_back);
         mBackIv.setVisibility(View.VISIBLE);
         mBackIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,9 +99,9 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
                 finish();
             }
         });
-        mTitleTv = (TextView) findViewById(R.id.toolbar_title);
-        mTitleTv.setText("买购物券");
-        mFunctionTv = (TextView) findViewById(R.id.toolbar_right_text);
+        mTitleTv = findViewById(R.id.toolbar_title);
+        mTitleTv.setText("购买购物券");
+        mFunctionTv = findViewById(R.id.toolbar_right_text);
         mFunctionTv.setVisibility(View.VISIBLE);
         mFunctionTv.setText("购买记录");
         mFunctionTv.setOnClickListener(new View.OnClickListener() {
@@ -111,27 +111,27 @@ public class ChongZhiActivity extends BaseActivity implements View.OnClickListen
             }
         });
 
-        mMoneyEt = (EditText) findViewById(R.id.chongzhi_money);
+        mMoneyEt = findViewById(R.id.chongzhi_money);
 
-        mRecyclerView= (RecyclerView) findViewById(R.id.recyclerview);
+        mRecyclerView= findViewById(R.id.recyclerview);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getRealContext()));
 
-        mKuaiJieRly = (RelativeLayout) findViewById(R.id.chongzhi_kuaijie);
+        mKuaiJieRly = findViewById(R.id.chongzhi_kuaijie);
         mKuaiJieRly.setOnClickListener(this);
         mKuaiJieRly.setClickable(false);
-        mKuaiJieTv= (TextView) findViewById(R.id.chongzhi_textview_kuaijie);
+        mKuaiJieTv= findViewById(R.id.chongzhi_textview_kuaijie);
         mKuaiJieTv.setTextColor(Color.GRAY);
 
-        mAlipayRly = (RelativeLayout) findViewById(R.id.chongzhi_alipay);
+        mAlipayRly = findViewById(R.id.chongzhi_alipay);
         mAlipayRly.setOnClickListener(this);
         mAlipayRly.setClickable(false);
-        mAlipayTv= (TextView) findViewById(R.id.chongzhi_textview_alipay);
+        mAlipayTv= findViewById(R.id.chongzhi_textview_alipay);
         mAlipayTv.setTextColor(Color.GRAY);
 
-        mWeXinRly = (RelativeLayout) findViewById(R.id.chongzhi_weixin);
+        mWeXinRly = findViewById(R.id.chongzhi_weixin);
         mWeXinRly.setOnClickListener(this);
         mWeXinRly.setClickable(false);
-        mWeiXinTv= (TextView) findViewById(R.id.chongzhi_textview_weixin);
+        mWeiXinTv= findViewById(R.id.chongzhi_textview_weixin);
         mWeiXinTv.setTextColor(Color.GRAY);
 
         loadPayType();

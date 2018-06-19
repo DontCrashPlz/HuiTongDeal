@@ -207,6 +207,12 @@ public class StorePayOrderActivity extends BaseActivity {
         window.setAttributes(params);
     }
 
+    /**
+     * 购物券和提货券支付
+     * @param payPass
+     * @param payType
+     * @param price
+     */
     private void requestPayOrder(String payPass, int payType, int price){
         addNetWork(Network.getInstance().payForOrder(MyApplication.appToken, orderNo, payPass, payType, price)
                 .subscribeOn(Schedulers.io())
@@ -238,6 +244,10 @@ public class StorePayOrderActivity extends BaseActivity {
                 }));
     }
 
+    /**
+     * 银联扫码支付
+     * @param payType
+     */
     private void requestPayByUnit(String payType){
         addNetWork(Network.getInstance().storeRequestPay(MyApplication.appToken, orderNo, payType)
                 .subscribeOn(Schedulers.io())

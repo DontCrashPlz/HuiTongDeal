@@ -41,12 +41,23 @@ public class StorePaySuccessActivity extends BaseActivity {
         mFuncTv.setVisibility(View.INVISIBLE);
 
         mDetailBtn= findViewById(R.id.store_pay_successd_detail);
-        mHomePageBtn= findViewById(R.id.store_pay_successd_homepage);
+        mDetailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+        mHomePageBtn= findViewById(R.id.store_pay_successd_homepage);
+        mHomePageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
     public void initProgressDialog() {
-
     }
+
 }

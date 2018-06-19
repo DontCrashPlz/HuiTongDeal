@@ -39,7 +39,7 @@ public class GuidePageFragment extends BaseFragment {
 
         View v= LayoutInflater.from(getActivity()).inflate(R.layout.fragment_guideview, container,false);
         ImageView mRl= v.findViewById(R.id.rl_guidepage_back);
-        TextView mBtn= v.findViewById(R.id.btn_guidepage_start);
+        ImageView mBtn= v.findViewById(R.id.btn_guidepage_start);
         if(index==1){
             mRl.setImageResource(R.mipmap.guide_01);
         }else if(index==2){

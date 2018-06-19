@@ -106,9 +106,8 @@ public class Network {
     private static OkHttpClient mOkHttpClient;
     private static Retrofit mRetrofit;
     //private static final String BASEURL= "http://47.92.28.185/";
-    private static final String BASEURL= "http://47.92.94.101/";
-    //private static final String BASEURL= "http://192.168.1.244:8040/";
-    //private static final String BASEURL= "http://www.zzxxjx.cn/";
+    //private static final String BASEURL= "http://47.92.94.101/";
+    private static final String BASEURL= "http://www.zzxxjx.cn/";
 
 //    private Map<String, String> getParamsMap(){
 //        HashMap<String, String> params= new HashMap<>();

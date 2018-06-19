@@ -60,6 +60,7 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.store_activity_home);
+        ActivityManager.getInstance().removeAllExceptTop();
 
         initUI();
 
@@ -71,8 +72,6 @@ public class StoreHomeActivity extends BaseActivity implements CompoundButton.On
         }else if (mLaunchViewTag== 2){
             switchFragment(2);
         }
-
-        ActivityManager.getInstance().removeAllExceptTop();
 
         //launcher_tag标识是从哪里启动的StoreActivity
         //0表示正常启动，1表示从特惠专区退回，2表示从商品详情页跳转，正常启动时intent中会携带版本更新信息
