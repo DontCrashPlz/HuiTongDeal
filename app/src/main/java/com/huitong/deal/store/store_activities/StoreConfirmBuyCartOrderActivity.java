@@ -152,6 +152,10 @@ public class StoreConfirmBuyCartOrderActivity extends BaseActivity implements Vi
             intent.putExtra("launch_from_order", 1);
             startActivityForResult(intent, ORDER_ADDRESS_REQUEST_CODE);
         }else if (v.getId()== R.id.confirm_order_commit){
+            if (addressId== 0){
+                showShortToast("请选择收货地址");
+                return;
+            }
             addNetWork(Network.getInstance().commitBuyCartOrder(
                     MyApplication.appToken,
                     cartItemIds.toString(),

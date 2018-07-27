@@ -130,8 +130,12 @@ public class StoreHomeShoppingFragment extends BaseFragment implements View.OnCl
             Intent intent= new Intent(getRealContext(), StoreConfirmBuyCartOrderActivity.class);
             ArrayList<ShopCartItemEntity> selectedList= new ArrayList<>();
             selectedList.addAll(mSelectedList);
-            intent.putExtra("selected_buycart_list", selectedList);
-            startActivity(intent);
+            if (selectedList.size()>0){
+                intent.putExtra("selected_buycart_list", selectedList);
+                startActivity(intent);
+            }else {
+                showShortToast("请选择要结算的商品");
+            }
         }
     }
 

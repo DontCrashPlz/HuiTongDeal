@@ -144,6 +144,10 @@ public class StoreConfirmOrderActivity extends BaseActivity implements View.OnCl
             intent.putExtra("launch_from_order", 1);
             startActivityForResult(intent, ORDER_ADDRESS_REQUEST_CODE);
         }else if (v.getId()== R.id.confirm_order_commit){
+            if (addressId== 0){
+                showShortToast("请选择收货地址");
+                return;
+            }
             addNetWork(Network.getInstance().commitNowBuyOrder(
                     String.valueOf(addressId),
                     goodId,
